@@ -97,10 +97,10 @@ public abstract class AppBaseActivity extends AppCompatActivity implements MenuI
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_sumting1:
+            case R.id.nav_camera:
                 // handle it
                 break;
-            case R.id.item_sumting2:
+            case R.id.nav_gallery:
                 // do whatever
                 break;
             // and so on...

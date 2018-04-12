@@ -53,7 +53,7 @@ public class ShoppingListFragment extends Fragment {
 
 
 
-        ListView listView = (ListView) view.findViewById(R.id.listview);
+        ListView listView = (ListView) view.findViewById(R.id.listview_shopping_list);
 
         final List<ShoppingListItemModel> items = new ArrayList<>();
         items.add(new ShoppingListItemModel(false, "milk"));
