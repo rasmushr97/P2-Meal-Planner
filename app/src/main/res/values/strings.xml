@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">menuComplete</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="item_1">Home</string>
+    <string name="item_2">Calendar</string>
+    <string name="item_3">Shopping list</string>
+    <string name="some_title">Title</string>
+
+    <string name="long_recipe">Ham 200g \nCheese 10kg \nSausage 600g\nBacon 1g\nCucumber\nBratwurst \nTomato \nOregano \nSalt \nPepper
+                                \nOther Stuff \nPenis \nSalad (not) \nIngredients probably \n\nFremgangsmåde: \n1. Do some stuff with the meat \n2. Cook some Pasta, bitch \n3. EAT!</string>
+    <string name="description_text">This Italian dish is a great melody of fresh vegetables and herbs in a light garlic tomato basil sauce served over angel hair pasta and sprinkled with Parmesan cheese. </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
