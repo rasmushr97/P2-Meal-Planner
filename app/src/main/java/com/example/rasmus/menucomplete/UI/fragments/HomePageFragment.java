@@ -49,8 +49,7 @@ public class HomePageFragment extends Fragment {
     int todaysCalories = 0;
 
     public static HomePageFragment newInstance() {
-        HomePageFragment fragment = new HomePageFragment();
-        return fragment;
+        return new HomePageFragment();
     }
 
     @Override
@@ -72,7 +71,7 @@ public class HomePageFragment extends Fragment {
         scrollView = (ScrollView) view.findViewById(R.id.scrollView1);
 
         // Setting up the add button
-        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_1);
+        final FloatingActionButton fab = view.findViewById(R.id.fab_1);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -91,6 +90,7 @@ public class HomePageFragment extends Fragment {
             FragmentManager manager = getFragmentManager();
             bundle.putInt("img", recipe.getImgID(i));
             bundle.putInt("calories", recipe.getCalories(i));
+            bundle.putInt("id", recipe.getIdCounter());
             bundle.putString("meal", recipe.getMealName(i));
             mealFragment.setArguments(bundle);
             manager.beginTransaction()

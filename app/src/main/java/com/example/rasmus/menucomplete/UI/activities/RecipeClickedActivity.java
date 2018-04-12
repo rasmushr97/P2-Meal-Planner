@@ -2,15 +2,14 @@ package com.example.rasmus.menucomplete.UI.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.rasmus.menucomplete.AppBaseActivity;
 import com.example.rasmus.menucomplete.R;
 import com.example.rasmus.menucomplete.other.RecipeTest;
+import com.example.rasmus.menucomplete.AppBackButtonActivity;
 
-public class RecipeClickedActivity extends AppBaseActivity {
+public class RecipeClickedActivity extends AppBackButtonActivity {
 
     RecipeTest recipe = new RecipeTest();
 
@@ -20,7 +19,9 @@ public class RecipeClickedActivity extends AppBaseActivity {
         setContentView(R.layout.activity_recipe_clicked);
         setTitle("Den Valgte Opskrift");
 
-        Button button = (Button) findViewById(R.id.description_button);
+        // App bar back button
+
+        Button button = findViewById(R.id.description_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,7 +31,7 @@ public class RecipeClickedActivity extends AppBaseActivity {
             }
         });
 
-        Button addRecipeButton = (Button) findViewById(R.id.btn_add_recipe);
+        Button addRecipeButton = findViewById(R.id.btn_add_recipe);
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +45,5 @@ public class RecipeClickedActivity extends AppBaseActivity {
         });
 
     }
-
 
 }

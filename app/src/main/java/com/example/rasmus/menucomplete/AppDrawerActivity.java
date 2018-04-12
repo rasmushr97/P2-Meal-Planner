@@ -1,5 +1,6 @@
 package com.example.rasmus.menucomplete;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-public abstract class AppBaseActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
+import com.example.rasmus.menucomplete.UI.activities.MainActivity;
+
+public abstract class AppDrawerActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
     private FrameLayout view_stub; //This is the framelayout to keep your content view
     private NavigationView navigation_view; // The new navigation view from Android Design Library. Can inflate menu resources. Easy
     private DrawerLayout mDrawerLayout;
@@ -90,15 +93,17 @@ public abstract class AppBaseActivity extends AppCompatActivity implements MenuI
             return true;
         }
         // Handle your other action bar items...
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.nav_camera:
-                // handle it
+                intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             case R.id.nav_gallery:
                 // do whatever

@@ -7,14 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
-import com.example.rasmus.menucomplete.AppBaseActivity;
+import com.example.rasmus.menucomplete.AppDrawerActivity;
 import com.example.rasmus.menucomplete.R;
 import com.example.rasmus.menucomplete.UI.fragments.CalenderFragment;
 import com.example.rasmus.menucomplete.UI.fragments.HomePageFragment;
 import com.example.rasmus.menucomplete.UI.fragments.ShoppingListFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-public class MainActivity extends AppBaseActivity{
+public class MainActivity extends AppDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class MainActivity extends AppBaseActivity{
 
 
         // Bottom navigation bar
-        BottomNavigationViewEx bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.bottom_navigation);
+        BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_navigation);
                 findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.enableAnimation(true);

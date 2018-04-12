@@ -1,20 +1,19 @@
 package com.example.rasmus.menucomplete.UI.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.example.rasmus.menucomplete.AppBaseActivity;
 import com.example.rasmus.menucomplete.R;
 import com.example.rasmus.menucomplete.adapters.RecyclerViewDataAdapter;
 import com.example.rasmus.menucomplete.models.SectionDataModel;
 import com.example.rasmus.menucomplete.models.SingleItemModel;
+import com.example.rasmus.menucomplete.AppBackButtonActivity;
 
 import java.util.ArrayList;
 
-public class PickRecipeActivity extends AppBaseActivity {
+public class PickRecipeActivity extends AppBackButtonActivity {
 
     private Toolbar toolbar;
 
@@ -31,14 +30,16 @@ public class PickRecipeActivity extends AppBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_recipe);
 
+        // App bar back button
+
         //skal kommenteres ind hvis man vil have toolbaren i toppen
         //toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        allSampleData = new ArrayList<SectionDataModel>();
+        allSampleData = new ArrayList<>();
 
         createDummyData();
 
-        RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.my_recycler_view);
+        RecyclerView my_recycler_view = findViewById(R.id.my_recycler_view);
 
         my_recycler_view.setHasFixedSize(true);
 
@@ -60,7 +61,7 @@ public class PickRecipeActivity extends AppBaseActivity {
 
             dm.setHeaderTitle("Category " + i);
 
-            ArrayList<SingleItemModel> singleItem = new ArrayList<SingleItemModel>();
+            ArrayList<SingleItemModel> singleItem = new ArrayList<>();
             for (int j = 0; j < 20; j++) {
                 singleItem.add(new SingleItemModel(counter + ""));
                 counter++;
@@ -72,9 +73,4 @@ public class PickRecipeActivity extends AppBaseActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-    }
 }

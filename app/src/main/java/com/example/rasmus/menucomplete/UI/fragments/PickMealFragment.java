@@ -24,8 +24,7 @@ public class PickMealFragment extends Fragment {
     private RecipeTest recipe = new RecipeTest();
 
     public static PickMealFragment newInstance() {
-        PickMealFragment fragment = new PickMealFragment();
-        return fragment;
+        return new PickMealFragment();
     }
 
     public PickMealFragment() {
@@ -39,8 +38,9 @@ public class PickMealFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pick_meal, container, false);
 
+
         // Get ListView object from xml
-        listView = (ListView) view.findViewById(R.id.listview1);
+        listView = view.findViewById(R.id.listview1);
 
         // Defined Array values to show in ListView
         final String[] values = new String[]{
@@ -55,7 +55,7 @@ public class PickMealFragment extends Fragment {
         // Third parameter - ID of the TextView to which the data is written
         // Forth - the Array of data
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
 
 

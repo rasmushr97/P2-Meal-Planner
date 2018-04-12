@@ -1,12 +1,12 @@
 package com.example.rasmus.menucomplete.UI.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-import com.example.rasmus.menucomplete.AppBaseActivity;
+import com.example.rasmus.menucomplete.AppBackButtonActivity;
+import com.example.rasmus.menucomplete.AppDrawerActivity;
 import com.example.rasmus.menucomplete.R;
 
-public class DescriptionRecipeClicked extends AppBaseActivity {
+public class DescriptionRecipeClicked extends AppBackButtonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
