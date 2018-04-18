@@ -40,7 +40,10 @@ public class MealFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+
+
         // pick up the bundle sent from MainActivity
+        // Use the information to create the title, image and piechart of the Fragment
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             image = bundle.getInt("img");
@@ -63,7 +66,6 @@ public class MealFragment extends Fragment {
         PieChart chart = view.findViewById(R.id.home_chart_1);
         List<PieEntry> pieChartEntries = new ArrayList<>();
 
-
         int goalCalories = 2500 - calories;
         pieChartEntries.add(new PieEntry(calories, "Meal"));
         pieChartEntries.add(new PieEntry(goalCalories, "Total"));
@@ -74,6 +76,7 @@ public class MealFragment extends Fragment {
         // Change image to the input image
         imgbtn.setImageResource(image);
 
+        // Image button OnClickListener
         imgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

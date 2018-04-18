@@ -71,33 +71,35 @@ public class PickMealFragment extends Fragment {
 
                 // ListView Clicked item value
                 String itemValue = (String) listView.getItemAtPosition(position);
+                // Set the intention for which page to switch to
                 Intent intent = new Intent(getActivity(), PickRecipeActivity.class);
+                // Create a bundle of information to pass with the page switch
                 Bundle bundle = new Bundle();
                 bundle.putInt("position", position);
                 bundle.putString("meal", values[position]);
 
                 switch (position) {
                     case 0:
+                        // Adding the recipe here is temporary
                         recipe.addRecipe(R.drawable.breakfast, 650, "Breakfast");
-                        getActivity().startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                         break;
 
                     case 1:
                         recipe.addRecipe(R.drawable.lunch, 760, "Lunch");
-                        getActivity().startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                         break;
 
                     case 2:
                         recipe.addRecipe(R.drawable.dinner, 1000, "Dinner");
-                        getActivity().startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                         break;
 
                     default:
                         // Something went wrong
                 }
+
+                // Switch to the pick recipe page (PickRecipeActivity)
+                getActivity().startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
             }
 
         });

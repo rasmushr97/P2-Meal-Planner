@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name=".UI.activities.DescriptionRecipeClicked">
+            android:name=".UI.activities.DescriptionRecipeClickedActivity">
         </activity>
 
         <activity

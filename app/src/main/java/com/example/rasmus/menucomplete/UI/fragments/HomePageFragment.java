@@ -63,17 +63,21 @@ public class HomePageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
+        // Temporary, Adds 3 recipes to the front page, when you open the app for the first time
         initializeTodaysRecipe();
 
+        // Update calorie text
         textCalories = (TextView) view.findViewById(R.id.text_calories);
         updateCalorieText();
 
         scrollView = (ScrollView) view.findViewById(R.id.scrollView1);
 
+
         // Setting up the add button
         final FloatingActionButton fab = view.findViewById(R.id.fab_1);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Open the meal pick page (PickMealFragment)
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 Fragment fragment = PickMealFragment.newInstance();
                 transaction.replace(R.id.frame_layout1, fragment);
@@ -81,23 +85,33 @@ public class HomePageFragment extends Fragment {
             }
         });
 
-        // Create a bundle of information
+
         int prevLayoutCounter = layoutCounter;
+
+        // Draw all todays recipes on the front page
         int startID = R.id.layout_1;
         for (int i = 0; i < recipe.getIdCounter(); i++) {
+            // Creating a bundle of information
             Bundle bundle = new Bundle();
+            // Create an instance of the MealFragment
             final MealFragment mealFragment = new MealFragment();
             FragmentManager manager = getFragmentManager();
+            // Input information to the bundle
             bundle.putInt("img", recipe.getImgID(i));
             bundle.putInt("calories", recipe.getCalories(i));
             bundle.putInt("id", recipe.getIdCounter());
             bundle.putString("meal", recipe.getMealName(i));
+            // Pass the bundle of information into the meal fragment
             mealFragment.setArguments(bundle);
+            // Replace one of the layouts in fragment_home_page.xml with the MealFragment
             manager.beginTransaction()
                     .replace(startID + i, mealFragment, mealFragment.getTag())
                     .commit();
+            // Update the layout counter, so it knows how many meals is on the page
             layoutCounter = i;
         }
+
+        // Scroll down the page after a recipe has been added
         if(prevLayoutCounter != layoutCounter && layoutCounter > 2){
             scrollView.postDelayed(new Runnable() {
                 @Override

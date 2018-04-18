@@ -27,18 +27,25 @@ public class MainActivity extends AppDrawerActivity {
         BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_navigation);
                 findViewById(R.id.bottom_navigation);
 
+        /* Bottom navigation bar styling, animations and stuff */
         bottomNavigationView.enableAnimation(true);
         bottomNavigationView.enableShiftingMode(false);
         bottomNavigationView.enableItemShiftingMode(true);
+
+        // Highlight the first item
         bottomNavigationView.setCurrentItem(1);
+
+        // Icon and text size
         bottomNavigationView.setIconSize(24, 24);
         bottomNavigationView.setTextSize(14);
 
+        // Bottom navigation bar onclickListener
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Fragment selectedFragment = null;
+                        // select a page (fragment) to switch to
                         switch (item.getItemId()) {
                             case R.id.action_home_page:
                                 selectedFragment = HomePageFragment.newInstance();
@@ -53,6 +60,7 @@ public class MainActivity extends AppDrawerActivity {
                                 setTitle(R.string.item_3);
                                 break;
                         }
+                        // Switch to the chosen fragment
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_layout1, selectedFragment);
                         transaction.commit();
@@ -60,7 +68,7 @@ public class MainActivity extends AppDrawerActivity {
                     }
                 });
 
-        //Manually displaying the first fragment - one time only
+        // Display the home page fragment, when main activity is active
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout1, HomePageFragment.newInstance());
         transaction.commit();
