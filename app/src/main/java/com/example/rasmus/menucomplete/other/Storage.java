@@ -7,18 +7,14 @@ import java.util.ArrayList;
 public class Storage {
     public static ArrayList<Entry> userWeight = new ArrayList<>();
     public static ArrayList<Entry> goalWeight = new ArrayList<>();
-    static private int goalWeightValue = 0;
+    static private float goalWeightValue = 0;
 
-    public int getGoalWeightValue() {
+    public float getGoalWeightValue() {
         return goalWeightValue;
     }
 
-    public void setGoalWeightValue(int goalWeightValue) {
+    public void setGoalWeightValue(float goalWeightValue) {
         this.goalWeightValue = goalWeightValue;
-    }
-
-    public Storage() {
-
     }
 
     public void intialize(){

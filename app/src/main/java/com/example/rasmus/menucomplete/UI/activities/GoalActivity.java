@@ -28,7 +28,7 @@ public class GoalActivity extends AppBackButtonActivity {
     private TextView goalEdit;
     private LineChart mChart;
     static Storage storage = new Storage();
-    private int userWeight;
+    private float userWeight;
     private Button enterWeightButton;
     private EditText weightText;
 
@@ -61,13 +61,13 @@ public class GoalActivity extends AppBackButtonActivity {
 
                         final EditText input = new EditText(GoalActivity.this);
 
-                        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        input.setInputType(weightText.getInputType());
                         builder.setView(input);
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if(!input.getText().toString().equals("")) {
-                                    storage.setGoalWeightValue(Integer.valueOf(input.getText().toString()));
+                                    storage.setGoalWeightValue(Float.valueOf(input.getText().toString()));
                                     storage.goalWeight.add(new Entry(5 + storage.getGoalWeightValue(), storage.getGoalWeightValue()));
                                     String text = storage.getGoalWeightValue() + " kg";
                                     goalEdit.setText(text);
@@ -91,7 +91,7 @@ public class GoalActivity extends AppBackButtonActivity {
             @Override
             public void onClick(View view) {
                 if(!weightText.getText().toString().equals("")) {
-                    userWeight = Integer.valueOf(weightText.getText().toString());
+                    userWeight = Float.valueOf(weightText.getText().toString());
                     weightText.setText("" + userWeight);
                     storage.userWeight.add(new Entry(userWeight + 3, userWeight));
                     refreshGraph();
