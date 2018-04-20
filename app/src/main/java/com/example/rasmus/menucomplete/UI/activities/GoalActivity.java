@@ -132,7 +132,6 @@ public class GoalActivity extends AppBackButtonActivity {
                         }
                     }
                 };
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
                 builder.setMessage("You are about to delete your last weight which was...?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
