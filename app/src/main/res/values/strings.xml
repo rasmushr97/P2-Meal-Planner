@@ -8,6 +8,11 @@
     <string name="item_3">Shopping list</string>
     <string name="some_title">Title</string>
 
+    <string name="default_food">No food chosen</string>
+    <string name="breakfast_food_chosen">Breakfast food chosen</string>
+    <string name="lunch_food_chosen">Lunch food chosen</string>
+    <string name="dinner_food_chosen">Dinner food chosen</string>
+
     <string name="long_recipe">Ham 200g \nCheese 10kg \nSausage 600g\nBacon 1g\nCucumber\nBratwurst \nTomato \nOregano \nSalt \nPepper
                                 \nOther Stuff \nPenis \nSalad (not) \nIngredients probably \n\nFremgangsmåde: \n1. Do some stuff with the meat \n2. Cook some Pasta, bitch \n3. EAT!</string>
     <string name="description_text">This Italian dish is a great melody of fresh vegetables and herbs in a light garlic tomato basil sauce served over angel hair pasta and sprinkled with Parmesan cheese. </string>

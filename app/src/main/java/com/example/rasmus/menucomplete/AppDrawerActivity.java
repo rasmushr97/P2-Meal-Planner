@@ -13,13 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 
+import com.example.rasmus.menucomplete.UI.activities.GoalActivity;
 import com.example.rasmus.menucomplete.UI.activities.MainActivity;
 
 public abstract class AppDrawerActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
     private FrameLayout view_stub; //This is the framelayout to keep your content view
-    private ActionBarDrawerToggle mDrawerToggle;
+    public static ActionBarDrawerToggle mDrawerToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,8 @@ public abstract class AppDrawerActivity extends AppCompatActivity implements Men
         }
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -106,8 +111,7 @@ public abstract class AppDrawerActivity extends AppCompatActivity implements Men
         Intent intent;
         switch (item.getItemId()) {
             case R.id.nav_camera:
-                intent = new Intent(this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent = new Intent(getApplicationContext(), GoalActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
