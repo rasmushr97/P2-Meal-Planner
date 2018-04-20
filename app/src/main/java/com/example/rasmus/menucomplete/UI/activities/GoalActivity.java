@@ -13,14 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.rasmus.menucomplete.AppDrawerActivity;
+import com.example.rasmus.menucomplete.AppBackButtonActivity;
 import com.example.rasmus.menucomplete.R;
 import com.example.rasmus.menucomplete.UI.fragments.ChartFragment;
 import com.example.rasmus.menucomplete.other.Storage;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 
-public class GoalActivity extends AppDrawerActivity {
+public class GoalActivity extends AppBackButtonActivity {
     //TODO Do stuff on notepad
 
     private static final String TAG = "GoalActivity";
@@ -114,7 +114,6 @@ public class GoalActivity extends AppDrawerActivity {
     // Adds functionality to the three dots in upper right corner :)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
 
         switch(id){
@@ -125,13 +124,10 @@ public class GoalActivity extends AppDrawerActivity {
                         switch (which){
                             //Yes button clicked
                             case DialogInterface.BUTTON_POSITIVE:
-
-
                                 break;
 
                             //No button clicked
                             case DialogInterface.BUTTON_NEGATIVE:
-
                                 break;
                         }
                     }
@@ -145,10 +141,6 @@ public class GoalActivity extends AppDrawerActivity {
 
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
-        if (AppDrawerActivity.mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        // Handle your other action bar items...
         return super.onOptionsItemSelected(item);
     }
 
