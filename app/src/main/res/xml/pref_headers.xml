@@ -1,0 +1,17 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <!-- header til preferences -->
+    <header
+        android:fragment="com.example.rasmus.menucomplete.UI.activities.SettingsActivity$GeneralPreferenceFragment"
+        android:icon="@drawable/preferenceicon_24dp"
+        android:title="@string/pref_header_general" />
+
+    <!-- header til login -->
+    <header
+        android:fragment="com.example.rasmus.menucomplete.UI.activities.SettingsActivity$DataSyncPreferenceFragment"
+        android:icon="@drawable/login_24dp"
+        android:title="@string/pref_header_login_page" />
+
+</preference-headers>

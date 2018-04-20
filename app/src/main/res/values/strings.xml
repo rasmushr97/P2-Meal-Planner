@@ -19,4 +19,116 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- Preference settings -->
+    <string name="pref_header_general">Preferences</string>
+
+    <!-- Vegan Button -->
+    <string name="pref_title_pref_veganButton">Are you a vegan?</string>
+    <string name="pref_description_pref_veganDescription">Turn on this button if you are a vegan and you will exclusively get vegan recipes recommended to you
+        </string>
+
+    <!-- Name Display-->
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">Lars Larsen</string>
+
+    <!-- Dislikes Multi -->
+    <string name="pref_dislikes_title">Dislikes</string>
+    <string name="pref_dislikes_summary">Select all items that you do not want to encounter in your recipes</string>
+    <string name="pref_dislikes_dialogtitle">Select all of your dislikes below</string>
+    <string-array name="pref_dislikes_list">
+        <item>Pork</item>
+        <item>Beef</item>
+        <item>Beetroots</item>
+        <item>Brusselsprouts</item>
+        <item>Wasabi</item>
+        <item>Sushi</item>
+        <item>Fish</item>
+        <item>Vegetables</item>
+        <item>Cale</item>
+        <item>Thai</item>
+        <item>Chicken</item>
+        <item>Spinach</item>
+        <item>Asparagus</item>
+        <item>Coffee</item>
+        <item>Eggplant</item>
+        <item>Cheese</item>
+        <item>Blue Cheese</item>
+        <item>Olives</item>
+    </string-array>
+    <string-array name="pref_dislikes_list_values">
+        <item>16</item>
+        <item>15</item>
+        <item>14</item>
+        <item>13</item>
+        <item>12</item>
+        <item>11</item>
+        <item>10</item>
+        <item>9</item>
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Allergies Multi -->
+    <string name="pref_allergies_title">Allergies</string>
+    <string name="pref_allergies_summary">Select all your allergies so that you will not get any recipes containing those food items</string>
+    <string name="pref_allergies_dialogtitle">Select all of your allergies below</string>
+    <string-array name="pref_allergies_list">
+        <item>Gluten</item>
+        <item>milk</item>
+        <item>Dairy</item>
+        <item>Peanuts</item>
+        <item>Eggs</item>
+        <item>Tree nuts</item>
+        <item>Wheat</item>
+        <item>Fish</item>
+        <item>Soy</item>
+        <item>Sesame</item>
+        <item>Shellfish</item>
+
+    </string-array>
+    <string-array name="pref_allergies_list_values">
+        <item>9</item>
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Empty arrays -->
+    <string-array name="pref_emptyStringArray_multiselect"></string-array>
+    <string-array name="pref_emptyStringArray_dislikes"></string-array>
+    <string-array name="pref_emptyStringArray_allergies"></string-array>
+
+
+    <!-- Login  -->
+    <string name="pref_header_login_page">Login Settings</string>
+    <string name="pref_title_login_title">Login</string>
+    <string name="pref_title_login_title2">Click to login</string>
+
+
+    <!-- Settings for Notifications -->
+    <!-- Can't delete dis cuz it's being used in SettingsActivity.java and I can't seem to rewrite it so that it doesn't need these name n' shit
+        so apparently I have never been on live java comments before and apparentlyy -->
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+    <string name="pref_title_vibrate">Vibrate</string>
+
+
 </resources>

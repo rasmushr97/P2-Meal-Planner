@@ -36,6 +36,10 @@
             android:name=".UI.activities.GoalActivity">
         </activity>
 
+        <activity
+            android:name=".UI.activities.SettingsActivity">
+        </activity>
+
     </application>
 
 </manifest>

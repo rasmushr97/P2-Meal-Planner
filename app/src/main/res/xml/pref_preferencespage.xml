@@ -1,0 +1,48 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+
+
+    <!-- Name thingy -->
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_display_name"
+        android:inputType="textCapWords"
+        android:key="nameTyped_text"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_display_name" />
+
+
+    <!-- Dislikes Multi -->
+    <MultiSelectListPreference
+        android:title="@string/pref_dislikes_title"
+        android:summary="@string/pref_dislikes_summary"
+        android:dialogTitle="@string/pref_dislikes_dialogtitle"
+        android:defaultValue="@array/pref_emptyStringArray_dislikes"
+        android:entries="@array/pref_dislikes_list"
+        android:entryValues="@array/pref_dislikes_list_values"
+        android:key="pref_dislikesMulti"
+        />
+
+    <!-- Allergies Multi -->
+    <MultiSelectListPreference
+        android:title="@string/pref_allergies_title"
+        android:summary="@string/pref_allergies_summary"
+        android:dialogTitle="@string/pref_allergies_dialogtitle"
+        android:defaultValue="@array/pref_emptyStringArray_allergies"
+        android:entries="@array/pref_allergies_list"
+        android:entryValues="@array/pref_allergies_list_values"
+        android:key="pref_allergiesMulti"
+        />
+
+    <!-- Switch til Vegan Mode -->
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="example_switch"
+        android:summary="@string/pref_description_pref_veganDescription"
+        android:title="@string/pref_title_pref_veganButton" />
+
+</PreferenceScreen>

@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 
 import com.example.rasmus.menucomplete.UI.activities.GoalActivity;
 import com.example.rasmus.menucomplete.UI.activities.MainActivity;
+import com.example.rasmus.menucomplete.UI.activities.SettingsActivity;
 
 public abstract class AppDrawerActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
     private FrameLayout view_stub; //This is the framelayout to keep your content view
@@ -116,7 +117,9 @@ public abstract class AppDrawerActivity extends AppCompatActivity implements Men
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
             case R.id.nav_gallery:
-                // do whatever
+                intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
             // and so on...
         }
