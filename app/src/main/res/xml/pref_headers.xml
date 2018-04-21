@@ -5,13 +5,13 @@
     <!-- header til preferences -->
     <header
         android:fragment="com.example.rasmus.menucomplete.UI.activities.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@drawable/preferenceicon_24dp"
+        android:icon="@drawable/ic_preferences"
         android:title="@string/pref_header_general" />
 
     <!-- header til login -->
     <header
         android:fragment="com.example.rasmus.menucomplete.UI.activities.SettingsActivity$DataSyncPreferenceFragment"
-        android:icon="@drawable/login_24dp"
+        android:icon="@drawable/ic_login"
         android:title="@string/pref_header_login_page" />
 
 </preference-headers>

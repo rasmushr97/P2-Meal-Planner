@@ -27,6 +27,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/aubergine" />
+        app:srcCompat="@drawable/img_aubergine" />
 
 </android.support.constraint.ConstraintLayout>

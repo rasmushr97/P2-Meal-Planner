@@ -34,7 +34,7 @@
         android:background="#00000000"
         android:contentDescription="dab"
         android:scaleType="centerCrop"
-        android:src="@drawable/breakfast"
+        android:src="@drawable/img_breakfast"
         app:layout_constraintBottom_toTopOf="@+id/h_guide_2"
         app:layout_constraintEnd_toStartOf="@+id/v_guide_1"
         app:layout_constraintHorizontal_bias="1.0"

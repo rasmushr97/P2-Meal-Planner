@@ -13,7 +13,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pasta" />
+        app:srcCompat="@drawable/img_pasta" />
 
     <TextView
         android:id="@+id/description_text"

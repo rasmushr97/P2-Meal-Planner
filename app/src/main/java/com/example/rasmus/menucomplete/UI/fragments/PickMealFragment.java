@@ -4,7 +4,6 @@ package com.example.rasmus.menucomplete.UI.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,15 +80,15 @@ public class PickMealFragment extends Fragment {
                 switch (position) {
                     case 0:
                         // Adding the recipe here is temporary
-                        recipe.addRecipe(R.drawable.breakfast, 650, "Breakfast");
+                        recipe.addRecipe(R.drawable.img_breakfast, 650, "Breakfast");
                         break;
 
                     case 1:
-                        recipe.addRecipe(R.drawable.lunch, 760, "Lunch");
+                        recipe.addRecipe(R.drawable.img_lunch, 760, "Lunch");
                         break;
 
                     case 2:
-                        recipe.addRecipe(R.drawable.dinner, 1000, "Dinner");
+                        recipe.addRecipe(R.drawable.img_dinner, 1000, "Dinner");
                         break;
 
                     default:

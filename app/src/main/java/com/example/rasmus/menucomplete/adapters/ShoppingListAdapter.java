@@ -69,10 +69,10 @@ LayoutInflater inflater;
         holder.tvItemName.setText(model.getItemName());
 
         if(model.isSelected())
-            holder.ivCheckbox.setBackgroundResource(R.drawable.checked);
+            holder.ivCheckbox.setBackgroundResource(R.drawable.ic_checked);
 
         else
-            holder.ivCheckbox.setBackgroundResource(R.drawable.unchecked);
+            holder.ivCheckbox.setBackgroundResource(R.drawable.ic_unchecked);
 
         return view;
     }

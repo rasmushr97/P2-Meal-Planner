@@ -76,7 +76,7 @@ public class CalenderFragment extends Fragment {
         breakfastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //FoodChoice breakfast = new FoodChoice("Breakfast chosen");
+                //FoodChoice img_breakfast = new FoodChoice("Breakfast chosen");
 
             }
         });
@@ -84,14 +84,14 @@ public class CalenderFragment extends Fragment {
         lunchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //lunch
+                //img_lunch
             }
         });
 
         dinnerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //dinner
+                //img_dinner
             }
         });
 

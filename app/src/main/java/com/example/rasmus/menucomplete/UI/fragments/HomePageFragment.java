@@ -32,7 +32,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.rasmus.menucomplete.R;
-import com.example.rasmus.menucomplete.UI.activities.MainActivity;
 import com.example.rasmus.menucomplete.other.RecipeTest;
 
 public class HomePageFragment extends Fragment {
@@ -139,9 +138,9 @@ public class HomePageFragment extends Fragment {
 
     public void initializeTodaysRecipe() {
         if (layoutCounter == 0) {
-            recipe.addRecipe(R.drawable.breakfast, 650, "Breakfast");
-            recipe.addRecipe(R.drawable.lunch, 760, "Lunch");
-            recipe.addRecipe(R.drawable.dinner, 1000, "Dinner");
+            recipe.addRecipe(R.drawable.img_breakfast, 650, "Breakfast");
+            recipe.addRecipe(R.drawable.img_lunch, 760, "Lunch");
+            recipe.addRecipe(R.drawable.img_dinner, 1000, "Dinner");
         }
     }
 

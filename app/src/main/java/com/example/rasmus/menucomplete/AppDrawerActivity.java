@@ -112,17 +112,23 @@ public abstract class AppDrawerActivity extends AppCompatActivity implements Men
     public boolean onMenuItemClick(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.nav_camera:
+            case R.id.home_item:
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                break;
+
+            case R.id.goal_page_item:
                 intent = new Intent(getApplicationContext(), GoalActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
-            case R.id.nav_gallery:
+
+            case R.id.setting_item:
                 intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 break;
-            // and so on...
         }
         return false;
     }
