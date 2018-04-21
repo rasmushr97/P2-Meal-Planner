@@ -34,14 +34,15 @@ import com.example.rasmus.menucomplete.R;
 import com.example.rasmus.menucomplete.other.DateTest;
 import com.example.rasmus.menucomplete.other.FoodChoice;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CalenderFragment extends Fragment {
     public static CalenderFragment newInstance() {
         CalenderFragment fragment = new CalenderFragment();
         return fragment;
-
     }
 
     @Override
@@ -78,7 +79,7 @@ public class CalenderFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //FoodChoice img_breakfast = new FoodChoice("Breakfast chosen");
-
+                Toast.makeText(getContext(), "Button Clicked",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -88,13 +89,26 @@ public class CalenderFragment extends Fragment {
                 //img_lunch
             }
         });
-
         dinnerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //img_dinner
             }
         });
+
+
+        String today = new SimpleDateFormat("dd/M/yyyy").format(new Date(calendar.getDate()));
+
+
+        for(DateTest d : dateTests){
+            if (d.date.equals(today)){
+                System.out.println("hello");
+                breakfastDyn.setText(d.getBreakfastText());
+                lunchDyn.setText(d.getLunchText());
+                dinnerDyn.setText(d.getDinnerText());
+            }
+        }
+
 
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
@@ -106,14 +120,22 @@ public class CalenderFragment extends Fragment {
                         dayOfMonth +"/"+month+"/"+ year,Toast.LENGTH_SHORT).show();
 
                 String clickedDate = dayOfMonth +"/"+month+"/"+ year;
+
+                boolean dayfound = false;
                 for(DateTest d : dateTests){
                     if (d.date.equals(clickedDate)){
-                        System.out.println("hello");
                         breakfastDyn.setText(d.getBreakfastText());
                         lunchDyn.setText(d.getLunchText());
                         dinnerDyn.setText(d.getDinnerText());
+                        dayfound = true;
                     }
                 }
+                if(!dayfound){
+                    breakfastDyn.setText("No meal found");
+                    lunchDyn.setText("No meal found");
+                    dinnerDyn.setText("No meal found");
+                }
+
 
             }});
 

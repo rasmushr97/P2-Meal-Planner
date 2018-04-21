@@ -129,7 +129,6 @@ public class HomePageFragment extends Fragment {
         int sum = 0;
         for (int i = 0; i < recipe.getIdCounter(); i++) {
             sum += recipe.getCalories(i);
-            System.out.println(recipe.getCalories(i));
         }
         todaysCalories = sum;
         String calories = "Calories: " + todaysCalories + " / " + todaysGoal;
