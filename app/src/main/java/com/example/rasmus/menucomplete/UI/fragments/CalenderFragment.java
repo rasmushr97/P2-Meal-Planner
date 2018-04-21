@@ -41,6 +41,7 @@ public class CalenderFragment extends Fragment {
     public static CalenderFragment newInstance() {
         CalenderFragment fragment = new CalenderFragment();
         return fragment;
+
     }
 
     @Override
