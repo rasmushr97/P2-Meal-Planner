@@ -72,7 +72,6 @@ public class MainActivity extends AppDrawerActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout1, HomePageFragment.newInstance());
         transaction.commit();
-
     }
 
 }

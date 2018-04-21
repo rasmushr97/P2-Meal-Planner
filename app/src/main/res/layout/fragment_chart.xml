@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.fragments.ChartFragment">
+    tools:context=".UI.fragments.ChartFragment"
+    >
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/weightChart"

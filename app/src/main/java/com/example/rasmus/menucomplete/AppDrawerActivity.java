@@ -30,6 +30,7 @@ public abstract class AppDrawerActivity extends AppCompatActivity implements Men
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.app_base_layout);// The base layout that contains your navigation drawer.
 
+
         Menu drawerMenu;
         NavigationView navigation_view = (NavigationView) findViewById(R.id.navigation_view);
         DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

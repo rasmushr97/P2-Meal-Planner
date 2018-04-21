@@ -116,6 +116,11 @@ public class MealFragment extends Fragment {
         chart.animateY(750, Easing.EasingOption.EaseInOutQuad);
         String centerText = calories + " / " + 2500;
         chart.setCenterText(centerText);
+        chart.setCenterTextColor(Color.WHITE);
+
+        // middle hole color
+        chart.setHoleColor(Color.TRANSPARENT);
+
         // Some default design features that are disabled
         chart.setTransparentCircleAlpha(0);
         chart.getDescription().setEnabled(false);
