@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rasmus.menucomplete">
+    package="com.example.rasmus.p2app">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".UI.activities.LoadingScreenActivity"
+            android:name=".frontend.ui.activities.LoadingScreenActivity"
             android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,27 +21,27 @@
         </activity>
 
         <activity
-            android:name=".UI.activities.MainActivity">
+            android:name=".frontend.ui.activities.MainActivity">
         </activity>
 
         <activity
-            android:name=".UI.activities.PickRecipeActivity">
+            android:name=".frontend.ui.activities.PickRecipeActivity">
         </activity>
 
         <activity
-            android:name=".UI.activities.DescriptionRecipeClickedActivity">
+            android:name=".frontend.ui.activities.DescriptionRecipeClickedActivity">
         </activity>
 
         <activity
-            android:name=".UI.activities.RecipeClickedActivity">
+            android:name=".frontend.ui.activities.RecipeClickedActivity">
         </activity>
 
         <activity
-            android:name=".UI.activities.GoalActivity">
+            android:name=".frontend.ui.activities.GoalActivity">
         </activity>
 
         <activity
-            android:name=".UI.activities.SettingsActivity">
+            android:name=".frontend.ui.activities.SettingsActivity">
         </activity>
 
     </application>

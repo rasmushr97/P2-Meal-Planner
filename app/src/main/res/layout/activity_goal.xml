@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_constraintVertical_chainStyle="packed"
-    tools:context=".UI.activities.GoalActivity"
+    tools:context=".frontend.ui.activities.GoalActivity"
     >
 
 
