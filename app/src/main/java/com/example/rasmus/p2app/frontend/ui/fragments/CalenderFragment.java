@@ -102,7 +102,6 @@ public class CalenderFragment extends Fragment {
 
         for(DateTest d : dateTests){
             if (d.date.equals(today)){
-                System.out.println("hello");
                 breakfastDyn.setText(d.getBreakfastText());
                 lunchDyn.setText(d.getLunchText());
                 dinnerDyn.setText(d.getDinnerText());
@@ -138,8 +137,6 @@ public class CalenderFragment extends Fragment {
 
 
             }});
-
-
 
 
         return view;
