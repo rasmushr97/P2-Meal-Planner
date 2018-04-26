@@ -12,6 +12,7 @@ public class InRAM {
 
     /*public Calender calender
     public static LocalUser user;
+    public staic Goal goal;
 
     public static void initializeUser(int ID){
         user = DatabaseHandler.getUser(ID);
