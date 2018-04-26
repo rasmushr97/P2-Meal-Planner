@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.rasmus.p2app.R;
+import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.frontend.ui.activities.RecipeClickedActivity;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -39,8 +40,6 @@ public class MealFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_meal, container, false);
 
         setHasOptionsMenu(true);
-
-
 
         // pick up the bundle sent from MainActivity
         // Use the information to create the title, image and piechart of the Fragment
