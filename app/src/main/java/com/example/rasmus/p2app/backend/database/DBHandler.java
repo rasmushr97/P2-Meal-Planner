@@ -597,8 +597,6 @@ public class DBHandler {
                 calendar.addDay(localDate, day);
             }
 
-            System.out.println(calendar.getDates());
-
 
         } catch(SQLException e){
             e.printStackTrace();
