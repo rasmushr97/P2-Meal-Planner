@@ -7,6 +7,10 @@ import java.util.List;
 public class Day {
     private List<Meal> meals = new ArrayList<>();
 
+    public List<Meal> getMeals() {
+        return meals;
+    }
+
     public void addMeal(Meal m){
         meals.add(m);
     }

@@ -2,15 +2,13 @@ package com.example.rasmus.p2app.backend.time;
 
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 
-import java.util.List;
-
 public class Meal {
     private String mealName;
-    private Recipe recipes;
+    private Recipe recipe;
 
-    public Meal(String mealName, Recipe recipes) {
+    public Meal(String mealName, Recipe recipe) {
         this.mealName = mealName;
-        this.recipes = recipes;
+        this.recipe = recipe;
     }
 
     public String getMealName() {
@@ -21,11 +19,11 @@ public class Meal {
         this.mealName = mealName;
     }
 
-    public Recipe getRecipes() {
-        return recipes;
+    public Recipe getRecipe() {
+        return recipe;
     }
 
-    public void setRecipes(Recipe recipes) {
-        this.recipes = recipes;
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }
