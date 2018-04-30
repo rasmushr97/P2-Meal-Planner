@@ -17,21 +17,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DBHandler {
 
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2?useSSL=false";
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2?useSSL=false";
 
     //  Database credentials
-    static final String USER = "root";
-    static final String PASS = "admin";
+    private static final String USER = "root";
+    private static final String PASS = "admin";
 
-    static Connection conn = null;
-    static Statement stmt = null;
-    static ResultSet rs = null;
+    private static Connection conn = null;
+    private static Statement stmt = null;
+    private static ResultSet rs = null;
 
     static public void createCon() {
 
