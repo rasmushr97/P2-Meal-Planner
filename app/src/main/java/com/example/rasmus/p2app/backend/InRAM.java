@@ -1,6 +1,6 @@
 package com.example.rasmus.p2app.backend;
 
-import com.example.rasmus.p2app.backend.database.DBHandler;
+import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Calendar;
 import com.example.rasmus.p2app.backend.time.Day;
@@ -8,7 +8,6 @@ import com.example.rasmus.p2app.backend.userclasses.User;
 import com.example.rasmus.p2app.frontend.exception.NoUserException;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

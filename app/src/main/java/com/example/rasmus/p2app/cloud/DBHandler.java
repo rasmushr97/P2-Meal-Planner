@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.backend.database;
+package com.example.rasmus.p2app.cloud;
 
 import com.example.rasmus.p2app.backend.recipeclasses.CookTime;
 import com.example.rasmus.p2app.backend.recipeclasses.Ingredients;
@@ -11,8 +11,8 @@ import com.example.rasmus.p2app.backend.userclasses.Goal;
 import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.backend.userclasses.User;
 import com.example.rasmus.p2app.frontend.exception.NoDBConnectionException;
-
 import java.sql.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,16 +24,15 @@ public class DBHandler {
     private static Connection conn = null;
     private static Statement stmt = null;
 
+    // JDBC driver name and database URL
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2?useSSL=false";
+
+    //  Database credentials
+    private static final String USER = "root";
+    private static final String PASS = "admin";
+
     public static void createCon() {
-
-        // JDBC driver name and database URL
-        final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2?useSSL=false";
-
-        //  Database credentials
-        final String USER = "root";
-        final String PASS = "admin";
-
 
         //Register JDBC driver
         System.out.println("Registering JDBC drivers");
@@ -50,7 +49,6 @@ public class DBHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void closeCon() {

@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.rasmus.p2app.R;
-import com.example.rasmus.p2app.backend.InRAM;
-import com.example.rasmus.p2app.backend.database.DBHandler;
 
 public class LoadingScreenActivity extends AppCompatActivity {
     final int startAnimationTime = 1000;
@@ -24,6 +22,6 @@ public class LoadingScreenActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
-        },startAnimationTime);
+        }, startAnimationTime);
     }
 }
