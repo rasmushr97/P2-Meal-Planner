@@ -32,7 +32,7 @@ public class DBHandler {
     private static Statement stmt = null;
     private static ResultSet rs = null;
 
-    static public void createCon() {
+    public static void createCon() {
 
         //Register JDBC driver
         System.out.println("Registering JDBC drivers");
@@ -52,8 +52,20 @@ public class DBHandler {
 
     }
 
+    public static void closeCon() {
+        // what exception to use here
+        try {
+            rs.close();
+            if (stmt != null)
+                stmt.close();
+            if (conn != null)
+                conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-    static public List<Recipe> getRecipesFromList(List<Integer> IDs) {
+    public static List<Recipe> getRecipesFromIDs(List<Integer> IDs) {
         List<Recipe> recipeList = new ArrayList<>();
 
         try {
@@ -84,27 +96,27 @@ public class DBHandler {
         }
 
 
-        HashMap<Integer, CookTime> cookTimeMap = getTimeFromList(IDs);
+        HashMap<Integer, CookTime> cookTimeMap = getTimeFromRecipeIDs(IDs);
         for (Recipe r : recipeList) {
             r.setTime(cookTimeMap.get(r.getID()));
         }
 
-        HashMap<Integer, List<Ingredients>> ingredientsListMap = getIngrFromList(IDs);
+        HashMap<Integer, List<Ingredients>> ingredientsListMap = getIngredientsFromRecipeIDs(IDs);
         for (Recipe r : recipeList) {
             r.setIngredients(ingredientsListMap.get(r.getID()));
         }
 
-        HashMap<Integer, List<String>> catListMap = getCatFromList(IDs);
+        HashMap<Integer, List<String>> catListMap = getCategoriesFromRecipeIDs(IDs);
         for (Recipe r : recipeList) {
             r.setCategories(catListMap.get(r.getID()));
         }
 
-        HashMap<Integer, List<String>> dirListMap = getDirectionsFromList(IDs);
+        HashMap<Integer, List<String>> dirListMap = getDirectionsFromRecipeIDs(IDs);
         for (Recipe r : recipeList) {
             r.setDirections(dirListMap.get(r.getID()));
         }
 
-        HashMap<Integer, List<Review>> revListMap = getRevFromList(IDs);
+        HashMap<Integer, List<Review>> revListMap = getReviewsFromRecipeIDs(IDs);
         for (Recipe r : recipeList) {
             r.setReviews(revListMap.get(r.getID()));
         }
@@ -112,8 +124,7 @@ public class DBHandler {
         return recipeList;
     }
 
-
-    static public HashMap<Integer, CookTime> getTimeFromList(List<Integer> IDs) {
+    private static HashMap<Integer, CookTime> getTimeFromRecipeIDs(List<Integer> IDs) {
         HashMap<Integer, CookTime> cookTimeMap = new HashMap<>();
 
         try {
@@ -139,8 +150,7 @@ public class DBHandler {
         return cookTimeMap;
     }
 
-
-    public static HashMap<Integer, List<String>> getCatFromList(List<Integer> IDs) {
+    private static HashMap<Integer, List<String>> getCategoriesFromRecipeIDs(List<Integer> IDs) {
         int prevRecipeID = 0;
         int recipeID = 0;
 
@@ -178,8 +188,7 @@ public class DBHandler {
         return categoryMap;
     }
 
-
-    public static HashMap<Integer, List<Ingredients>> getIngrFromList(List<Integer> IDs) {
+    private static HashMap<Integer, List<Ingredients>> getIngredientsFromRecipeIDs(List<Integer> IDs) {
         int recipeID = 0;
         int prevRecipeID = 0;
 
@@ -221,7 +230,7 @@ public class DBHandler {
         return ingredientsMap;
     }
 
-    public static HashMap<Integer, List<String>> getDirectionsFromList(List<Integer> IDs) {
+    private static HashMap<Integer, List<String>> getDirectionsFromRecipeIDs(List<Integer> IDs) {
         int recipeID = 0;
         int prevRecipeID = 0;
 
@@ -259,8 +268,7 @@ public class DBHandler {
         return directionsMap;
     }
 
-
-    public static HashMap<Integer, List<Review>> getRevFromList(List<Integer> IDs) {
+    private static HashMap<Integer, List<Review>> getReviewsFromRecipeIDs(List<Integer> IDs) {
         int recipeID = 0;
         int prevRecipeID = 0;
 
@@ -304,7 +312,7 @@ public class DBHandler {
     }
 
     //Gets information to the recipe class from the database
-    static public Recipe getRecipe(int ID) {
+    public static Recipe getRecipe(int ID) {
         Recipe recipe = new Recipe();
         String title = null;
         String submitterName = null;
@@ -351,7 +359,7 @@ public class DBHandler {
     }
 
     //Gets information to the cooktime class from the database
-    static public CookTime getTime(int ID) {
+    public static CookTime getTime(int ID) {
         String prepTime = null;
         String cookTime = null;
         String readyIn = null;
@@ -493,10 +501,7 @@ public class DBHandler {
         return reviewList;
     }
 
-
-    /*** Retrieving data for all the classes in the folder xxx  ***/
-
-    static public User getRevToUser(int userID) {
+    public static User getRevToUser(int userID) {
         User user = new User();
 
         try {
@@ -527,10 +532,8 @@ public class DBHandler {
         return user;
     }
 
-
-
     //Gets information to the recipe class from the database
-    static public LocalUser getLocalUser(int userID) {
+    public static LocalUser getLocalUser(int userID) {
         Goal goal = new Goal();
         LocalUser localUser = new LocalUser();
 
@@ -563,8 +566,7 @@ public class DBHandler {
         return localUser;
     }
 
-
-    static public Calendar getCalender(int userID) {
+    public static Calendar getCalender(int userID) {
         Calendar calendar = null;
 
         try {
@@ -605,7 +607,7 @@ public class DBHandler {
         return calendar;
     }
 
-    static public User getUser(int userID) {
+    public static User getUser(int userID) {
         User user = new User();
 
         try {
@@ -631,21 +633,6 @@ public class DBHandler {
         }
 
         return user;
-    }
-
-
-
-    public static void closeCon() {
-        // what exception to use here
-        try {
-            rs.close();
-            if (stmt != null)
-                stmt.close();
-            if (conn != null)
-                conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private static String createQueryString(String tableName, List<Integer> IDs) {
