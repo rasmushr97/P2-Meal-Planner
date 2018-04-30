@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
+import com.example.rasmus.p2app.backend.InRAM;
+import com.example.rasmus.p2app.backend.database.DBHandler;
+import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.frontend.AppDrawerActivity;
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.frontend.ui.fragments.CalenderFragment;

@@ -5,6 +5,7 @@ import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Calendar;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.userclasses.User;
+import com.example.rasmus.p2app.frontend.exception.NoUserException;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -22,11 +23,16 @@ public class InRAM {
 
     //TODO: login method
 
-    public static void initializeUser(int ID){
+    public static void initializeUser(int ID) {
         user = DBHandler.getUser(ID);
     }
 
-    public static void initializeRecipes(){
+    public static void initializeRecipes() {
+
+        if (user == null) {
+            throw new NoUserException();
+        }
+
         // TODO: get recipe from databaseHandler based on the dates
         // maybe get recipes from the recommender systems
         calendar = DBHandler.getCalender(user.getID());
@@ -34,9 +40,9 @@ public class InRAM {
         today = days.get(LocalDate.now());
     }
 
-    public static void addRecipesToRam(List<Integer> IDList){
+    public static void addRecipesToRam(List<Integer> IDList) {
         List<Recipe> recipes = DBHandler.getRecipesFromIDs(IDList);
-        for (Recipe r : recipes){
+        for (Recipe r : recipes) {
             recipesInRAM.put(r.getID(), r);
         }
     }

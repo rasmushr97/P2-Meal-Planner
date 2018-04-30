@@ -7,14 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
+import com.example.rasmus.p2app.backend.database.DBHandler;
 
 public class LoadingScreenActivity extends AppCompatActivity {
-    final int startAnimationTime = 4000;
+    final int startAnimationTime = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

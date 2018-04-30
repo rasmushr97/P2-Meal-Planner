@@ -10,6 +10,7 @@ import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.backend.userclasses.Goal;
 import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.backend.userclasses.User;
+import com.example.rasmus.p2app.frontend.exception.NoDBConnectionException;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -67,6 +68,10 @@ public class DBHandler {
     public static List<Recipe> getRecipesFromIDs(List<Integer> IDs) {
         List<Recipe> recipeList = new ArrayList<>();
         ResultSet resultSet = null;
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         try {
             stmt = conn.createStatement();
@@ -129,6 +134,10 @@ public class DBHandler {
         HashMap<Integer, CookTime> cookTimeMap = new HashMap<>();
         ResultSet resultSet = null;
 
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
+
         try {
             stmt = conn.createStatement();
             // Create string for SQL Query
@@ -158,6 +167,10 @@ public class DBHandler {
         int prevRecipeID = 0;
         int recipeID = 0;
         ResultSet resultSet = null;
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         HashMap<Integer, List<String>> categoryMap = new HashMap<>();
         List<String> categoryList = new ArrayList<>();
@@ -199,6 +212,10 @@ public class DBHandler {
         int recipeID = 0;
         int prevRecipeID = 0;
         ResultSet resultSet = null;
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         HashMap<Integer, List<Ingredients>> ingredientsMap = new HashMap<>();
         List<Ingredients> ingredientsList = new ArrayList<>();
@@ -245,6 +262,10 @@ public class DBHandler {
         int prevRecipeID = 0;
         ResultSet resultSet = null;
 
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
+
         HashMap<Integer, List<String>> directionsMap = new HashMap<>();
         List<String> directionList = new ArrayList<>();
 
@@ -285,9 +306,12 @@ public class DBHandler {
         int recipeID = 0;
         int prevRecipeID = 0;
         ResultSet resultSet = null;
-
         HashMap<Integer, List<Review>> reviewMap = new HashMap<>();
         List<Review> reviewList = new ArrayList<>();
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         try {
             stmt = conn.createStatement();
@@ -345,6 +369,10 @@ public class DBHandler {
         List<String> directions = new ArrayList<>();
         List<Review> reviews = new ArrayList<>();
 
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
+
         try {
             stmt = conn.createStatement();
             String sql = "SELECT title, submitter, picture_link, link, description, servings, calories, rating FROM recipe WHERE recipe_id=" + ID;
@@ -383,6 +411,10 @@ public class DBHandler {
         String cookTime = null;
         String readyIn = null;
 
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
+
         try {
             stmt = conn.createStatement();
             String sql = "SELECT prep_time, cook_time, ready_in FROM time WHERE recipe_id=" + ID;
@@ -409,6 +441,10 @@ public class DBHandler {
     public static List<String> getCat(int ID) {
         List<String> listOfCategoryNames = new ArrayList<>();
         ResultSet resultSet = null;
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         try {
             stmt = conn.createStatement();
@@ -443,8 +479,11 @@ public class DBHandler {
         double amount = 0;
         String unit = null;
         String other_unit = null;
-
         List<Ingredients> ingredientsList = new ArrayList<>();
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         try {
             stmt = conn.createStatement();
@@ -477,6 +516,10 @@ public class DBHandler {
         ResultSet resultSet = null;
         List<String> listOfDirections = new ArrayList<>();
 
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
+
         try {
             stmt = conn.createStatement();
             String sql = "SELECT directions FROM directions WHERE recipe_id=" + ID;
@@ -507,6 +550,10 @@ public class DBHandler {
         int individualRating;
         List<Review> reviewList = new ArrayList<>();
 
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
+
         try {
             stmt = conn.createStatement();
             String sql = "SELECT review, submitter, submitter_id, individual_rating FROM reviews WHERE recipe_id=" + ID;
@@ -536,6 +583,10 @@ public class DBHandler {
     public static User getRevToUser(int userID) {
         ResultSet resultSet = null;
         User user = new User();
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         try {
             stmt = conn.createStatement();
@@ -571,6 +622,10 @@ public class DBHandler {
         ResultSet resultSet = null;
         Goal goal = new Goal();
         LocalUser localUser = new LocalUser();
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         try {
             stmt = conn.createStatement();
@@ -611,6 +666,10 @@ public class DBHandler {
         Day day = new Day();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = null;
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         try {
             stmt = conn.createStatement();
@@ -658,6 +717,10 @@ public class DBHandler {
     public static User getUser(int userID) {
         ResultSet resultSet = null;
         User user = new User();
+
+        if(conn == null){
+            throw new NoDBConnectionException();
+        }
 
         try {
             stmt = conn.createStatement();
