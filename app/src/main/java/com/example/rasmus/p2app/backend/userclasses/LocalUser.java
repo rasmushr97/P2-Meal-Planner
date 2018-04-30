@@ -2,6 +2,8 @@ package com.example.rasmus.p2app.backend.userclasses;
 
 import java.time.LocalDate;
 
+import static java.time.temporal.ChronoUnit.YEARS;
+
 
 public class LocalUser extends User {
     private int age;
@@ -21,9 +23,9 @@ public class LocalUser extends User {
         return this.weight / ((this.height / 100) * (this.height / 100));
     }
 
-    /*public void calcBirthday() {
-        this.age = (int) YEARS.between(this.birthday, LocalDate.now());
-    }*/
+    public void calcBirthday() {
+       this.age = (int) YEARS.between(this.birthday, LocalDate.now());
+    }
 
     public LocalDate getBirthday() {
         return birthday;
