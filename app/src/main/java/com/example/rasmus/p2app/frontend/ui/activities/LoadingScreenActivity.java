@@ -10,7 +10,7 @@ import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.database.DBHandler;
 
 public class LoadingScreenActivity extends AppCompatActivity {
-    final int startAnimationTime = 2000;
+    final int startAnimationTime = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
