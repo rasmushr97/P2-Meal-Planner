@@ -32,14 +32,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.rasmus.p2app.R;
-import com.example.rasmus.p2app.frontend.other.RecipeTest;
+import com.example.rasmus.p2app.backend.InRAM;
+import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
+import com.example.rasmus.p2app.backend.time.Meal;
+
+import java.util.List;
 
 public class HomePageFragment extends Fragment {
 
     static private int layoutCounter = 0;
+    static private int prevLayoutCounter = 0;
 
-    // Temporary
-    private RecipeTest recipe = new RecipeTest();
 
     ScrollView scrollView;
     TextView textCalories;
@@ -62,8 +65,6 @@ public class HomePageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
-        // Temporary, Adds 3 recipes to the front page, when you open the app for the first time
-        initializeTodaysRecipe();
 
         // Update calorie text
         textCalories = (TextView) view.findViewById(R.id.text_calories);
@@ -85,33 +86,11 @@ public class HomePageFragment extends Fragment {
         });
 
 
-        int prevLayoutCounter = layoutCounter;
 
-        // Draw all todays recipes on the front page
-        int startID = R.id.layout_1;
-        for (int i = 0; i < recipe.getIdCounter(); i++) {
-            // Creating a bundle of information
-            Bundle bundle = new Bundle();
-            // Create an instance of the MealFragment
-            final MealFragment mealFragment = new MealFragment();
-            FragmentManager manager = getFragmentManager();
-            // Input information to the bundle
-            bundle.putInt("img", recipe.getImgID(i));
-            bundle.putInt("calories", recipe.getCalories(i));
-            bundle.putInt("id", recipe.getIdCounter());
-            bundle.putString("meal", recipe.getMealName(i));
-            // Pass the bundle of information into the meal fragment
-            mealFragment.setArguments(bundle);
-            // Replace one of the layouts in fragment_home_page.xml with the MealFragment
-            manager.beginTransaction()
-                    .replace(startID + i, mealFragment, mealFragment.getTag())
-                    .commit();
-            // Update the layout counter, so it knows how many meals is on the page
-            layoutCounter = i;
-        }
+        layoutCounter = instantiateMeals();
 
         // Scroll down the page after a recipe has been added
-        if(prevLayoutCounter != layoutCounter && layoutCounter > 2){
+        if (prevLayoutCounter != layoutCounter && layoutCounter > 2) {
             scrollView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -119,29 +98,56 @@ public class HomePageFragment extends Fragment {
                 }
             }, 250);
         }
+        prevLayoutCounter = layoutCounter;
 
         return view;
     }
 
 
-    public void updateCalorieText() {
-        // Setting up the text at the top of the front screen
-        int sum = 0;
-        for (int i = 0; i < recipe.getIdCounter(); i++) {
-            sum += recipe.getCalories(i);
+    public int instantiateMeals() {
+        // Draw all todays recipes on the front page
+
+        List<Meal> todaysMeals = InRAM.today.getMeals();
+        int startID = R.id.layout_1;
+
+        int counter = 0;
+        for (Meal m : todaysMeals) {
+            // Creating a bundle of information
+            Bundle bundle = new Bundle();
+
+            Recipe recipe = m.getRecipe();
+
+            // Input information to the bundle
+            bundle.putInt("calories", recipe.getCalories());
+            bundle.putInt("id", recipe.getID());
+            bundle.putString("meal", m.getMealName());
+            bundle.putString("img", recipe.getPictureLink());
+
+            // Create an instance of the MealFragment
+            final MealFragment mealFragment = new MealFragment();
+            FragmentManager manager = getFragmentManager();
+
+
+            // Pass the bundle of information into the meal fragment
+            mealFragment.setArguments(bundle);
+            // Replace one of the layouts in fragment_home_page.xml with the MealFragment
+            manager.beginTransaction()
+                    .replace(startID + counter, mealFragment, mealFragment.getTag())
+                    .commit();
+
+            counter++;
         }
-        todaysCalories = sum;
+
+        return todaysMeals.size();
+    }
+
+
+    public void updateCalorieText() {
+        todaysCalories = InRAM.today.getCalorieSum();
         String calories = "Calories: " + todaysCalories + " / " + todaysGoal;
         textCalories.setText(calories);
     }
 
-    public void initializeTodaysRecipe() {
-        if (layoutCounter == 0) {
-            recipe.addRecipe(R.drawable.img_breakfast, 650, "Breakfast");
-            recipe.addRecipe(R.drawable.img_lunch, 760, "Lunch");
-            recipe.addRecipe(R.drawable.img_dinner, 1000, "Dinner");
-        }
-    }
 
 }
 

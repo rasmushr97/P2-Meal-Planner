@@ -14,7 +14,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     // use it by calling this
     // new DownloadImageTask((ImageView) findViewById(R.id.imageView)).execute(URL);
 
-    DownloadImageTask(ImageView bmImage) {
+    public DownloadImageTask(ImageView bmImage) {
         this.bmImage = bmImage;
     }
 

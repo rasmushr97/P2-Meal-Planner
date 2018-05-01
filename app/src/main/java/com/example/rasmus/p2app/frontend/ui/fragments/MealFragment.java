@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.rasmus.p2app.R;
+import com.example.rasmus.p2app.frontend.adapters.DownloadImageTask;
 import com.example.rasmus.p2app.frontend.ui.activities.RecipeClickedActivity;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -24,8 +25,8 @@ import java.util.List;
 
 public class MealFragment extends Fragment {
     private String meal = "Breakfast";
+    private String image = null;
     private int calories = 0;
-    private int image = 0;
     private int id = 0;
 
     public void setMeal(String meal) {
@@ -44,7 +45,7 @@ public class MealFragment extends Fragment {
         // Use the information to create the title, image and piechart of the Fragment
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            image = bundle.getInt("img");
+            image = bundle.getString("img");
             calories = bundle.getInt("calories");
             id = bundle.getInt("id");
             meal = bundle.getString("meal");
@@ -71,8 +72,8 @@ public class MealFragment extends Fragment {
 
         // Initialization of the recipe's image
         ImageButton imgbtn = view.findViewById(R.id.imgbtn_meal_1);
-        // Change image to the input image
-        imgbtn.setImageResource(image);
+        new DownloadImageTask((ImageButton) view.findViewById(R.id.imgbtn_meal_1)).execute(image);
+
 
         // Image button OnClickListener
         imgbtn.setOnClickListener(new View.OnClickListener() {
