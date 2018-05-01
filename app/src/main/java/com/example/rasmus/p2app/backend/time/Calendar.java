@@ -7,7 +7,9 @@ public class Calendar {
     private LocalDate today;
     private Map<LocalDate, Day> dates = new HashMap<LocalDate, Day>();
 
-    public Calendar(LocalDate today) { this.today = LocalDate.now(); }
+    public Calendar(LocalDate today) {
+        this.today = today;
+    }
 
     public LocalDate getToday() {
         return today;

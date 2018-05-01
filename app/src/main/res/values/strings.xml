@@ -26,7 +26,7 @@
 
     <!-- Vegan Button -->
     <string name="pref_title_pref_veganButton">Are you a vegan?</string>
-    <string name="pref_description_pref_veganDescription">Turn on this button if you are a vegan and you will exclusively get vegan recipes recommended to you
+    <string name="pref_description_pref_veganDescription">Turn on this button if you are a vegan and you will exclusively get vegan recipe recommended to you
         </string>
 
     <!-- Name Display-->
@@ -35,7 +35,7 @@
 
     <!-- Dislikes Multi -->
     <string name="pref_dislikes_title">Dislikes</string>
-    <string name="pref_dislikes_summary">Select all items that you do not want to encounter in your recipes</string>
+    <string name="pref_dislikes_summary">Select all items that you do not want to encounter in your recipe</string>
     <string name="pref_dislikes_dialogtitle">Select all of your dislikes below</string>
     <string-array name="pref_dislikes_list">
         <item>Pork</item>
@@ -80,7 +80,7 @@
 
     <!-- Allergies Multi -->
     <string name="pref_allergies_title">Allergies</string>
-    <string name="pref_allergies_summary">Select all your allergies so that you will not get any recipes containing those food items</string>
+    <string name="pref_allergies_summary">Select all your allergies so that you will not get any recipe containing those food items</string>
     <string name="pref_allergies_dialogtitle">Select all of your allergies below</string>
     <string-array name="pref_allergies_list">
         <item>Gluten</item>
