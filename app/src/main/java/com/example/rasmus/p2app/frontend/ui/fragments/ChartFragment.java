@@ -49,6 +49,8 @@ public class ChartFragment extends android.app.Fragment {
 
         LineDataSet userSet = new LineDataSet(storage.userWeight,"Your weight");
         LineDataSet goalSet = new LineDataSet(storage.goalWeight,"Goal weight");
+        goalSet.setDrawCircles(false);
+        goalSet.setDrawValues(false);
 
 
         mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
