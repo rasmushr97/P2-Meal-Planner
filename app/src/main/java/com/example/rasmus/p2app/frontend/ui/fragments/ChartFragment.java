@@ -49,6 +49,7 @@ public class ChartFragment extends android.app.Fragment {
 
         LineDataSet userSet = new LineDataSet(storage.userWeight,"Your weight");
         LineDataSet goalSet = new LineDataSet(storage.goalWeight,"Goal weight");
+        //goal weight no circle or values
         goalSet.setDrawCircles(false);
         goalSet.setDrawValues(false);
 

@@ -48,6 +48,7 @@ public class GoalActivity extends AppBackButtonActivity {
         localUser.getGoal().addUserWeight(LocalDate.of(2018,1,17), (float) 78);
         localUser.getGoal().addUserWeight(LocalDate.of(2018,2,1), (float) 76);
         localUser.getGoal().addUserWeight(LocalDate.of(2018,3,9), (float) 73.4);
+        localUser.getGoal().addUserWeight(LocalDate.of(2018,3,21), (float) 71.8);
         localUser.getGoal().addUserWeight(LocalDate.of(2018,4,1), (float) 65);
         storage.initializeWeight(localUser);
         storage.initializeGoal(localUser);

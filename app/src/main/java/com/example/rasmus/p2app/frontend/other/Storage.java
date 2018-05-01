@@ -34,6 +34,7 @@ public class Storage {
         this.goalWeightValue = goalWeightValue;
     }
 
+    //Initialize userweight line
     public void initializeWeight(LocalUser localUser){
         /* Start and End date*/
         LocalDate start = localUser.getGoal().getFirstDate(Goal.getUserWeight());
@@ -53,7 +54,7 @@ public class Storage {
         }
     }
 
-
+    //Initialize goalweight line
     public void initializeGoal(LocalUser localUser){
         this.goalWeight.clear();
         localUser.getGoal().getGoalWeight().clear();

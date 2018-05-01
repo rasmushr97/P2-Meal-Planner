@@ -13,7 +13,7 @@ public class LocalUser extends User {
     private double goalWeight;
     private int calorieDeficit;
     private int caloriesPerDay;
-    private double exerciseLvl = 1.375;
+    private double exerciseLvl = 1.3750;
     private String sex;
 
     private Goal goal = new Goal();
