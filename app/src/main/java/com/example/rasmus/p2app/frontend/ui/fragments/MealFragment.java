@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.rasmus.p2app.R;
-import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.frontend.ui.activities.RecipeClickedActivity;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;

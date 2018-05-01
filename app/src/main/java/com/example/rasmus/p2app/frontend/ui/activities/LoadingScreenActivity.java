@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.rasmus.p2app.R;
+import com.example.rasmus.p2app.backend.InRAM;
+import com.example.rasmus.p2app.cloud.DBHandler;
 
 public class LoadingScreenActivity extends AppCompatActivity {
     final int startAnimationTime = 1000;
@@ -14,6 +16,15 @@ public class LoadingScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
+
+        DBHandler.createCon();
+
+        InRAM.initializeUser(1);
+        InRAM.initializeTodaysRecipes();
+
+        System.out.println(InRAM.today.getMeals().size());
+
+        DBHandler.closeCon();
 
         new Handler().postDelayed(new Runnable() {
             @Override

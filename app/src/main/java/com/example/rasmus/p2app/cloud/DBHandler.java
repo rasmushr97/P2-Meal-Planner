@@ -1,5 +1,9 @@
 package com.example.rasmus.p2app.cloud;
 
+import android.annotation.SuppressLint;
+import android.os.StrictMode;
+import android.util.Log;
+
 import com.example.rasmus.p2app.backend.recipeclasses.CookTime;
 import com.example.rasmus.p2app.backend.recipeclasses.Ingredients;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
@@ -11,6 +15,7 @@ import com.example.rasmus.p2app.backend.userclasses.Goal;
 import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.backend.userclasses.User;
 import com.example.rasmus.p2app.frontend.exception.NoDBConnectionException;
+
 import java.sql.*;
 
 import java.time.LocalDate;
@@ -32,24 +37,27 @@ public class DBHandler {
     private static final String USER = "root";
     private static final String PASS = "admin";
 
+
+    @SuppressLint("NewApi")
     public static void createCon() {
 
-        //Register JDBC driver
-        System.out.println("Registering JDBC drivers");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        java.sql.Connection connection = null;
         try {
             Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (SQLException se) {
+            System.out.println("Driver connection FAILED");
+            //Log.e("error here 1 : ", se.getMessage());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Database connection FAILED");
+            //Log.e("error here 2 : ", e.getMessage());
         }
-
-        //Open a connection
-        System.out.println("Connecting to database...");
-        try {
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        conn = connection;
     }
+
 
     public static void closeCon() {
         // what exception to use here
@@ -67,7 +75,7 @@ public class DBHandler {
         List<Recipe> recipeList = new ArrayList<>();
         ResultSet resultSet = null;
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -132,7 +140,7 @@ public class DBHandler {
         HashMap<Integer, CookTime> cookTimeMap = new HashMap<>();
         ResultSet resultSet = null;
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -166,7 +174,7 @@ public class DBHandler {
         int recipeID = 0;
         ResultSet resultSet = null;
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -211,7 +219,7 @@ public class DBHandler {
         int prevRecipeID = 0;
         ResultSet resultSet = null;
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -260,7 +268,7 @@ public class DBHandler {
         int prevRecipeID = 0;
         ResultSet resultSet = null;
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -307,7 +315,7 @@ public class DBHandler {
         HashMap<Integer, List<Review>> reviewMap = new HashMap<>();
         List<Review> reviewList = new ArrayList<>();
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -367,7 +375,7 @@ public class DBHandler {
         List<String> directions = new ArrayList<>();
         List<Review> reviews = new ArrayList<>();
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -409,7 +417,7 @@ public class DBHandler {
         String cookTime = null;
         String readyIn = null;
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -440,7 +448,7 @@ public class DBHandler {
         List<String> listOfCategoryNames = new ArrayList<>();
         ResultSet resultSet = null;
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -479,7 +487,7 @@ public class DBHandler {
         String other_unit = null;
         List<Ingredients> ingredientsList = new ArrayList<>();
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -514,7 +522,7 @@ public class DBHandler {
         ResultSet resultSet = null;
         List<String> listOfDirections = new ArrayList<>();
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -548,7 +556,7 @@ public class DBHandler {
         int individualRating;
         List<Review> reviewList = new ArrayList<>();
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -582,7 +590,7 @@ public class DBHandler {
         ResultSet resultSet = null;
         User user = new User();
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -621,7 +629,7 @@ public class DBHandler {
         Goal goal = new Goal();
         LocalUser localUser = new LocalUser();
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -665,7 +673,7 @@ public class DBHandler {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = null;
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -716,7 +724,7 @@ public class DBHandler {
         ResultSet resultSet = null;
         User user = new User();
 
-        if(conn == null){
+        if (conn == null) {
             throw new NoDBConnectionException();
         }
 
@@ -761,11 +769,11 @@ public class DBHandler {
         return res;
     }
 
-    private static void closeResultSet(ResultSet r){
-        try{
-            if(r != null)
+    private static void closeResultSet(ResultSet r) {
+        try {
+            if (r != null)
                 r.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.getMessage();
         }
     }

@@ -4,10 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/P2-App.iml" filepath="$PROJECT_DIR$/.idea/P2-App.iml" />
       <module fileurl="file://$PROJECT_DIR$/P2-App.iml" filepath="$PROJECT_DIR$/P2-App.iml" />
-      <module fileurl="file://$PROJECT_DIR$/P2-App1.iml" filepath="$PROJECT_DIR$/P2-App1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/P2-App1.iml" filepath="$PROJECT_DIR$/.idea/P2-App1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/P2-App1.iml" filepath="$PROJECT_DIR$/P2-App1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/P2app.iml" filepath="$PROJECT_DIR$/.idea/P2app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jtds-1.3.1/jtds-1.3.1.iml" filepath="$PROJECT_DIR$/jtds-1.3.1/jtds-1.3.1.iml" />
       <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.1.45-bin/mysql-connector-java-5.1.45-bin.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.1.45-bin/mysql-connector-java-5.1.45-bin.iml" />
     </modules>
   </component>
