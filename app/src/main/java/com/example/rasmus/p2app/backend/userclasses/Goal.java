@@ -5,43 +5,43 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Goal {
-    public static Map<LocalDate, Double> userWeight = new HashMap<>();
-    public static Map<LocalDate, Double> goalWeight = new HashMap<>();
+    public static Map<LocalDate, Float> userWeight = new HashMap<>();
+    public static Map<LocalDate, Float> goalWeight = new HashMap<>();
 
-    public void addUserWeight(LocalDate localDate, double weight){
+    public void addUserWeight(LocalDate localDate, float weight){
         userWeight.put(localDate, weight);
     }
 
-    public void addGoalWeight(LocalDate localDate, double weight){
+    public void addGoalWeight(LocalDate localDate, float weight){
         goalWeight.put(localDate, weight);
     }
 
-    public static Map<LocalDate, Double> getUserWeight() { return userWeight; }
+    public static Map<LocalDate, Float> getUserWeight() { return userWeight; }
 
-    public static Map<LocalDate, Double> getGoalWeight() { return goalWeight; }
+    public static Map<LocalDate, Float> getGoalWeight() { return goalWeight; }
 
 
     /* Method calculates the date where the user will reach their goal*/
     public LocalDate calcGoalDate(LocalUser localUser){
         //TODO Check if date has changed // Does the goal chart begin from beginning or last weight
+        //LUL
         LocalDate firstDate = getFirstDate(this.userWeight);
         //LocalDate lastWeightDate = getLastDate(getUserWeight(), localUser.getWeight());
         //LocalDate goalDate = getLastDate(goalWeight, localUser.getGoalWeight());
         //double userGoalWeight = goalWeight.get(goalDate);
         //double userGoalWeight = localUser.getGoalWeight();
-        double tempWeight = userWeight.get(firstDate);
+        float tempWeight = userWeight.get(firstDate);
 
         //TODO Gain weight?
-        int weeks = 0;
+        int days = 0;
         //getGoalWeight().clear();
         while(tempWeight > localUser.getGoalWeight()){
             double BMI = tempWeight / ((localUser.getHeight() / 100) * (localUser.getHeight() / 100));
-            tempWeight -= calToKilo(calOffset(BMI));
-            weeks++;
+            tempWeight -= (calToKilo(calOffset(BMI)))/7;
+            addGoalWeight(firstDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
+            days++;
         }
-        //TODO Adds the date of goal to map for app screen, here or in loop
-        //addGoalWeight(goalDate.plusWeeks(weeks), localUser.getGoalWeight());
-        LocalDate goalDate = firstDate.plusWeeks(weeks);
+        LocalDate goalDate = firstDate.plusDays(days);
         return goalDate;
     }
 
@@ -67,10 +67,10 @@ public class Goal {
     */
 
     /* Finds the latest date where a certain weight was entered in the user/goal maps */
-    public LocalDate getLastDate(Map<LocalDate, Double> map, double weight){
+    public LocalDate getLastDate(Map<LocalDate, Float> map){
         LocalDate lastDate = LocalDate.of(2000,1,1);
-        for(Map.Entry<LocalDate, Double> entry : map.entrySet()){
-            if(entry.getValue().equals(weight) && entry.getKey().isAfter(lastDate)) {
+        for(Map.Entry<LocalDate, Float> entry : map.entrySet()){
+            if(entry.getKey().isAfter(lastDate)) {
                 lastDate = entry.getKey();
             }
         }
@@ -83,9 +83,9 @@ public class Goal {
     }
 
     /* Method that finds the first date in a Map */
-    public LocalDate getFirstDate(Map<LocalDate, Double> map){
+    public LocalDate getFirstDate(Map<LocalDate, Float> map){
         LocalDate firstDate = LocalDate.of(3000,1,1);
-        for(Map.Entry<LocalDate, Double> entry : map.entrySet()){
+        for(Map.Entry<LocalDate, Float> entry : map.entrySet()){
             if(entry.getKey().isBefore(firstDate)) {
                 firstDate = entry.getKey();
             }

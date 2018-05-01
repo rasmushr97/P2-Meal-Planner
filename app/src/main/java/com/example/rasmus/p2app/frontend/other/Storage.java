@@ -1,9 +1,26 @@
 package com.example.rasmus.p2app.frontend.other;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
+import com.example.rasmus.p2app.backend.userclasses.Goal;
+import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.github.mikephil.charting.data.Entry;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.WEEKS;
+
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class Storage {
     public static ArrayList<Entry> userWeight = new ArrayList<>();
     public static ArrayList<Entry> goalWeight = new ArrayList<>();
@@ -17,16 +34,45 @@ public class Storage {
         this.goalWeightValue = goalWeightValue;
     }
 
-    public void intialize(){
-        this.userWeight.add(new Entry(1,4));
-        this.userWeight.add(new Entry(2,8));
-        this.userWeight.add(new Entry(3,3));
-        this.userWeight.add(new Entry(4,2));
+    //Initialize userweight line
+    public void initializeWeight(LocalUser localUser){
+        /* Start and End date*/
+        LocalDate start = localUser.getGoal().getFirstDate(Goal.getUserWeight());
+        LocalDate end = localUser.getGoal().getLastDate(Goal.getUserWeight());
 
-        this.goalWeight.add(new Entry(1,9));
-        this.goalWeight.add(new Entry(3,3));
-        this.goalWeight.add(new Entry(6,2));
-        this.goalWeight.add(new Entry(9,1));
+        this.userWeight.clear();
+        /* Goes through all days between the first and the end day */
+        List<LocalDate> dates = Stream.iterate(start, date -> date.plusDays(1))
+                .limit(ChronoUnit.DAYS.between(start, end.plusDays(1)))
+                .collect(Collectors.toList());
+        for(LocalDate date : dates){
+            for(Map.Entry<LocalDate, Float> entry : localUser.getGoal().getUserWeight().entrySet()){
+                if(date.equals(entry.getKey())){
+                    this.userWeight.add(new Entry(WEEKS.between(localUser.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
+                }
+            }
+        }
+    }
+
+    //Initialize goalweight line
+    public void initializeGoal(LocalUser localUser){
+        this.goalWeight.clear();
+        localUser.getGoal().getGoalWeight().clear();
+        localUser.getGoal().calcGoalDate(localUser);
+        /* Start and End date*/
+        LocalDate goalStart = localUser.getGoal().getFirstDate(Goal.getUserWeight());
+        LocalDate goalEnd = localUser.getGoal().getLastDate(Goal.getUserWeight());
+        /* Goes through all days between the first and the end day */
+        List<LocalDate> goalDates = Stream.iterate(goalStart, date -> date.plusDays(1))
+                .limit(ChronoUnit.DAYS.between(goalStart, goalEnd.plusDays(1)))
+                .collect(Collectors.toList());
+        for(LocalDate date : goalDates){
+            for(Map.Entry<LocalDate, Float> entry : localUser.getGoal().getGoalWeight().entrySet()){
+                if(date.equals(entry.getKey()) && DAYS.between(localUser.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()) % 7 == 0){
+                    this.goalWeight.add(new Entry(WEEKS.between(localUser.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
+                }
+            }
+        }
     }
 
     public ArrayList<Entry> getUserWeight() {

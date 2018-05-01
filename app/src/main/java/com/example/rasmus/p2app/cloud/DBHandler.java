@@ -650,8 +650,8 @@ public class DBHandler {
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate localDate = LocalDate.parse(date, dateFormatter);
 
-                goal.addUserWeight(localDate, curWeight);
-                goal.addGoalWeight(localDate, goalWeight);
+                goal.addUserWeight(localDate, (float) curWeight);
+                goal.addGoalWeight(localDate, (float) goalWeight);
             }
 
             localUser.setGoal(goal);
