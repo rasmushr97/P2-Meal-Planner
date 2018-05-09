@@ -26,6 +26,9 @@ public class Calendar {
     public void setDates(Map<LocalDate, Day> dates) {
         this.dates = dates;
     }
+    public Day getDay(LocalDate date){
+        return dates.get(date);
+    }
 
     public void addDay(LocalDate localDate, Day day){
         this.dates.put(localDate,day);
@@ -35,10 +38,14 @@ public class Calendar {
     public List<Day> get7DayList() {
         List<Day> res = new ArrayList<>();
 
+        LocalDate date;
         for(int i = 0; i < 7; i++){
-            if(i <= dates.size()){
-                res.add(dates.get(i));
+            date = LocalDate.now().plusDays(i);
+
+            if(dates.get(date) != null){
+                res.add(dates.get(date));
             }
+
         }
 
         return res;

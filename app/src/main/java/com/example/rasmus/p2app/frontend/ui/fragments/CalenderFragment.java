@@ -31,15 +31,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rasmus.p2app.R;
-import com.example.rasmus.p2app.frontend.other.DateTest;
-import com.example.rasmus.p2app.frontend.other.FoodChoice;
+import com.example.rasmus.p2app.backend.InRAM;
+import com.example.rasmus.p2app.backend.time.Calendar;
+import com.example.rasmus.p2app.backend.time.Day;
+import com.example.rasmus.p2app.backend.time.Meal;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class CalenderFragment extends Fragment {
+    Calendar c;
+
+
     public static CalenderFragment newInstance() {
         CalenderFragment fragment = new CalenderFragment();
         return fragment;
@@ -56,7 +59,6 @@ public class CalenderFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_calender, container, false);
 
-
         final CalendarView calendar = (CalendarView) view.findViewById(R.id.calendar);
         final Button breakfastButton = view.findViewById(R.id.breakfastButton);
         final Button lunchButton = view.findViewById(R.id.lunchButton);
@@ -65,15 +67,13 @@ public class CalenderFragment extends Fragment {
         final TextView lunchDyn = view.findViewById(R.id.lunchDyn);
         final TextView dinnerDyn = view.findViewById(R.id.dinnerDyn);
 
+        c = InRAM.calendar;
+
         //default
         breakfastDyn.setText(R.string.default_food);
         lunchDyn.setText(R.string.default_food);
         dinnerDyn.setText(R.string.default_food);
 
-        final List<DateTest> dateTests = new ArrayList<>();
-        ArrayList<FoodChoice> Choice = new ArrayList<FoodChoice>();
-
-        dateTests.add(new DateTest("21/4/2018", "Cake", "Sandwich", "Lasagne"));
 
         breakfastButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +82,6 @@ public class CalenderFragment extends Fragment {
                 Toast.makeText(getContext(), "Button Clicked",Toast.LENGTH_SHORT).show();
             }
         });
-
         lunchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,15 +96,25 @@ public class CalenderFragment extends Fragment {
         });
 
 
-        String today = new SimpleDateFormat("dd/M/yyyy").format(new Date(calendar.getDate()));
 
+        final Day today = c.getDay(LocalDate.now());
+        int i = 0;
+        for(Meal meal : today.getMeals()){
+            switch (i){
+                case 0:
+                    breakfastDyn.setText(meal.getRecipe().getTitle());
+                    break;
 
-        for(DateTest d : dateTests){
-            if (d.date.equals(today)){
-                breakfastDyn.setText(d.getBreakfastText());
-                lunchDyn.setText(d.getLunchText());
-                dinnerDyn.setText(d.getDinnerText());
+                case 1:
+                    lunchDyn.setText(meal.getRecipe().getTitle());
+                    break;
+
+                case 2:
+                    dinnerDyn.setText(meal.getRecipe().getTitle());
+                    break;
             }
+
+            i++;
         }
 
 
@@ -119,17 +128,41 @@ public class CalenderFragment extends Fragment {
                         dayOfMonth +"/"+month+"/"+ year,Toast.LENGTH_SHORT).show();
 
                 String clickedDate = dayOfMonth +"/"+month+"/"+ year;
+                LocalDate date = LocalDate.parse(clickedDate, DateTimeFormatter.ofPattern("d/M/yyyy"));
 
-                boolean dayfound = false;
-                for(DateTest d : dateTests){
-                    if (d.date.equals(clickedDate)){
-                        breakfastDyn.setText(d.getBreakfastText());
-                        lunchDyn.setText(d.getLunchText());
-                        dinnerDyn.setText(d.getDinnerText());
-                        dayfound = true;
-                    }
+                if(date.equals(c.getToday())){
+                    Toast.makeText(getContext(),
+                            "nice",Toast.LENGTH_SHORT).show();
                 }
-                if(!dayfound){
+
+                // TODO: create fragment instead
+                Day clickedDay = c.getDates().get(date);
+                if(clickedDay != null){
+                    breakfastDyn.setText("No meal found");
+                    lunchDyn.setText("No meal found");
+                    dinnerDyn.setText("No meal found");
+
+                    int i = 0;
+                    for(Meal meal : clickedDay.getMeals()){
+                        switch (i){
+                            case 0:
+                                breakfastDyn.setText(meal.getRecipe().getTitle());
+                                break;
+
+                            case 1:
+                                lunchDyn.setText(meal.getRecipe().getTitle());
+                                break;
+
+                            case 2:
+                                dinnerDyn.setText(meal.getRecipe().getTitle());
+                                break;
+                        }
+
+                        i++;
+                    }
+
+
+                } else {
                     breakfastDyn.setText("No meal found");
                     lunchDyn.setText("No meal found");
                     dinnerDyn.setText("No meal found");
