@@ -109,10 +109,10 @@ public class Goal {
     public double RHB_Equation(LocalUser localUser){
         /* BMR = the amount of calories you burn during a day without exercise */
         double BMR = 0;
-        if(localUser.getSex().equals("Male")) {
+        if(localUser.isMale()) {
             BMR = 88.362 + (13.397 * localUser.getWeight()) + (4.799 * localUser.getHeight()) - (5.677 * localUser.getAge());
         }
-        else if(localUser.getSex().equals("Female")){
+        else {
             BMR = 447.593 + (9.247 * localUser.getWeight()) + (3.098 * localUser.getHeight()) - (4.330 * localUser.getAge());
         }
         return BMR;

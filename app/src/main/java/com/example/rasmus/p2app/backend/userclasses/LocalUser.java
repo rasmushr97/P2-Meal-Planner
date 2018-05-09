@@ -14,8 +14,7 @@ public class LocalUser extends User {
     private int calorieDeficit;
     private int caloriesPerDay;
     private double exerciseLvl = 1.3750;
-    private String sex;
-
+    private boolean isMale;
     private Goal goal = new Goal();
     private Preferences preferences;
 
@@ -49,6 +48,14 @@ public class LocalUser extends User {
 
     public void setCalorieDeficit(int calorieDeficit) {
         this.calorieDeficit = calorieDeficit;
+    }
+
+    public boolean isMale() {
+        return this.isMale;
+    }
+
+    public void setMale(boolean male) {
+        isMale = male;
     }
 
     public double getExerciseLvl() {
@@ -89,14 +96,6 @@ public class LocalUser extends User {
 
     public void setGoalWeight(double goalWeight) {
         this.goalWeight = goalWeight;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
     }
 
     public Goal getGoal() {
