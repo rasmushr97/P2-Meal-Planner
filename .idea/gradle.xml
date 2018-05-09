@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/mysql-connector-java-3.0.17-ga-bin" />
             <option value="$PROJECT_DIR$/mysql-connector-java-5.1.45-bin" />
           </set>
         </option>
