@@ -63,7 +63,7 @@ public class GoalActivity extends AppBackButtonActivity {
 
         if (storage.getGoalWeightValue() == 0) {
             goalEdit.setText("No Goal Set");
-            goalButton.setText("Set Goal");
+            goalButton.setText("Set Goal" );
         } else {
             goalEdit.setText(storage.getGoalWeightValue() + "kg");
         }
