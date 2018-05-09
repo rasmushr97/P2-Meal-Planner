@@ -31,7 +31,7 @@ public class DBHandler {
 
     // JDBC driver name and database URL
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2?useSSL=false";
+    private static final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2?user=root&useSSL=false";
 
     //  Database credentials
     private static final String USER = "root";
@@ -39,14 +39,14 @@ public class DBHandler {
 
 
     @SuppressLint("NewApi")
-    public static void createCon() {
+    public static void createCon(){
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        java.sql.Connection connection = null;
+        Connection connection = null;
         try {
-            Class.forName(JDBC_DRIVER);
+            Class.forName(JDBC_DRIVER).newInstance();
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException se) {
             System.out.println("Driver connection FAILED");
@@ -54,6 +54,8 @@ public class DBHandler {
         } catch (ClassNotFoundException e) {
             System.out.println("Database connection FAILED");
             //Log.e("error here 2 : ", e.getMessage());
+        }catch (Exception ex){
+            ex.getMessage();
         }
         conn = connection;
     }
