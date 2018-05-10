@@ -65,11 +65,9 @@ public class ShoppingListFragment extends Fragment {
         List<Day> week = calendar.get7DayList();
         List<Ingredients> ingredientList = new ArrayList<>();
 
-        System.out.println(week.size());
 
         for(Day day : week){
             for(Meal meal : day.getMeals()){
-                System.out.println(meal.getMealName());
                 ingredientList.addAll(meal.getRecipe().getIngredients());
             }
         }

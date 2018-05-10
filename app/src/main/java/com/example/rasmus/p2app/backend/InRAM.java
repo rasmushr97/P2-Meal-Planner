@@ -17,7 +17,7 @@ public class InRAM {
 
     public static Calendar calendar;
     public static User user;
-    public static Day today;
+    public static Day today = null;
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
 
 
@@ -34,11 +34,13 @@ public class InRAM {
         }
 
         // TODO: get recipe from databaseHandler based on the dates
-        // maybe get recipes from the recommender systems
+        // maybe get recipes from the recommender  systems
         try{
             calendar = DBHandler.getCalender(user.getID());
             Map<LocalDate, Day> days = calendar.getDates();
-            today = days.get(LocalDate.now());
+            if(days.get(LocalDate.now()) != null){
+                today = days.get(LocalDate.now());
+            }
         }catch (NoDBConnectionException e){
             System.out.println("no connection");
         }
