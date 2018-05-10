@@ -9,9 +9,7 @@ import com.github.mikephil.charting.data.Entry;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,7 +44,7 @@ public class Storage {
                 .limit(ChronoUnit.DAYS.between(start, end.plusDays(1)))
                 .collect(Collectors.toList());
         for(LocalDate date : dates){
-            for(Map.Entry<LocalDate, Float> entry : localUser.getGoal().getUserWeight().entrySet()){
+            for(Map.Entry<LocalDate, Float> entry : Goal.getUserWeight().entrySet()){
                 if(date.equals(entry.getKey())){
                     this.userWeight.add(new Entry(WEEKS.between(localUser.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
                 }
@@ -57,17 +55,20 @@ public class Storage {
     //Initialize goalweight line
     public void initializeGoal(LocalUser localUser){
         this.goalWeight.clear();
-        localUser.getGoal().getGoalWeight().clear();
+        Goal.getGoalWeight().clear();
         localUser.getGoal().calcGoalDate(localUser);
         /* Start and End date*/
         LocalDate goalStart = localUser.getGoal().getFirstDate(Goal.getUserWeight());
         LocalDate goalEnd = localUser.getGoal().getLastDate(Goal.getUserWeight());
+        long extendGraphWeeks = (long) (WEEKS.between(goalStart, goalEnd) * 0.2);
+        goalEnd = goalEnd.plusWeeks(extendGraphWeeks);
+
         /* Goes through all days between the first and the end day */
         List<LocalDate> goalDates = Stream.iterate(goalStart, date -> date.plusDays(1))
-                .limit(ChronoUnit.DAYS.between(goalStart, goalEnd.plusDays(1)))
+                .limit(ChronoUnit.DAYS.between(goalStart, goalEnd.plusDays(1).plusWeeks(2)))
                 .collect(Collectors.toList());
         for(LocalDate date : goalDates){
-            for(Map.Entry<LocalDate, Float> entry : localUser.getGoal().getGoalWeight().entrySet()){
+            for(Map.Entry<LocalDate, Float> entry : Goal.getGoalWeight().entrySet()){
                 if(date.equals(entry.getKey()) && DAYS.between(localUser.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()) % 7 == 0){
                     this.goalWeight.add(new Entry(WEEKS.between(localUser.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
                 }
