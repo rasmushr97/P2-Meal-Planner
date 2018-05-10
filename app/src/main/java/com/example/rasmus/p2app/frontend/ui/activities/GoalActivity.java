@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.rasmus.p2app.backend.userclasses.Goal;
 import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 import com.example.rasmus.p2app.R;
@@ -63,7 +64,7 @@ public class GoalActivity extends AppBackButtonActivity {
 
         if (storage.getGoalWeightValue() == 0) {
             goalEdit.setText("No Goal Set");
-            goalButton.setText("Set Goal" );
+            goalButton.setText("Set Goal");
         } else {
             goalEdit.setText(storage.getGoalWeightValue() + "kg");
         }
@@ -72,7 +73,7 @@ public class GoalActivity extends AppBackButtonActivity {
         enterWeightButton = findViewById(R.id.enterWeight);
         enterWeightButton.setOnClickListener(view -> {
             if (!weightText.getText().toString().equals("")) {
-                if (Float.valueOf(weightText.getText().toString()) > 1000) {
+                if (Float.valueOf(weightText.getText().toString()) < 500) {
                     localUser.setWeight(Float.valueOf(weightText.getText().toString()));
                     localUser.getGoal().addUserWeight(LocalDate.now(), (float) localUser.getWeight());
                     hideKeyboard(GoalActivity.this);
@@ -81,24 +82,12 @@ public class GoalActivity extends AppBackButtonActivity {
                     refreshGraph();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
-                    builder.setTitle("LORT Goal Weight");
+                    builder.setTitle("You Are Fat! :)");
 
                     final EditText input = new EditText(GoalActivity.this);
 
-                    /*
-                    input.setInputType(weightText.getInputType());
-                    builder.setView(input);
-                    builder.setPositiveButton("OK", (dialog, which) -> {
-                        if (!input.getText().toString().equals("")) {
-                            localUser.setGoalWeight(Float.valueOf(input.getText().toString()));
-                            goalEdit.setText(localUser.getGoalWeight() + " kg");
-                            storage.initializeGoal(localUser);
-                            refreshGraph();
-                        }
-                    }); */
                     builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
                     builder.show();
-
                 }
             }
         });
@@ -149,15 +138,15 @@ public class GoalActivity extends AppBackButtonActivity {
                     }
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
-                LocalDate lastMeasurement = localUser.getGoal().getLastDate(localUser.getGoal().getUserWeight());
-                Object lastWeight = localUser.getGoal().getUserWeight().get(lastMeasurement);
+                LocalDate lastMeasurement = localUser.getGoal().getLastDate(Goal.getUserWeight());
+                Object lastWeight = Goal.getUserWeight().get(lastMeasurement);
                 builder.setMessage("You are about to delete your last weight measurement: " +
                         "\nWeight: " + lastWeight.toString() + " kg" +
                         "\nTime: " + (lastMeasurement.equals(LocalDate.now()) ? "Today" : lastMeasurement));
                 builder.setPositiveButton("YES", (dialog, which) -> {
-                    localUser.getGoal().getUserWeight().remove(lastMeasurement, lastWeight);
-                    LocalDate prevWeightDate = localUser.getGoal().getLastDate(localUser.getGoal().getUserWeight());
-                    localUser.setWeight(localUser.getGoal().getUserWeight().get(prevWeightDate));
+                    Goal.getUserWeight().remove(lastMeasurement, lastWeight);
+                    LocalDate prevWeightDate = localUser.getGoal().getLastDate(Goal.getUserWeight());
+                    localUser.setWeight(Goal.getUserWeight().get(prevWeightDate));
                     storage.initializeGoal(localUser);
                     storage.initializeWeight(localUser);
                     refreshGraph();

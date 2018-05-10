@@ -37,7 +37,7 @@ public class Goal {
         //getGoalWeight().clear();
         while(tempWeight > localUser.getGoalWeight()){
             double BMI = tempWeight / ((localUser.getHeight() / 100) * (localUser.getHeight() / 100));
-            tempWeight -= (calToKilo(calOffset(BMI)))/7;
+            tempWeight -= (calToKilo(calDeficit(BMI)))/7;
             addGoalWeight(firstDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
             days++;
         }
@@ -99,7 +99,7 @@ public class Goal {
 
         if(localUser.getWeight() > localUser.getGoalWeight()) { // user hasn't reached their goal
             double BMI = localUser.calcBMI();
-            localUser.setCalorieDeficit(calOffset(BMI)); // calculates the offset in calories
+            localUser.setCalorieDeficit(calDeficit(BMI)); // calculates the offset in calories
             localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl()) - localUser.getCalorieDeficit()));
         }
         else { localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl()))); } // goal reached, no deficit
@@ -108,7 +108,7 @@ public class Goal {
     /* Using 'The Revised Harris-Benedict Equation' to calculate daily burned calories for male or female */
     public double RHB_Equation(LocalUser localUser){
         /* BMR = the amount of calories you burn during a day without exercise */
-        double BMR = 0;
+        double BMR;
         if(localUser.isMale()) {
             BMR = 88.362 + (13.397 * localUser.getWeight()) + (4.799 * localUser.getHeight()) - (5.677 * localUser.getAge());
         }
@@ -118,7 +118,7 @@ public class Goal {
         return BMR;
     }
 
-    public int calOffset(double BMI){
+    public int calDeficit(double BMI){
         int offset = (int) ((BMI * BMI) - (BMI * 5)); // calculates the amount of calories less you need to eat
         return offset > 1000 ? 1000 : offset;         // max less calories per week is 1000
     }
