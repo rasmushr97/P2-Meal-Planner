@@ -20,12 +20,8 @@ import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.frontend.ui.fragments.ChartFragment;
 import com.example.rasmus.p2app.frontend.other.Storage;
-import com.github.mikephil.charting.data.Entry;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
-import static java.util.concurrent.TimeUnit.DAYS;
 
 public class GoalActivity extends AppBackButtonActivity {
 
