@@ -1,13 +1,23 @@
 package com.example.rasmus.p2app.frontend.models;
 
-public class SingleItemModel {
+import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 
+public class SingleItemModel {
+    private Recipe recipe;
     private String name;
     private String url;
     private String description;
 
     public SingleItemModel(String name) {
         this.name = name;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public String getUrl() {

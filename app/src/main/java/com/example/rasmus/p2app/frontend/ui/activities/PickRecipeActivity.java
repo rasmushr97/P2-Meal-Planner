@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.rasmus.p2app.R;
+import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.frontend.adapters.RecyclerViewDataAdapter;
 import com.example.rasmus.p2app.frontend.models.SectionDataModel;
 import com.example.rasmus.p2app.frontend.models.SingleItemModel;
@@ -54,6 +55,10 @@ public class PickRecipeActivity extends AppBackButtonActivity {
 
     //Metode der siger dataen der skal bruges
     public void createDummyData() {
+        Recipe recipe = new Recipe();
+        recipe.setTitle("hello");
+        recipe.setPictureLink("https://beebom.com/reverse-image-search-engines-apps-uses/");
+
         int counter = 0;
         for (int i = 1; i <= 5; i++) {
 
@@ -63,7 +68,9 @@ public class PickRecipeActivity extends AppBackButtonActivity {
 
             ArrayList<SingleItemModel> singleItem = new ArrayList<>();
             for (int j = 0; j < 20; j++) {
-                singleItem.add(new SingleItemModel(counter + ""));
+                SingleItemModel singleItemModel = new SingleItemModel(counter + "");
+                singleItemModel.setRecipe(recipe);
+                singleItem.add(singleItemModel);
                 counter++;
             }
 

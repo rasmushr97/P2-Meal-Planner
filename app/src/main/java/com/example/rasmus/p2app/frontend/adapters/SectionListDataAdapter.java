@@ -8,12 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.rasmus.p2app.R;
+import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.frontend.ui.activities.RecipeClickedActivity;
 import com.example.rasmus.p2app.frontend.models.SingleItemModel;
 
@@ -40,9 +42,9 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
     public void onBindViewHolder(SingleItemRowHolder holder, int i) {
 
         SingleItemModel singleItem = itemsList.get(i);
+        Recipe recipe = singleItem.getRecipe();
 
         holder.tvTitle.setText(singleItem.getName());
-
     }
 
     @Override
@@ -69,16 +71,16 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
                 public void onClick(View v) {
                     Toast.makeText(v.getContext(), tvTitle.getText(), Toast.LENGTH_SHORT).show();
 
+
                     Intent intent = new Intent(mContext, RecipeClickedActivity.class);
+                    intent.putExtra("id", 2500);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     mContext.startActivity(intent);
                     ((Activity) mContext).overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 }
             });
 
-
         }
-
     }
 
 }

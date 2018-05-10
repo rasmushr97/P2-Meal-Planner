@@ -1,5 +1,6 @@
 package com.example.rasmus.p2app.backend;
 
+import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Calendar;
@@ -34,7 +35,6 @@ public class InRAM {
 
         }
 
-        // TODO: get recipe from databaseHandler based on the dates
         // maybe get recipes from the recommender  systems
         try{
             calendar = DBHandler.getCalender(user.getID());
@@ -42,6 +42,12 @@ public class InRAM {
             if(days.get(LocalDate.now()) != null){
                 today = days.get(LocalDate.now());
             }
+
+            for(Meal meal : today.getMeals()){
+                Recipe recipe = meal.getRecipe();
+                recipesInRAM.put(recipe.getID(), recipe);
+            }
+
         }catch (NoDBConnectionException e){
             System.out.println("no connection");
         }

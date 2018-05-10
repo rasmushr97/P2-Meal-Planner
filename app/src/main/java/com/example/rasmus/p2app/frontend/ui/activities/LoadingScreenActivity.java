@@ -9,6 +9,10 @@ import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.cloud.DBHandler;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoadingScreenActivity extends AppCompatActivity {
     final int startAnimationTime = 1000;
 
@@ -21,6 +25,9 @@ public class LoadingScreenActivity extends AppCompatActivity {
 
         InRAM.initializeUser(1);
         InRAM.initializeTodaysRecipes();
+        List<Integer> recipeIDList = new ArrayList<>();
+        recipeIDList.add(2500);
+        InRAM.addRecipesToRam(recipeIDList);
 
         DBHandler.closeCon();
 
