@@ -22,8 +22,6 @@ public class LoadingScreenActivity extends AppCompatActivity {
         InRAM.initializeUser(1);
         InRAM.initializeTodaysRecipes();
 
-        System.out.println(InRAM.today.getMeals().size());
-
         DBHandler.closeCon();
 
         new Handler().postDelayed(new Runnable() {

@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
+import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
 
 import java.util.List;
@@ -63,11 +64,13 @@ public class HomePageFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
 
         // Update calorie text
         textCalories = (TextView) view.findViewById(R.id.text_calories);
+        // Default text
         updateCalorieText();
 
         scrollView = (ScrollView) view.findViewById(R.id.scrollView1);
@@ -84,7 +87,6 @@ public class HomePageFragment extends Fragment {
                 transaction.commit();
             }
         });
-
 
 
         layoutCounter = instantiateMeals();
@@ -106,46 +108,58 @@ public class HomePageFragment extends Fragment {
 
     public int instantiateMeals() {
         // Draw all todays recipes on the front page
+        Day today = InRAM.today;
 
-        List<Meal> todaysMeals = InRAM.today.getMeals();
-        int startID = R.id.layout_1;
+        if (today != null) {
+            List<Meal> todaysMeals = InRAM.today.getMeals();
+            int startID = R.id.layout_1;
 
-        int counter = 0;
-        for (Meal m : todaysMeals) {
-            // Creating a bundle of information
-            Bundle bundle = new Bundle();
+            int counter = 0;
+            for (Meal m : todaysMeals) {
+                // Creating a bundle of information
+                Bundle bundle = new Bundle();
 
-            Recipe recipe = m.getRecipe();
+                Recipe recipe = m.getRecipe();
 
-            // Input information to the bundle
-            bundle.putInt("calories", recipe.getCalories());
-            bundle.putInt("id", recipe.getID());
-            bundle.putString("meal", m.getMealName());
-            bundle.putString("img", recipe.getPictureLink());
+                // Input information to the bundle
+                bundle.putInt("calories", recipe.getCalories());
+                bundle.putInt("id", recipe.getID());
+                bundle.putString("meal", m.getMealName());
+                bundle.putString("img", recipe.getPictureLink());
 
-            // Create an instance of the MealFragment
-            final MealFragment mealFragment = new MealFragment();
-            FragmentManager manager = getFragmentManager();
+                // Create an instance of the MealFragment
+                final MealFragment mealFragment = new MealFragment();
+                FragmentManager manager = getFragmentManager();
 
 
-            // Pass the bundle of information into the meal fragment
-            mealFragment.setArguments(bundle);
-            // Replace one of the layouts in fragment_home_page.xml with the MealFragment
-            manager.beginTransaction()
-                    .replace(startID + counter, mealFragment, mealFragment.getTag())
-                    .commit();
+                // Pass the bundle of information into the meal fragment
+                mealFragment.setArguments(bundle);
+                // Replace one of the layouts in fragment_home_page.xml with the MealFragment
+                manager.beginTransaction()
+                        .replace(startID + counter, mealFragment, mealFragment.getTag())
+                        .commit();
 
-            counter++;
+                counter++;
+            }
+
+
+            return todaysMeals.size();
         }
 
-        return todaysMeals.size();
+        return 0;
     }
 
 
     public void updateCalorieText() {
-        todaysCalories = InRAM.today.getCalorieSum();
-        String calories = "Calories: " + todaysCalories + " / " + todaysGoal;
-        textCalories.setText(calories);
+        Day today = InRAM.today;
+
+        if (today != null) {
+            todaysCalories = today.getCalorieSum();
+            String calories = "Calories: " + todaysCalories + " / " + todaysGoal;
+            textCalories.setText(calories);
+        } else {
+            textCalories.setText("No recipes found");
+        }
     }
 
 
