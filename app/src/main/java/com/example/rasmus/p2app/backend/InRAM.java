@@ -31,6 +31,7 @@ public class InRAM {
 
         if (user == null) {
             throw new NoUserException();
+
         }
 
         // TODO: get recipe from databaseHandler based on the dates
