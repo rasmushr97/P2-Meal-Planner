@@ -7,7 +7,7 @@ public class Ingredients {
     private String name;
     private double amount;
     private String unit;
-    private String inParentheses = null;
+    private String inParentheses;
 
     public Ingredients(int ID, String name, double amount, String unit, String inParentheses) {
         this.ID = ID;
