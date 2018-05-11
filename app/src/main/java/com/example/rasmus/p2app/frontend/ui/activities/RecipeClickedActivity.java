@@ -11,15 +11,20 @@ import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.Ingredients;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
+import com.example.rasmus.p2app.backend.time.Day;
+import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.frontend.adapters.DownloadImageTask;
-import com.example.rasmus.p2app.frontend.other.RecipeTest;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
+
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RecipeClickedActivity extends AppBackButtonActivity {
 
     private int recipeID;
     private Recipe recipe;
-    //RecipeTest recipe = new RecipeTest();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,21 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Find the meal with a recipe that is null
+                Map<LocalDate, Day> addesDays = InRAM.addedDays.getDates();
+
+                // when found input the chosen recipe
+                for(Day day : InRAM.addedDays.getDates().values()){
+                    for(Meal meal : day.getMeals()){
+                        if(meal.getRecipe() == null){
+                            meal.setRecipe(InRAM.recipesInRAM.get(recipeID));
+                        }
+                    }
+                }
+
+                InRAM.syncCalender();
+
                 // Switches back to the home page (activity)
                 Intent intent = new Intent(RecipeClickedActivity.this, MainActivity.class);
                 // Clears all previous activities from the stack

@@ -10,6 +10,7 @@ import com.example.rasmus.p2app.frontend.exception.NoDBConnectionException;
 import com.example.rasmus.p2app.frontend.exception.NoUserException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class InRAM {
 
     public static Calendar calendar;
+    public static Calendar addedDays;
     public static User user;
     public static Day today = null;
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
@@ -28,7 +30,9 @@ public class InRAM {
         user = DBHandler.getUser(ID);
     }
 
-    public static void initializeTodaysRecipes() {
+    public static void initializeCalender() {
+
+        addedDays = new Calendar(LocalDate.now());
 
         if (user == null) {
             throw new NoUserException();
@@ -36,19 +40,21 @@ public class InRAM {
         }
 
         // maybe get recipes from the recommender  systems
-        try{
+        try {
             calendar = DBHandler.getCalender(user.getID());
             Map<LocalDate, Day> days = calendar.getDates();
-            if(days.get(LocalDate.now()) != null){
+            if (days.get(LocalDate.now()) != null) {
                 today = days.get(LocalDate.now());
             }
 
-            for(Meal meal : today.getMeals()){
-                Recipe recipe = meal.getRecipe();
-                recipesInRAM.put(recipe.getID(), recipe);
+            if (today != null) {
+                for (Meal meal : today.getMeals()) {
+                    Recipe recipe = meal.getRecipe();
+                    recipesInRAM.put(recipe.getID(), recipe);
+                }
             }
 
-        }catch (NoDBConnectionException e){
+        } catch (NoDBConnectionException e) {
             System.out.println("no connection");
         }
     }
@@ -60,5 +66,28 @@ public class InRAM {
         }
     }
 
+
+    public static void syncCalender() {
+
+        for (LocalDate date : addedDays.getDates().keySet()) {
+            if (calendar.getDates().get(date) == null) {
+                calendar.addDay(date, addedDays.getDay(date));
+            }
+        }
+
+        for (LocalDate date : addedDays.getDates().keySet()) {
+            for (Meal meal1 : addedDays.getDay(date).getMeals()) {
+                boolean mealFound = false;
+                for (Meal meal2 : calendar.getDay(date).getMeals()) {
+                    if (meal1.getRecipe().getID() == meal2.getRecipe().getID()) {
+                        mealFound = true;
+                    }
+                }
+                if (!mealFound) {
+                    calendar.getDay(date).addMeal(meal1);
+                }
+            }
+        }
+    }
 
 }

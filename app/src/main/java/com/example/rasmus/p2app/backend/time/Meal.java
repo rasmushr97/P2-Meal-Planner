@@ -4,7 +4,7 @@ import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 
 public class Meal {
     private String mealName;
-    private Recipe recipe;
+    private Recipe recipe = null;
 
     public Meal(String mealName, Recipe recipe) {
         this.mealName = mealName;

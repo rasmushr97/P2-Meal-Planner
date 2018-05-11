@@ -19,6 +19,7 @@ public class PickRecipeActivity extends AppBackButtonActivity {
     private Toolbar toolbar;
 
 
+
     /* SectionDataModel klassen er for hver kategori. SingleItemModel klassen er for hver ting inde i hver kategori.
      * Dataen der bliver indlæst er fra createDummyData metoden
      * RecyclerViewDataAdapter*/
@@ -30,6 +31,8 @@ public class PickRecipeActivity extends AppBackButtonActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_recipe);
+
+
 
         // App bar back button
 
@@ -55,9 +58,6 @@ public class PickRecipeActivity extends AppBackButtonActivity {
 
     //Metode der siger dataen der skal bruges
     public void createDummyData() {
-        Recipe recipe = new Recipe();
-        recipe.setTitle("hello");
-        recipe.setPictureLink("https://beebom.com/reverse-image-search-engines-apps-uses/");
 
         int counter = 0;
         for (int i = 1; i <= 5; i++) {
@@ -69,7 +69,6 @@ public class PickRecipeActivity extends AppBackButtonActivity {
             ArrayList<SingleItemModel> singleItem = new ArrayList<>();
             for (int j = 0; j < 20; j++) {
                 SingleItemModel singleItemModel = new SingleItemModel(counter + "");
-                singleItemModel.setRecipe(recipe);
                 singleItem.add(singleItemModel);
                 counter++;
             }

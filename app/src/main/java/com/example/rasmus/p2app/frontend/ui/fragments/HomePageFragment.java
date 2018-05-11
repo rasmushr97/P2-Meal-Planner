@@ -20,6 +20,7 @@
 
 package com.example.rasmus.p2app.frontend.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -36,7 +37,10 @@ import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
+import com.example.rasmus.p2app.frontend.ui.activities.PickMealActivity;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class HomePageFragment extends Fragment {
@@ -80,11 +84,12 @@ public class HomePageFragment extends Fragment {
         final FloatingActionButton fab = view.findViewById(R.id.fab_1);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Open the meal pick page (PickMealFragment)
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                Fragment fragment = PickMealFragment.newInstance();
-                transaction.replace(R.id.frame_layout1, fragment);
-                transaction.commit();
+                // Open the meal pick page (PickMealActivity)
+                Intent intent = new Intent(getActivity(), PickMealActivity.class);
+                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                intent.putExtra("date", date);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
         });
 

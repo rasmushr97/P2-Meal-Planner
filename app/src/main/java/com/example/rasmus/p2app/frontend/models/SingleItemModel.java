@@ -8,6 +8,7 @@ public class SingleItemModel {
     private String url;
     private String description;
 
+
     public SingleItemModel(String name) {
         this.name = name;
     }
