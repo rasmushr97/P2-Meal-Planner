@@ -17,6 +17,7 @@ import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PickRecipeActivity extends AppBackButtonActivity {
 
@@ -62,7 +63,7 @@ public class PickRecipeActivity extends AppBackButtonActivity {
     //Metode der siger dataen der skal bruges
     public void createDummyData() {
 
-        int counter = 0;
+
         for (int i = 1; i <= 5; i++) {
 
             SectionDataModel dm = new SectionDataModel();
@@ -70,10 +71,8 @@ public class PickRecipeActivity extends AppBackButtonActivity {
             dm.setHeaderTitle("Category " + i);
 
             ArrayList<SingleItemModel> singleItem = new ArrayList<>();
-            for (int j = 0; j < 20; j++) {
-                SingleItemModel singleItemModel = new SingleItemModel(counter + "");
-                singleItem.add(singleItemModel);
-                counter++;
+            for (int recipeID : InRAM.recommendedRecipes) {
+                singleItem.add(new SingleItemModel(recipeID));
             }
 
             dm.setAllItemsInSection(singleItem);

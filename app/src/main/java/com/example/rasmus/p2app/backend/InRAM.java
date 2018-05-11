@@ -10,6 +10,7 @@ import com.example.rasmus.p2app.exceptions.NoDBConnectionException;
 import com.example.rasmus.p2app.exceptions.NoUserException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,9 @@ public class InRAM {
     public static User user;
     public static Day today = null;
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
-    public static Map<String, LocalDate> mealsToMake = new HashMap();
+    public static Map<String, LocalDate> mealsToMake = new HashMap<>();
+
+    public static List<Integer> recommendedRecipes = new ArrayList<>();
 
 
     //TODO: login method
@@ -75,5 +78,14 @@ public class InRAM {
         today.setMeals(calendar.getDay(LocalDate.now()).getMeals());
     }
 
+    public static void test(){
+        for(int i = 0; i < 10; i++){
+            recommendedRecipes.add(2500 + i);
+        }
+        List<Recipe> recipes = DBHandler.getRecipesFromIDs(recommendedRecipes);
+        for(Recipe recipe: recipes){
+            recipesInRAM.put(recipe.getID(), recipe);
+        }
+    }
 
 }

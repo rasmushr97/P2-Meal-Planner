@@ -24,9 +24,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
 
         InRAM.initializeUser(1);
         InRAM.initializeCalender();
-        List<Integer> recipeIDList = new ArrayList<>();
-        recipeIDList.add(2500);
-        InRAM.addRecipesToRam(recipeIDList);
+        InRAM.test();
 
         DBHandler.closeCon();
 
