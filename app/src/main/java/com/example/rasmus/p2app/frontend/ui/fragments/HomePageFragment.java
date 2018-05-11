@@ -37,10 +37,13 @@ import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
+import com.example.rasmus.p2app.frontend.other.MealCompare;
 import com.example.rasmus.p2app.frontend.ui.activities.PickMealActivity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -114,7 +117,11 @@ public class HomePageFragment extends Fragment {
         Day today = InRAM.today;
 
         if (today != null) {
-            Set<Meal> todaysMeals = InRAM.today.getMeals();
+            ArrayList<Meal> todaysMeals = new ArrayList<>(InRAM.today.getMeals());
+
+
+
+            Collections.sort(todaysMeals, new MealCompare());
             int startID = R.id.layout_1;
 
             int counter = 0;

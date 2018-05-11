@@ -25,6 +25,9 @@ public class InRAM {
     public static Map<String, LocalDate> mealsToMake = new HashMap<>();
 
     public static List<Integer> recommendedRecipes = new ArrayList<>();
+    public static List<Integer> section1 = new ArrayList<>();
+    public static List<Integer> section2 = new ArrayList<>();
+    public static List<Integer> section3 = new ArrayList<>();
 
 
     //TODO: login method
@@ -78,14 +81,32 @@ public class InRAM {
         today.setMeals(calendar.getDay(LocalDate.now()).getMeals());
     }
 
-    public static void test(){
-        for(int i = 0; i < 10; i++){
-            recommendedRecipes.add(2500 + i);
+    public static void test() {
+        int count = 2500;
+        for (List<Integer> list : getRecipeIDsForExplorer()) {
+            for (int i = 0; i < 20; i++) {
+                list.add(count);
+                count++;
+            }
         }
         List<Recipe> recipes = DBHandler.getRecipesFromIDs(recommendedRecipes);
-        for(Recipe recipe: recipes){
+        recipes.addAll(DBHandler.getRecipesFromIDs(section1));
+        recipes.addAll(DBHandler.getRecipesFromIDs(section2));
+        recipes.addAll(DBHandler.getRecipesFromIDs(section3));
+        for (Recipe recipe : recipes) {
             recipesInRAM.put(recipe.getID(), recipe);
         }
+    }
+
+    public static List<List<Integer>> getRecipeIDsForExplorer() {
+        List<List<Integer>> res = new ArrayList<>();
+
+        res.add(recommendedRecipes);
+        res.add(section1);
+        res.add(section2);
+        res.add(section3);
+
+        return res;
     }
 
 }

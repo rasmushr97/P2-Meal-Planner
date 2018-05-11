@@ -63,15 +63,15 @@ public class PickRecipeActivity extends AppBackButtonActivity {
     //Metode der siger dataen der skal bruges
     public void createDummyData() {
 
+        List<List<Integer>> IDlist = InRAM.getRecipeIDsForExplorer();
 
-        for (int i = 1; i <= 5; i++) {
+        for (List<Integer> list : IDlist) {
 
             SectionDataModel dm = new SectionDataModel();
-
-            dm.setHeaderTitle("Category " + i);
+            dm.setHeaderTitle("Category");
 
             ArrayList<SingleItemModel> singleItem = new ArrayList<>();
-            for (int recipeID : InRAM.recommendedRecipes) {
+            for (int recipeID : list) {
                 singleItem.add(new SingleItemModel(recipeID));
             }
 
