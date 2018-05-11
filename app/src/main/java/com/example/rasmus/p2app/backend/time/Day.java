@@ -26,4 +26,8 @@ public class Day {
         }
         return sum;
     }
+
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
+    }
 }

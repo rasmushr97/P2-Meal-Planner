@@ -67,8 +67,6 @@ public class HomePageFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
 
@@ -92,7 +90,6 @@ public class HomePageFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
         });
-
 
         layoutCounter = instantiateMeals();
 

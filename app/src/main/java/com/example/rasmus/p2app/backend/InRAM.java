@@ -52,6 +52,8 @@ public class InRAM {
                     Recipe recipe = meal.getRecipe();
                     recipesInRAM.put(recipe.getID(), recipe);
                 }
+            } else {
+                today = new Day();
             }
 
         } catch (NoDBConnectionException e) {
@@ -67,27 +69,11 @@ public class InRAM {
     }
 
 
+    // Updates calender with the meals from addedDays
     public static void syncCalender() {
-
-        for (LocalDate date : addedDays.getDates().keySet()) {
-            if (calendar.getDates().get(date) == null) {
-                calendar.addDay(date, addedDays.getDay(date));
-            }
-        }
-
-        for (LocalDate date : addedDays.getDates().keySet()) {
-            for (Meal meal1 : addedDays.getDay(date).getMeals()) {
-                boolean mealFound = false;
-                for (Meal meal2 : calendar.getDay(date).getMeals()) {
-                    if (meal1.getRecipe().getID() == meal2.getRecipe().getID()) {
-                        mealFound = true;
-                    }
-                }
-                if (!mealFound) {
-                    calendar.getDay(date).addMeal(meal1);
-                }
-            }
-        }
+        calendar.getDates().putAll(addedDays.getDates());
+        today.setMeals(calendar.getDay(LocalDate.now()).getMeals());
     }
+
 
 }
