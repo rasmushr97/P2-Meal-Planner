@@ -81,6 +81,7 @@ public class MealFragment extends Fragment {
             public void onClick(View view) {
                 // Write code that just gives the id to RecipeClickedActivity
                 Intent intent = new Intent(getActivity(), RecipeClickedActivity.class);
+                intent.putExtra("delete", true);
                 intent.putExtra("id", id);
                 startActivity(intent);
             }

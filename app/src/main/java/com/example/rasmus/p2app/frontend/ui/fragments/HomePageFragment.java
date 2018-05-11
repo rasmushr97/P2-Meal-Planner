@@ -42,6 +42,7 @@ import com.example.rasmus.p2app.frontend.ui.activities.PickMealActivity;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 public class HomePageFragment extends Fragment {
 
@@ -113,7 +114,7 @@ public class HomePageFragment extends Fragment {
         Day today = InRAM.today;
 
         if (today != null) {
-            List<Meal> todaysMeals = InRAM.today.getMeals();
+            Set<Meal> todaysMeals = InRAM.today.getMeals();
             int startID = R.id.layout_1;
 
             int counter = 0;

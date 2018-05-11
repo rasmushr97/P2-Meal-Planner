@@ -2,12 +2,14 @@ package com.example.rasmus.p2app.backend.time;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Day {
-    private List<Meal> meals = new ArrayList<>();
+    private Set<Meal> meals = new HashSet<>();
 
-    public List<Meal> getMeals() {
+    public Set<Meal> getMeals() {
         return meals;
     }
 
@@ -27,7 +29,7 @@ public class Day {
         return sum;
     }
 
-    public void setMeals(List<Meal> meals) {
+    public void setMeals(Set<Meal> meals) {
         this.meals = meals;
     }
 }

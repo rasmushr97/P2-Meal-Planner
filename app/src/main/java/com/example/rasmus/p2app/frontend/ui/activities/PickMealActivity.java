@@ -67,25 +67,8 @@ public class PickMealActivity extends AppBackButtonActivity {
                 // Set the intention for which page to switch to
                 Intent intent = new Intent(PickMealActivity.this, PickRecipeActivity.class);
 
-                Meal meal = new Meal(values[position], null);
-                Day day1 = new Day();
-                day1.addMeal(meal);
-
-                // TODO: this looks stupid, refactor
-                Calendar calendar = InRAM.addedDays;
-                Map<LocalDate, Day> dates = calendar.getDates();
-                if (dates != null) {
-                    if (dates.containsKey(date)) {
-                        Day day = dates.get(date);
-                        day.addMeal(meal);
-                    } else {
-                        calendar.getDates().put(date, day1);
-                    }
-
-                } else {
-                    calendar.addDay(date, day1);
-                }
-
+                InRAM.mealsToMake = new HashMap<>();
+                InRAM.mealsToMake.put(values[position], date);
 
                 // Switch to the pick recipe page (PickRecipeActivity)
                 startActivity(intent);
@@ -97,6 +80,12 @@ public class PickMealActivity extends AppBackButtonActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Find the meal class without a recipe, and delete it
+        InRAM.mealsToMake = new HashMap<>();
+    }
 
 }
 

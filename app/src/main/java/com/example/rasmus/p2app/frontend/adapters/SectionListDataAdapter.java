@@ -73,6 +73,7 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
 
 
                     Intent intent = new Intent(mContext, RecipeClickedActivity.class);
+                    intent.putExtra("delete", false);
                     intent.putExtra("id", 2500);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     mContext.startActivity(intent);

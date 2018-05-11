@@ -6,13 +6,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.rasmus.p2app.R;
+import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
+import com.example.rasmus.p2app.backend.time.Day;
+import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.frontend.adapters.RecyclerViewDataAdapter;
 import com.example.rasmus.p2app.frontend.models.SectionDataModel;
 import com.example.rasmus.p2app.frontend.models.SingleItemModel;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PickRecipeActivity extends AppBackButtonActivity {
 
@@ -31,7 +35,6 @@ public class PickRecipeActivity extends AppBackButtonActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_recipe);
-
 
 
         // App bar back button
@@ -78,5 +81,7 @@ public class PickRecipeActivity extends AppBackButtonActivity {
             allSampleData.add(dm);
         }
     }
+
+
 
 }

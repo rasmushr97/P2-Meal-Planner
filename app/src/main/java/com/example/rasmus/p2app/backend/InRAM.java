@@ -6,11 +6,10 @@ import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Calendar;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.userclasses.User;
-import com.example.rasmus.p2app.frontend.exception.NoDBConnectionException;
-import com.example.rasmus.p2app.frontend.exception.NoUserException;
+import com.example.rasmus.p2app.exceptions.NoDBConnectionException;
+import com.example.rasmus.p2app.exceptions.NoUserException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,7 @@ public class InRAM {
     public static User user;
     public static Day today = null;
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
+    public static Map<String, LocalDate> mealsToMake = new HashMap();
 
 
     //TODO: login method

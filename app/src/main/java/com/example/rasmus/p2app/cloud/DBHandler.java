@@ -2,7 +2,6 @@ package com.example.rasmus.p2app.cloud;
 
 import android.annotation.SuppressLint;
 import android.os.StrictMode;
-import android.util.Log;
 
 import com.example.rasmus.p2app.backend.recipeclasses.CookTime;
 import com.example.rasmus.p2app.backend.recipeclasses.Ingredients;
@@ -14,7 +13,7 @@ import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.backend.userclasses.Goal;
 import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.backend.userclasses.User;
-import com.example.rasmus.p2app.frontend.exception.NoDBConnectionException;
+import com.example.rasmus.p2app.exceptions.NoDBConnectionException;
 
 import java.sql.*;
 
