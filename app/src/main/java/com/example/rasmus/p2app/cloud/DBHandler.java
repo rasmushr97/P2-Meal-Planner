@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DBHandler {
 
@@ -71,6 +72,14 @@ public class DBHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void addToRecipeChosen(Calendar calendar){
+        // TODO
+    }
+
+    public static void deleteFromRecipeChosen(Map<LocalDate, Meal> meal){
+        // TODO
     }
 
     public static List<Recipe> getRecipesFromIDs(List<Integer> IDs) {

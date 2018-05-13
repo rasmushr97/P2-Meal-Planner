@@ -71,6 +71,11 @@ public class InRAM {
         }
     }
 
+    public static void updateRecipesChosen(){
+        DBHandler.addToRecipeChosen(savedDays);
+        DBHandler.deleteFromRecipeChosen(deletedMeals);
+    }
+
     public static void addRecipesToRam(List<Integer> IDList) {
         List<Recipe> recipes = DBHandler.getRecipesFromIDs(IDList);
         for (Recipe r : recipes) {

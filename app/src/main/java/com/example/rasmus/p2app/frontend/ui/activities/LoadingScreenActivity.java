@@ -20,7 +20,6 @@ public class LoadingScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
 
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
