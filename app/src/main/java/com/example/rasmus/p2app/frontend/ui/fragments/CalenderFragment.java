@@ -79,7 +79,7 @@ public class CalenderFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //FoodChoice img_breakfast = new FoodChoice("Breakfast chosen");
-                Toast.makeText(getContext(), "Button Clicked",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
         lunchButton.setOnClickListener(new View.OnClickListener() {
@@ -96,55 +96,52 @@ public class CalenderFragment extends Fragment {
         });
 
 
+            final Day today = c.getDay(LocalDate.now());
+            int i = 0;
+            if(today != null) {
+                for (Meal meal : today.getMeals()) {
+                    switch (i) {
+                        case 0:
+                            breakfastDyn.setText(meal.getRecipe().getTitle());
+                            break;
 
-        final Day today = c.getDay(LocalDate.now());
-        int i = 0;
-        for(Meal meal : today.getMeals()){
-            switch (i){
-                case 0:
-                    breakfastDyn.setText(meal.getRecipe().getTitle());
-                    break;
+                        case 1:
+                            lunchDyn.setText(meal.getRecipe().getTitle());
+                            break;
 
-                case 1:
-                    lunchDyn.setText(meal.getRecipe().getTitle());
-                    break;
+                        case 2:
+                            dinnerDyn.setText(meal.getRecipe().getTitle());
+                            break;
+                    }
 
-                case 2:
-                    dinnerDyn.setText(meal.getRecipe().getTitle());
-                    break;
+                    i++;
+                }
             }
 
-            i++;
-        }
 
-
-
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 month += 1;
 
                 Toast.makeText(getContext(),
-                        dayOfMonth +"/"+month+"/"+ year,Toast.LENGTH_SHORT).show();
+                        dayOfMonth + "/" + month + "/" + year, Toast.LENGTH_SHORT).show();
 
-                String clickedDate = dayOfMonth +"/"+month+"/"+ year;
+                String clickedDate = dayOfMonth + "/" + month + "/" + year;
                 LocalDate date = LocalDate.parse(clickedDate, DateTimeFormatter.ofPattern("d/M/yyyy"));
 
-                if(date.equals(c.getToday())){
-                    Toast.makeText(getContext(),
-                            "nice",Toast.LENGTH_SHORT).show();
-                }
 
                 // TODO: create fragment instead
+
                 Day clickedDay = c.getDates().get(date);
-                if(clickedDay != null){
+                if (clickedDay != null) {
                     breakfastDyn.setText("No meal found");
                     lunchDyn.setText("No meal found");
                     dinnerDyn.setText("No meal found");
 
                     int i = 0;
-                    for(Meal meal : clickedDay.getMeals()){
-                        switch (i){
+                    for (Meal meal : clickedDay.getMeals()) {
+                        switch (i) {
                             case 0:
                                 breakfastDyn.setText(meal.getRecipe().getTitle());
                                 break;
@@ -169,7 +166,8 @@ public class CalenderFragment extends Fragment {
                 }
 
 
-            }});
+            }
+        });
 
 
         return view;

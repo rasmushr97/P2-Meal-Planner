@@ -744,7 +744,6 @@ public class DBHandler {
                 user.setID(userID);
                 user.setUserName(userName);
                 user.setPassWord(passWord);
-
             }
 
 

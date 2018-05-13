@@ -19,6 +19,8 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,8 +83,10 @@ public class MealFragment extends Fragment {
             public void onClick(View view) {
                 // Write code that just gives the id to RecipeClickedActivity
                 Intent intent = new Intent(getActivity(), RecipeClickedActivity.class);
+                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("d/M/yyyy"));
                 intent.putExtra("delete", true);
                 intent.putExtra("id", id);
+                intent.putExtra("date", date);
                 startActivity(intent);
             }
         });

@@ -20,17 +20,20 @@ public class LoadingScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
 
-        DBHandler.createCon();
-
-        InRAM.initializeUser(1);
-        InRAM.initializeCalender();
-        InRAM.test();
-
-        DBHandler.closeCon();
+        // TODO: CALENDER crashes app
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                DBHandler.createCon();
+
+                InRAM.initializeUser(1);
+                InRAM.initializeCalender();
+                InRAM.test();
+
+                DBHandler.closeCon();
+
                 Intent intent = new Intent(LoadingScreenActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

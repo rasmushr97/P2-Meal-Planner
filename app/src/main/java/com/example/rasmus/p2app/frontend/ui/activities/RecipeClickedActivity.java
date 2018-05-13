@@ -17,8 +17,8 @@ import com.example.rasmus.p2app.frontend.adapters.DownloadImageTask;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RecipeClickedActivity extends AppBackButtonActivity {
@@ -87,12 +87,17 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
 
                 if(delete){
                     Map<LocalDate, Day> daysInCalender = InRAM.calendar.getDates();
-                    Map<LocalDate, Day> addesDays = InRAM.addedDays.getDates();
+                    Map<LocalDate, Day> addesDays = InRAM.savedDays.getDates();
 
+                    String mealDate = getIntent().getExtras().getString("date");
+                    LocalDate date = LocalDate.parse(mealDate, DateTimeFormatter.ofPattern("d/M/yyyy"));
+
+                    // TODO: refactor, use deleted dates to remove meals from calendar
                     for(Day day : daysInCalender.values()){
                         for(Meal meal : day.getMeals()){
                             if(recipeID == meal.getRecipe().getID()){
                                 day.getMeals().remove(meal);
+                                InRAM.deletedMeals.put(date, meal);
                                 break;
                             }
                         }
@@ -132,7 +137,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
                     }
                     InRAM.mealsToMake = new HashMap<>();
                     // Find the meal with a recipe that is null
-                    Map<LocalDate, Day> addesDays = InRAM.addedDays.getDates();
+                    Map<LocalDate, Day> addesDays = InRAM.savedDays.getDates();
                     if (addesDays.get(date) == null) {
                         Day day = new Day();
                         day.addMeal(new Meal(meal, InRAM.recipesInRAM.get(recipeID)));

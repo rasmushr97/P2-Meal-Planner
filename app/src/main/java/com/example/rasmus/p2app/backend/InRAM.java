@@ -18,11 +18,15 @@ import java.util.Map;
 public class InRAM {
 
     public static Calendar calendar;
-    public static Calendar addedDays;
+    public static Calendar savedDays;
+    public static HashMap<LocalDate, Meal> deletedMeals = new HashMap<>();
+
     public static User user;
     public static Day today = null;
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
     public static Map<String, LocalDate> mealsToMake = new HashMap<>();
+
+
 
     public static List<Integer> recommendedRecipes = new ArrayList<>();
     public static List<Integer> section1 = new ArrayList<>();
@@ -38,7 +42,7 @@ public class InRAM {
 
     public static void initializeCalender() {
 
-        addedDays = new Calendar(LocalDate.now());
+        savedDays = new Calendar(LocalDate.now());
 
         if (user == null) {
             throw new NoUserException();
@@ -75,9 +79,9 @@ public class InRAM {
     }
 
 
-    // Updates calender with the meals from addedDays
+    // Updates calender with the meals from savedDays
     public static void syncCalender() {
-        calendar.getDates().putAll(addedDays.getDates());
+        calendar.getDates().putAll(savedDays.getDates());
         today.setMeals(calendar.getDay(LocalDate.now()).getMeals());
     }
 
