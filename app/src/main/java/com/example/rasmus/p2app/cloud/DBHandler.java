@@ -41,8 +41,8 @@ public class DBHandler {
     @SuppressLint("NewApi")
     public static void createCon(){
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);*/
 
         Connection connection = null;
         try {

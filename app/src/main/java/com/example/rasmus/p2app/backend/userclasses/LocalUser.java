@@ -151,6 +151,7 @@ public class LocalUser extends User {
 
     public static void main(String argv[]) {
         LocalUser localUser = new LocalUser();
+        DBHandler.createCon();
         /*localUser.setBirthday(LocalDate.now());
         localUser.setHeight(200);
         localUser.setWeight(70);
@@ -158,6 +159,7 @@ public class LocalUser extends User {
         localUser = localUser.initialize();
         System.out.println(localUser.toString());
         System.out.println(Goal.getUserWeight().values());
+        DBHandler.closeCon();
     }
 
     public LocalUser initialize(){
@@ -188,9 +190,7 @@ public class LocalUser extends User {
                     case 0: localUser.setMale(false); break;
                     case 1: localUser.setMale(true); break;
                 }
-                DBHandler.createCon();
                 DBHandler.getLocalUser(1, localUser);
-                DBHandler.closeCon();
 
                 /* Calculates the users daily calorie intake */
                 localUser.getGoal().calcCaloriesPerDay(localUser);
