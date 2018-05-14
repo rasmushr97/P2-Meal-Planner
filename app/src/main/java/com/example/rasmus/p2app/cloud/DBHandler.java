@@ -31,12 +31,11 @@ public class DBHandler {
 
     // JDBC driver name and database URL
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2?useSSL=false";
+    private static final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2";
 
     //  Database credentials
     private static final String USER = "root";
     private static final String PASS = "admin";
-
 
 
     @SuppressLint("NewApi")

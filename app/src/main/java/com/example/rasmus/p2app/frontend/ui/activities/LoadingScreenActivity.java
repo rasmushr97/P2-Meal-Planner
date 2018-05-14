@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoadingScreenActivity extends AppCompatActivity {
-    final int startAnimationTime = 1000;
+    final int startAnimationTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

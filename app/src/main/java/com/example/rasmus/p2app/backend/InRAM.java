@@ -26,8 +26,6 @@ public class InRAM {
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
     public static Map<String, LocalDate> mealsToMake = new HashMap<>();
 
-
-
     public static List<Integer> recommendedRecipes = new ArrayList<>();
     public static List<Integer> section1 = new ArrayList<>();
     public static List<Integer> section2 = new ArrayList<>();
