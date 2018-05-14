@@ -24,7 +24,6 @@ public class Goal {
     /* Method calculates the date where the user will reach their goal*/
     public LocalDate calcGoalDate(LocalUser localUser){
         //TODO Check if date has changed // Does the goal chart begin from beginning or last weight
-        //LUL
         LocalDate firstDate = getFirstDate(this.userWeight);
         //LocalDate lastWeightDate = getLastDate(getUserWeight(), localUser.getWeight());
         //LocalDate goalDate = getLastDate(goalWeight, localUser.getGoalWeight());

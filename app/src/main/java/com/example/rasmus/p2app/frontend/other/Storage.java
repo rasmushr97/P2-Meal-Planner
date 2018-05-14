@@ -22,22 +22,13 @@ import static java.time.temporal.ChronoUnit.WEEKS;
 public class Storage {
     public static ArrayList<Entry> userWeight = new ArrayList<>();
     public static ArrayList<Entry> goalWeight = new ArrayList<>();
-    static private float goalWeightValue = 0;
-
-    public float getGoalWeightValue() {
-        return goalWeightValue;
-    }
-
-    public void setGoalWeightValue(float goalWeightValue) {
-        this.goalWeightValue = goalWeightValue;
-    }
 
     //Initialize userweight line
     public void initializeWeight(LocalUser localUser){
         /* Start and End date*/
         LocalDate start = localUser.getGoal().getFirstDate(Goal.getUserWeight());
         LocalDate end = localUser.getGoal().getLastDate(Goal.getUserWeight());
-
+        //TODO if only one weight
         this.userWeight.clear();
         /* Goes through all days between the first and the end day */
         List<LocalDate> dates = Stream.iterate(start, date -> date.plusDays(1))

@@ -634,10 +634,9 @@ public class DBHandler {
     }
 
     //Gets information to the recipe class from the database
-    public static LocalUser getLocalUser(int userID) {
+    public static LocalUser getLocalUser(int userID, LocalUser localUser) {
         ResultSet resultSet = null;
         Goal goal = new Goal();
-        LocalUser localUser = new LocalUser();
 
         if (conn == null) {
             throw new NoDBConnectionException();
@@ -661,7 +660,8 @@ public class DBHandler {
                 LocalDate localDate = LocalDate.parse(date, dateFormatter);
 
                 goal.addUserWeight(localDate, (float) curWeight);
-                goal.addGoalWeight(localDate, (float) goalWeight);
+                //goal.addGoalWeight(localDate, (float) goalWeight);
+                localUser.setGoalWeight(goalWeight);
             }
 
             localUser.setGoal(goal);
