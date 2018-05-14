@@ -48,8 +48,9 @@ public abstract class AppDrawerActivity extends AppCompatActivity implements Men
         for (int i = 0; i < drawerMenu.size(); i++) {
             drawerMenu.getItem(i).setOnMenuItemClickListener(this);
         }
-        // and so on...
+
     }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

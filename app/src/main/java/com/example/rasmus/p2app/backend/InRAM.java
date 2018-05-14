@@ -35,6 +35,7 @@ public class InRAM {
     public static void initializeUser(int ID) {
         LocalUser localUser = new LocalUser();
         user = localUser.initialize(ID);
+        user.setID(ID);
         //user = DBHandler.getUser(ID);
     }
 
