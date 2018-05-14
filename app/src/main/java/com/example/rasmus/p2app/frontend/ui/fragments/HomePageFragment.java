@@ -49,7 +49,6 @@ import java.util.Set;
 
 public class HomePageFragment extends Fragment {
 
-
     ScrollView scrollView;
     TextView textCalories;
 
@@ -78,6 +77,7 @@ public class HomePageFragment extends Fragment {
 
         scrollView = (ScrollView) view.findViewById(R.id.scrollView1);
 
+        instantiateMeals();
 
         // Setting up the add button
         final FloatingActionButton fab = view.findViewById(R.id.fab_1);
@@ -92,19 +92,16 @@ public class HomePageFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
 
-    public int instantiateMeals() {
+    public void instantiateMeals() {
         // Draw all todays recipes on the front page
         Day today = InRAM.today;
 
         if (today != null) {
             ArrayList<Meal> todaysMeals = new ArrayList<>(InRAM.today.getMeals());
-
-
 
             Collections.sort(todaysMeals, new MealCompare());
             int startID = R.id.layout_1;
@@ -138,10 +135,8 @@ public class HomePageFragment extends Fragment {
             }
 
 
-            return todaysMeals.size();
         }
 
-        return 0;
     }
 
 
