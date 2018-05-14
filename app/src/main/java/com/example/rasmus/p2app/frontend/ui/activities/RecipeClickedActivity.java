@@ -52,6 +52,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
         String timeText = "Time: " + recipe.getTime().getReadyIn();
         time.setText(timeText);
 
+        // TODO: add directions
         TextView ingredients = findViewById(R.id.RecipeItems);
         String ingredientsText = "";
         for(Ingredients ingredient : recipe.getIngredients()){
@@ -71,6 +72,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
             public void onClick(View view) {
                 // Switches to the Description clicked page (activity)
                 Intent intent = new Intent(RecipeClickedActivity.this, DescriptionRecipeClickedActivity.class);
+                intent.putExtra("id", recipeID);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
