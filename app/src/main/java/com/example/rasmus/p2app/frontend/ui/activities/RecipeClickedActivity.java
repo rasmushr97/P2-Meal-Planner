@@ -85,34 +85,14 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
             @Override
             public void onClick(View view) {
 
+
                 if(delete){
                     Map<LocalDate, Day> daysInCalender = InRAM.calendar.getDates();
-                    Map<LocalDate, Day> addesDays = InRAM.savedDays.getDates();
 
                     String mealDate = getIntent().getExtras().getString("date");
                     LocalDate date = LocalDate.parse(mealDate, DateTimeFormatter.ofPattern("d/M/yyyy"));
 
-                    // TODO: refactor, use deleted dates to remove meals from calendar
-                    for(Day day : daysInCalender.values()){
-                        for(Meal meal : day.getMeals()){
-                            if(recipeID == meal.getRecipe().getID()){
-                                day.getMeals().remove(meal);
-                                InRAM.deletedMeals.put(date, meal);
-                                break;
-                            }
-                        }
-                    }
-
-                    for(Day day : addesDays.values()){
-                        for(Meal meal : day.getMeals()){
-                            if(recipeID == meal.getRecipe().getID()){
-                                day.getMeals().remove(meal);
-                                break;
-                            }
-                        }
-                    }
-
-                    InRAM.syncCalender();
+                    InRAM.deleteMeal(date, daysInCalender.get(date).getMeal(recipeID));
 
                     // Switches back to the home page (activity)
                     Intent intent = new Intent(RecipeClickedActivity.this, MainActivity.class);
@@ -120,6 +100,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
                 } else {
 
                     // TODO: throw an exception instead
@@ -131,23 +112,13 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
                     for (String s : InRAM.mealsToMake.keySet()) {
                         meal = s;
                     }
-                    LocalDate date = LocalDate.now();
+                    LocalDate date = null;
                     for (LocalDate d : InRAM.mealsToMake.values()) {
                         date = d;
                     }
                     InRAM.mealsToMake = new HashMap<>();
-                    // Find the meal with a recipe that is null
-                    Map<LocalDate, Day> addesDays = InRAM.savedDays.getDates();
-                    if (addesDays.get(date) == null) {
-                        Day day = new Day();
-                        day.addMeal(new Meal(meal, InRAM.recipesInRAM.get(recipeID)));
-                        addesDays.put(date, day);
-                    } else {
-                        addesDays.get(date).addMeal(new Meal(meal, recipe));
-                    }
 
-
-                    InRAM.syncCalender();
+                    InRAM.addMeal(date, new Meal(meal, InRAM.recipesInRAM.get(recipeID)));
 
                     // Switches back to the home page (activity)
                     Intent intent = new Intent(RecipeClickedActivity.this, MainActivity.class);

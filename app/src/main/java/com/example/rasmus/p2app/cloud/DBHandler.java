@@ -3,6 +3,7 @@ package com.example.rasmus.p2app.cloud;
 import android.annotation.SuppressLint;
 import android.os.StrictMode;
 
+import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.CookTime;
 import com.example.rasmus.p2app.backend.recipeclasses.Ingredients;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
@@ -31,7 +32,7 @@ public class DBHandler {
 
     // JDBC driver name and database URL
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2";
+    private static final String DB_URL = "jdbc:mysql://35.198.191.151:3306/p2?useSSL=false";
 
     //  Database credentials
     private static final String USER = "root";
@@ -41,8 +42,8 @@ public class DBHandler {
     @SuppressLint("NewApi")
     public static void createCon(){
 
-        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);*/
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         Connection connection = null;
         try {
@@ -56,6 +57,12 @@ public class DBHandler {
             //Log.e("error here 2 : ", e.getMessage());
         }catch (Exception ex){
             ex.getMessage();
+        }
+
+        try {
+            connection.setReadOnly(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         conn = connection;
     }
@@ -73,12 +80,32 @@ public class DBHandler {
         }
     }
 
-    public static void addToRecipeChosen(Calendar calendar){
-        // TODO
+    public static void addToRecipeChosen(LocalDate date, Meal meal, int userID){
+        String dateFormatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        String sql = "INSERT INTO recipes_chosen (recipe_id, date, meal_title, user_id) " +
+                "VALUES (" + meal.getRecipe().getID() + ", '" + dateFormatted + "', '" +
+                meal.getMealName() + "', " + userID + ")";
+
+        try {
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void deleteFromRecipeChosen(Map<LocalDate, Meal> meal){
-        // TODO
+
+    public static void deleteFromRecipeChosen(LocalDate date, int recipeID, int userID){
+        String dateFormatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        String sql = "DELETE FROM recipes_chosen WHERE recipe_id = " + recipeID
+                + " AND date = '" + dateFormatted + "' AND user_id = " + userID;
+
+        try {
+            System.out.println(stmt.executeUpdate(sql));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static List<Recipe> getRecipesFromIDs(List<Integer> IDs) {

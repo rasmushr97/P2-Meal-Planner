@@ -13,6 +13,15 @@ public class Day {
         return meals;
     }
 
+    public Meal getMeal(int recipeID){
+        for(Meal m : meals){
+            if(m.getRecipe().getID() == recipeID){
+                return m;
+            }
+        }
+        return null;
+    }
+
     public void addMeal(Meal m){
         meals.add(m);
     }

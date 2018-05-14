@@ -18,8 +18,6 @@ import java.util.Map;
 public class InRAM {
 
     public static Calendar calendar;
-    public static Calendar savedDays;
-    public static HashMap<LocalDate, Meal> deletedMeals = new HashMap<>();
 
     public static User user;
     public static Day today = null;
@@ -40,11 +38,9 @@ public class InRAM {
 
     public static void initializeCalender() {
 
-        savedDays = new Calendar(LocalDate.now());
 
         if (user == null) {
             throw new NoUserException();
-
         }
 
         // maybe get recipes from the recommender  systems
@@ -69,10 +65,6 @@ public class InRAM {
         }
     }
 
-    public static void updateRecipesChosen(){
-        DBHandler.addToRecipeChosen(savedDays);
-        DBHandler.deleteFromRecipeChosen(deletedMeals);
-    }
 
     public static void addRecipesToRam(List<Integer> IDList) {
         List<Recipe> recipes = DBHandler.getRecipesFromIDs(IDList);
@@ -82,10 +74,21 @@ public class InRAM {
     }
 
 
-    // Updates calender with the meals from savedDays
-    public static void syncCalender() {
-        calendar.getDates().putAll(savedDays.getDates());
-        today.setMeals(calendar.getDay(LocalDate.now()).getMeals());
+
+    public static void deleteMeal(LocalDate date, Meal meal){
+        calendar.getDay(date).deleteMeal(meal);
+        DBHandler.deleteFromRecipeChosen(date, meal.getRecipe().getID(), user.getID());
+    }
+
+    public static void addMeal(LocalDate date, Meal meal){
+        Day day = calendar.getDay(date);
+        if(day == null){
+            day = new Day();
+            calendar.addDay(date, day);
+        }
+        calendar.getDay(date).addMeal(meal);
+
+        DBHandler.addToRecipeChosen(date, meal, user.getID());
     }
 
     public static void test() {

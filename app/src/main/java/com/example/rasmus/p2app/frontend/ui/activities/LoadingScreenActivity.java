@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoadingScreenActivity extends AppCompatActivity {
-    final int startAnimationTime = 0;
+    final int startAnimationTime = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
                 InRAM.initializeCalender();
                 InRAM.test();
 
-                DBHandler.closeCon();
+                //DBHandler.closeCon();
 
                 Intent intent = new Intent(LoadingScreenActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
