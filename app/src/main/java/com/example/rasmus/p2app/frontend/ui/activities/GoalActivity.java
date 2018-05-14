@@ -163,7 +163,7 @@ public class GoalActivity extends AppBackButtonActivity {
                             "\nTime: " + (lastMeasurement.equals(LocalDate.now()) ? "Today" : lastMeasurement));
                     /* Yes button deletes the latest weight measurement */
                     builder.setPositiveButton("DELETE", (dialog, which) -> {
-                        //TODO NExt 3 lines should maybe do something with database/XML
+                        //TODO Next 3 lines should maybe do something with database/XML
                         Goal.getUserWeight().remove(lastMeasurement, lastWeight);
                         LocalDate prevWeightDate = localUser.getGoal().getLastDate(Goal.getUserWeight());
                         localUser.setWeight(Goal.getUserWeight().get(prevWeightDate));
