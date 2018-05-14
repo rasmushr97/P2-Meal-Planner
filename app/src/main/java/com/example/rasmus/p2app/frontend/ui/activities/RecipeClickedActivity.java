@@ -62,6 +62,11 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
             }
             ingredientsText = ingredientsText.concat(ingredient.getName() + " " + inParentheses + "\nAmount: " + ingredient.getAmount() + " " + ingredient.getUnit() + "\n\n");
         }
+
+        ingredientsText = ingredientsText.concat("\n\n");
+        for(String direction : recipe.getDirections()){
+            ingredientsText = ingredientsText.concat(direction + "\n\n");
+        }
         ingredients.setText(ingredientsText);
 
 
