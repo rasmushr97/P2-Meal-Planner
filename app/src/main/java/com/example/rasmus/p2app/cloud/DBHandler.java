@@ -59,11 +59,6 @@ public class DBHandler {
             ex.getMessage();
         }
 
-        try {
-            connection.setReadOnly(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         conn = connection;
     }
 
