@@ -49,9 +49,6 @@ import java.util.Set;
 
 public class HomePageFragment extends Fragment {
 
-    static private int layoutCounter = 0;
-    static private int prevLayoutCounter = 0;
-
 
     ScrollView scrollView;
     TextView textCalories;
@@ -95,18 +92,6 @@ public class HomePageFragment extends Fragment {
             }
         });
 
-        layoutCounter = instantiateMeals();
-
-        // Scroll down the page after a recipe has been added
-        if (prevLayoutCounter != layoutCounter && layoutCounter > 2) {
-            scrollView.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                }
-            }, 250);
-        }
-        prevLayoutCounter = layoutCounter;
 
         return view;
     }
