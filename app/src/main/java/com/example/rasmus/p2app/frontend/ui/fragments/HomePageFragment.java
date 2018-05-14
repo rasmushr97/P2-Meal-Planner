@@ -56,7 +56,7 @@ public class HomePageFragment extends Fragment {
     ScrollView scrollView;
     TextView textCalories;
 
-    int todaysGoal = 2500;
+    int todaysGoal = 0;
     int todaysCalories = 0;
 
     public static HomePageFragment newInstance() {
@@ -73,6 +73,9 @@ public class HomePageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
+        /* Sets todays goal to the calculated amount of calories */
+        InRAM.user.getGoal().calcCaloriesPerDay(InRAM.user);
+        todaysGoal = InRAM.user.getCaloriesPerDay();
 
         // Update calorie text
         textCalories = (TextView) view.findViewById(R.id.text_calories);

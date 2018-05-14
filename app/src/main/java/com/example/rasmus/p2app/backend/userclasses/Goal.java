@@ -92,16 +92,17 @@ public class Goal {
         return firstDate;
     }
 
-    public void calcCaloriesPerDay(LocalUser localUser){
+    public void calcCaloriesPerDay(LocalUser localUser) {
         //TODO (Maybe the ability to gain weight)
         double BMR = RHB_Equation(localUser);
 
-        if(localUser.getWeight() > localUser.getGoalWeight()) { // user hasn't reached their goal
+        if (localUser.getWeight() > localUser.getGoalWeight()) { // user hasn't reached their goal
             double BMI = localUser.calcBMI();
             localUser.setCalorieDeficit(calDeficit(BMI)); // calculates the offset in calories
             localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl()) - localUser.getCalorieDeficit()));
+        } else {
+            localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl())));
         }
-        else { localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl()))); } // goal reached, no deficit
     }
 
     /* Using 'The Revised Harris-Benedict Equation' to calculate daily burned calories for male or female */
