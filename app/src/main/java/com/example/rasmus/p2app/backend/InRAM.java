@@ -1,6 +1,7 @@
 package com.example.rasmus.p2app.backend;
 
 import com.example.rasmus.p2app.backend.time.Meal;
+import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Calendar;
@@ -19,7 +20,7 @@ public class InRAM {
 
     public static Calendar calendar;
 
-    public static User user;
+    public static LocalUser user = new LocalUser();
     public static Day today = null;
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
     public static Map<String, LocalDate> mealsToMake = new HashMap<>();
@@ -29,11 +30,12 @@ public class InRAM {
     public static List<Integer> section2 = new ArrayList<>();
     public static List<Integer> section3 = new ArrayList<>();
 
-
     //TODO: login method
 
     public static void initializeUser(int ID) {
-        user = DBHandler.getUser(ID);
+        LocalUser localUser = new LocalUser();
+        user = localUser.initialize(ID);
+        //user = DBHandler.getUser(ID);
     }
 
     public static void initializeCalender() {

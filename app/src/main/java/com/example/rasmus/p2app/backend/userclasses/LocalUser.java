@@ -156,13 +156,13 @@ public class LocalUser extends User {
         localUser.setHeight(200);
         localUser.setWeight(70);
         localUser.updateXML(localUser); */
-        localUser = localUser.initialize();
+        localUser = localUser.initialize(1);
         System.out.println(localUser.toString());
         System.out.println(Goal.getUserWeight().values());
         DBHandler.closeCon();
     }
 
-    public LocalUser initialize(){
+    public LocalUser initialize(int ID){
         LocalUser localUser = new LocalUser();
         try {
             File userXML = new File("app\\src\\main\\res\\xml\\localuser_data.xml");
@@ -190,10 +190,12 @@ public class LocalUser extends User {
                     case 0: localUser.setMale(false); break;
                     case 1: localUser.setMale(true); break;
                 }
-                DBHandler.getLocalUser(1, localUser);
 
                 /* Calculates the users daily calorie intake */
                 localUser.getGoal().calcCaloriesPerDay(localUser);
+
+                /* Gets previous weight measurements from database */
+                DBHandler.getLocalUser(ID, localUser);
             }
         } catch (Exception e) {
             e.printStackTrace();
