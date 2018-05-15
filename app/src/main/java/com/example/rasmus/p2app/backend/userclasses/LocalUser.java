@@ -1,7 +1,9 @@
 package com.example.rasmus.p2app.backend.userclasses;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.cloud.DBHandler;
 
@@ -11,9 +13,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -36,7 +43,7 @@ public class LocalUser extends User {
     private static double goalWeight;
     private static int calorieDeficit;
     private static int caloriesPerDay;
-    private static int wantLoseWeight = 1;
+    private static int wantLoseWeight;
     private static double exerciseLvl = 1.375;
     private static boolean isMale;
     private static Goal goal = new Goal();
@@ -62,11 +69,11 @@ public class LocalUser extends User {
         return weight / (newHeight * newHeight);
     }
 
-    public static int getWantLoseWeight() {
+    public int getWantLoseWeight() {
         return wantLoseWeight;
     }
 
-    public static void setWantLoseWeight(int wantLoseWeight) {
+    public void setWantLoseWeight(int wantLoseWeight) {
         LocalUser.wantLoseWeight = wantLoseWeight;
     }
         //TODO RIGHT
@@ -165,13 +172,13 @@ public class LocalUser extends User {
 
     public void initialize(int ID, AppCompatActivity activity){
         try {
-            //Path path = activity.getResources().openRawResource(R.xml.localuser_data));
-            InputStream is = activity.getAssets().open("localuser_data.xml");
-            //File userXML = new File(path.toString());
+            //InputStream is = activity.getAssets().open("localuser_data.xml");
+            File is = activity.getFileStreamPath("localuser_data.xml");
+
+
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
-
             /* Makes the format clean */
             doc.getDocumentElement().normalize();
 
@@ -186,7 +193,7 @@ public class LocalUser extends User {
                 InRAM.user.setWeight(Double.parseDouble(eElement.getElementsByTagName("weight").item(0).getTextContent()));
                 InRAM.user.setBirthday(LocalDate.parse(eElement.getElementsByTagName("birthday").item(0).getTextContent()));
                 InRAM.user.calcAge();
-                //localUser.setGoalWeight(Double.parseDouble(eElement.getElementsByTagName("goalweight").item(0).getTextContent()));
+                InRAM.user.setWantLoseWeight(Integer.parseInt(eElement.getElementsByTagName("loseweight").item(0).getTextContent()));
                 int isMale = Integer.parseInt(eElement.getElementsByTagName("isMale").item(0).getTextContent());
                 switch (isMale){
                     case 0: InRAM.user.setMale(false); break;
@@ -198,6 +205,7 @@ public class LocalUser extends User {
 
                 /* Gets previous weight measurements from database */
                 DBHandler.getLocalUser(ID);
+                //is.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,12 +213,12 @@ public class LocalUser extends User {
     }
 
 
-    public static void updateXML(LocalUser localUser){
+    public static void updateXML(LocalUser localUser, AppCompatActivity activity){
         try {
-            String filepath = "app\\src\\main\\res\\xml\\localuser_data.xml";
+            File file = activity.getFileStreamPath("localuser_data.xml");
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(filepath);
+            Document doc = docBuilder.parse(file);
 
             /* Get the userNode element by tag name directly */
             Node userNode = doc.getElementsByTagName("localuser").item(0);
@@ -232,13 +240,15 @@ public class LocalUser extends User {
                     node.setTextContent(localUser.getBirthday().toString());
                 }
             }
+            localUser.getGoal().calcCaloriesPerDay(localUser);
 
             /* Writes everything to the XML file */
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(filepath));
+            StreamResult result = new StreamResult(file.getPath());
             transformer.transform(source, result);
+
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();

@@ -112,6 +112,17 @@ public class DBHandler {
         }
     }
 
+    public static void deleteFromGoals(){
+        String sql = "DELETE FROM goals";
+
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void deleteFromRecipeChosen(LocalDate date, int recipeID, int userID){
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));

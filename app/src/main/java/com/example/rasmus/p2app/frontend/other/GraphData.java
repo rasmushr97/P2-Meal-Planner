@@ -3,6 +3,7 @@ package com.example.rasmus.p2app.frontend.other;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.userclasses.Goal;
 import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.github.mikephil.charting.data.Entry;
@@ -19,16 +20,16 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static java.time.temporal.ChronoUnit.WEEKS;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class Storage {
+public class GraphData {
     public static ArrayList<Entry> userWeight = new ArrayList<>();
     public static ArrayList<Entry> goalWeight = new ArrayList<>();
 
     //Initialize userweight line
     public void initializeWeight(LocalUser localUser){
         /* Start and End date*/
-        LocalDate start = localUser.getGoal().getFirstDate(Goal.getUserWeight());
-        LocalDate end = localUser.getGoal().getLastDate(Goal.getUserWeight());
-        //TODO if only one weight
+        LocalDate start = InRAM.user.getGoal().getFirstDate(Goal.getUserWeight());
+        LocalDate end = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
+
         this.userWeight.clear();
         /* Goes through all days between the first and the end day */
         List<LocalDate> dates = Stream.iterate(start, date -> date.plusDays(1))
@@ -37,7 +38,7 @@ public class Storage {
         for(LocalDate date : dates){
             for(Map.Entry<LocalDate, Float> entry : Goal.getUserWeight().entrySet()){
                 if(date.equals(entry.getKey())){
-                    this.userWeight.add(new Entry(WEEKS.between(localUser.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
+                    this.userWeight.add(new Entry(WEEKS.between(InRAM.user.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
                 }
             }
         }
@@ -47,10 +48,10 @@ public class Storage {
     public void initializeGoal(LocalUser localUser){
         this.goalWeight.clear();
         Goal.getGoalWeight().clear();
-        localUser.getGoal().calcGoalDate(localUser);
+        InRAM.user.getGoal().calcGoalDate(localUser);
         /* Start and End date*/
-        LocalDate goalStart = localUser.getGoal().getFirstDate(Goal.getUserWeight());
-        LocalDate goalEnd = localUser.getGoal().getLastDate(Goal.getUserWeight());
+        LocalDate goalStart = InRAM.user.getGoal().getFirstDate(Goal.getUserWeight());
+        LocalDate goalEnd = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
         long extendGraphWeeks = (long) (WEEKS.between(goalStart, goalEnd) * 0.2);
         goalEnd = goalEnd.plusWeeks(extendGraphWeeks);
 
@@ -60,8 +61,8 @@ public class Storage {
                 .collect(Collectors.toList());
         for(LocalDate date : goalDates){
             for(Map.Entry<LocalDate, Float> entry : Goal.getGoalWeight().entrySet()){
-                if(date.equals(entry.getKey()) && DAYS.between(localUser.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()) % 7 == 0){
-                    this.goalWeight.add(new Entry(WEEKS.between(localUser.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
+                if(date.equals(entry.getKey()) && DAYS.between(InRAM.user.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()) % 7 == 0){
+                    this.goalWeight.add(new Entry(WEEKS.between(InRAM.user.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
                 }
             }
         }

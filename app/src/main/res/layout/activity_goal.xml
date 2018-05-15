@@ -118,7 +118,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:text="Time"
+        android:text="Weeks"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/chart_layout_replacer"
         app:layout_constraintEnd_toEndOf="@+id/chart_layout_replacer" />

@@ -3,5 +3,6 @@
     <height>180</height>
     <weight>80.0</weight>
     <isMale>1</isMale>
+    <loseweight>1</loseweight>
     <birthday>1997-08-22</birthday>
 </localuser>

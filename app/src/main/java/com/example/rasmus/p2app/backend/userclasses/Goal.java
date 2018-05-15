@@ -33,12 +33,12 @@ public class Goal {
         float tempWeight = userWeight.get(firstDate);
 
         // determines whether the user wants to lose or gain weight
-        if (localUser.getGoalWeight() > localUser.getWeight()) {
+  /*      if (localUser.getGoalWeight() > localUser.getWeight()) {
             localUser.setWantLoseWeight(0); // 0 is false the user want to gain weight
         } else {
             localUser.setWantLoseWeight(1); // 1 is true the user want to lose weight
         }
-
+*/
         int days = 0;
         //getGoalWeight().clear();
         if (localUser.getWantLoseWeight() == 1) {

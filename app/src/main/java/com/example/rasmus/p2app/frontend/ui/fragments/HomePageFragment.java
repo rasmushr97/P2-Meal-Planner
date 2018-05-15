@@ -41,6 +41,7 @@ import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.frontend.other.MealCompare;
 import com.example.rasmus.p2app.frontend.ui.activities.PickMealActivity;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

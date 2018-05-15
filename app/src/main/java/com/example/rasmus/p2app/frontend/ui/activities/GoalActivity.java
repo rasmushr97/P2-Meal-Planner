@@ -21,20 +21,23 @@ import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.frontend.ui.fragments.ChartFragment;
-import com.example.rasmus.p2app.frontend.other.Storage;
+import com.example.rasmus.p2app.frontend.other.GraphData;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GoalActivity extends AppBackButtonActivity {
 
     private static final String TAG = "GoalActivity";
     private Button goalButton;
     private TextView goalEdit;
-    static Storage storage = new Storage();
+    static GraphData graphData = new GraphData();
     private Button enterWeightButton;
     private EditText weightText;
-    private LocalUser localUser = new LocalUser();
 
     //TODO needs an onStop() or something method that saves the data
     @Override
@@ -42,31 +45,18 @@ public class GoalActivity extends AppBackButtonActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
         setTitle("Weight control");
-        /* TODO All this should be loaded in */
-        localUser.setGoalWeight(40);
-        localUser.setAge(25);
-        localUser.setHeight(180);
-        localUser.setWeight(80);
-        localUser.setMale(true);
-        localUser.getGoal().addUserWeight(LocalDate.of(2018, 1, 1), (float) 80);
-        localUser.getGoal().addUserWeight(LocalDate.of(2018, 1, 9), (float) 79.6);
-        localUser.getGoal().addUserWeight(LocalDate.of(2018, 1, 17), (float) 78);
-        localUser.getGoal().addUserWeight(LocalDate.of(2018, 2, 1), (float) 76);
-        localUser.getGoal().addUserWeight(LocalDate.of(2018, 3, 9), (float) 73.4);
-        localUser.getGoal().addUserWeight(LocalDate.of(2018, 3, 21), (float) 71.8);
-        localUser.getGoal().addUserWeight(LocalDate.of(2018, 4, 1), (float) 90);
 
         /* If there only is one weight measurement stored (graph needs atleast two)*/
-        if(localUser.getGoal().getUserWeight().size() == 1){
-            Map.Entry<LocalDate,Float> entry = localUser.getGoal().getUserWeight().entrySet().iterator().next();
+        if(Goal.getUserWeight().size() == 1){
+            Map.Entry<LocalDate,Float> entry = Goal.getUserWeight().entrySet().iterator().next();
             /* Adds another weight a day before thats the same */
             LocalDate key = entry.getKey().minusDays(1);
             Float value = entry.getValue();
-            localUser.getGoal().addUserWeight(key, value);
+            InRAM.user.getGoal().addUserWeight(key, value);
         }
         /* Loads graph */
-        storage.initializeWeight(localUser);
-        storage.initializeGoal(localUser);
+        graphData.initializeWeight(InRAM.user);
+        graphData.initializeGoal(InRAM.user);
         refreshGraph();
 
         /* Userweight button and textbox */
@@ -76,12 +66,12 @@ public class GoalActivity extends AppBackButtonActivity {
             if (!weightText.getText().toString().equals("")) { //Checks if the input is empty
                 if (Float.valueOf(weightText.getText().toString()) < 500) { //TODO right now checks if weight is below 500
                     /* Changes the user weight and adds it to the history of weight*/
-                    localUser.setWeight(Float.valueOf(weightText.getText().toString())); //TODO add to database/XML
-                    localUser.getGoal().addUserWeight(LocalDate.now(), (float) localUser.getWeight()); //TODO same as above
+                    InRAM.user.setWeight(Float.valueOf(weightText.getText().toString())); //TODO add to database/XML
+                    InRAM.user.getGoal().addUserWeight(LocalDate.now(), (float) InRAM.user.getWeight()); //TODO same as above
                     hideKeyboard(GoalActivity.this);
                     /* Refreshes the graph with new weight */
-                    storage.initializeGoal(localUser);
-                    storage.initializeWeight(localUser);
+                    graphData.initializeGoal(InRAM.user);
+                    graphData.initializeWeight(InRAM.user);
                     refreshGraph();
                 } else { //TODO If you are above 500kg
                     AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
@@ -98,11 +88,11 @@ public class GoalActivity extends AppBackButtonActivity {
         goalEdit = findViewById(R.id.goalText);
 
         /* Checks if there currently is a goal for the user */
-        if (localUser.getGoalWeight() == 0) {
+        if (InRAM.user.getGoalWeight() == 0) {
             goalEdit.setText("No Goal Set");
             goalButton.setText("Set Goal");
         } else {
-            goalEdit.setText(localUser.getGoalWeight() + "kg");
+            goalEdit.setText(InRAM.user.getGoalWeight() + "kg");
         }
 
         /* 'Change goal weight' button */
@@ -115,11 +105,16 @@ public class GoalActivity extends AppBackButtonActivity {
                     input.setInputType(weightText.getInputType()); //Decimal input
                     builder.setView(input);
                     builder.setPositiveButton("OK", (dialog, which) -> {
-                        if (!input.getText().toString().equals("")) { //Checks if input is empty
-                            localUser.setGoalWeight(Float.valueOf(input.getText().toString())); //TODO update database/XML
-                            goalEdit.setText(localUser.getGoalWeight() + " kg"); //Shows the goal weight
+                        if (!input.getText().toString().equals("")) { //Checks if input is empty)
+                            InRAM.user.setGoalWeight(Float.valueOf(input.getText().toString()));
+                            if(InRAM.user.getGoalWeight() > InRAM.user.getWeight()){
+                                InRAM.user.setWantLoseWeight(0);
+                            } else{
+                                InRAM.user.setWantLoseWeight(1);
+                            }//TODO update database/XML
+                            goalEdit.setText(InRAM.user.getGoalWeight() + " kg"); //Shows the goal weight
                             /* Updates graph for goal line */
-                            storage.initializeGoal(localUser);
+                            graphData.initializeGoal(InRAM.user);
                             refreshGraph();
                         }
                     });
@@ -153,10 +148,10 @@ public class GoalActivity extends AppBackButtonActivity {
                     }
                 };
                 /* Alertbox for 'undo weight' */
-                if(localUser.getGoal().getUserWeight().size() > 2) {
+                if(Goal.getUserWeight().size() > 2) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
                     //Last date of entering a weight
-                    LocalDate lastMeasurement = localUser.getGoal().getLastDate(Goal.getUserWeight());
+                    LocalDate lastMeasurement = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
                     Object lastWeight = Goal.getUserWeight().get(lastMeasurement);
                     builder.setTitle("Are you sure?");
                     builder.setMessage("You are about to delete your last weight measurement forever, this cannot be undone!\n" +
@@ -166,11 +161,11 @@ public class GoalActivity extends AppBackButtonActivity {
                     builder.setPositiveButton("DELETE", (dialog, which) -> {
                         //TODO Next 3 lines should maybe do something with database/XML
                         Goal.getUserWeight().remove(lastMeasurement, lastWeight);
-                        LocalDate prevWeightDate = localUser.getGoal().getLastDate(Goal.getUserWeight());
-                        localUser.setWeight(Goal.getUserWeight().get(prevWeightDate));
+                        LocalDate prevWeightDate = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
+                        InRAM.user.setWeight(Goal.getUserWeight().get(prevWeightDate));
                         /* Refreshes the graph */
-                        storage.initializeGoal(localUser);
-                        storage.initializeWeight(localUser);
+                        graphData.initializeGoal(InRAM.user);
+                        graphData.initializeWeight(InRAM.user);
                         refreshGraph();
                     });
                     builder.setNegativeButton("CANCEL", dialogClickListener).show();
@@ -207,14 +202,30 @@ public class GoalActivity extends AppBackButtonActivity {
         transaction.commit();
     }
 
-    @Override //TODO something else (InRAM user doesnt save)
+    @Override
     protected void onPause() {
         super.onPause();
-        if(InRAM.user.getGoal().getLastDate(Goal.getUserWeight()).equals(LocalDate.now())) {
-            float weight = Goal.getUserWeight().get(LocalDate.now());
-            float goalweight = (float) InRAM.user.getGoalWeight();
-            DBHandler.addWeightMeasurement(LocalDate.now(), weight, goalweight, 1);
+        /* Clears the goals data base */
+        DBHandler.deleteFromGoals();
+
+        float goalWeight = (float) InRAM.user.getGoalWeight();
+
+        LocalDate first = InRAM.user.getGoal().getFirstDate(Goal.getUserWeight());
+        LocalDate last = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
+
+        /* Creates a list of dates between 'first' and 'last' date */
+        List<LocalDate> dates = Stream.iterate(first, date -> date.plusDays(1))
+                .limit(ChronoUnit.DAYS.between(first, last.plusDays(1)))
+                .collect(Collectors.toList());
+        /* Goes through all days, and adds all weight measurements to the database */
+        for(LocalDate date : dates){
+            if(Goal.getUserWeight().keySet().contains(date)){
+                DBHandler.addWeightMeasurement(date, Goal.getUserWeight().get(date), goalWeight, InRAM.user.getID());
+            }
         }
+
+        /* Updates the XML file with user data */
+        LocalUser.updateXML(InRAM.user, GoalActivity.this);
     }
 }
 

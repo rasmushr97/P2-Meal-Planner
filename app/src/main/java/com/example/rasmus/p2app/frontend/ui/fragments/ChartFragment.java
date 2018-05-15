@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rasmus.p2app.R;
-import com.example.rasmus.p2app.frontend.other.Storage;
+import com.example.rasmus.p2app.frontend.other.GraphData;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class ChartFragment extends android.app.Fragment {
 
     private LineChart mChart;
-    static Storage storage = new Storage();
+    static GraphData graphData = new GraphData();
 
     public ChartFragment() {
         // Required empty public constructor
@@ -47,8 +47,8 @@ public class ChartFragment extends android.app.Fragment {
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
 
-        LineDataSet userSet = new LineDataSet(storage.userWeight,"Your weight");
-        LineDataSet goalSet = new LineDataSet(storage.goalWeight,"Goal weight");
+        LineDataSet userSet = new LineDataSet(graphData.userWeight,"Your weight");
+        LineDataSet goalSet = new LineDataSet(graphData.goalWeight,"Goal weight");
         //goal weight no circle or values
         goalSet.setDrawCircles(false);
         goalSet.setDrawValues(false);
