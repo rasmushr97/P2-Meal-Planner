@@ -1,5 +1,7 @@
 package com.example.rasmus.p2app.backend;
 
+import android.support.v7.app.AppCompatActivity;
+
 import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.cloud.DBHandler;
@@ -32,10 +34,12 @@ public class InRAM {
 
     //TODO: login method
 
-    public static void initializeUser(int ID) {
-        user =  new LocalUser().initialize(ID);
+    public static void initializeUser(int ID, AppCompatActivity activity) {
+        if(user == null){
+            user = new LocalUser();
+        }
+        user.initialize(ID, activity);
         user.setID(ID);
-
     }
 
     public static void initializeCalender() {

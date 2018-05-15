@@ -37,6 +37,7 @@ import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
+import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.frontend.other.MealCompare;
 import com.example.rasmus.p2app.frontend.ui.activities.PickMealActivity;
 
@@ -70,7 +71,6 @@ public class HomePageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
         /* Sets todays goal to the calculated amount of calories */
-        InRAM.user.getGoal().calcCaloriesPerDay(InRAM.user);
         todaysGoal = InRAM.user.getCaloriesPerDay();
 
         // Update calorie text

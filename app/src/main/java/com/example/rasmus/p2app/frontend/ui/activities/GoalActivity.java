@@ -14,8 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.userclasses.Goal;
 import com.example.rasmus.p2app.backend.userclasses.LocalUser;
+import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.frontend.ui.fragments.ChartFragment;
@@ -46,13 +48,12 @@ public class GoalActivity extends AppBackButtonActivity {
         localUser.setHeight(180);
         localUser.setWeight(80);
         localUser.setMale(true);
-        /*
         localUser.getGoal().addUserWeight(LocalDate.of(2018, 1, 1), (float) 80);
         localUser.getGoal().addUserWeight(LocalDate.of(2018, 1, 9), (float) 79.6);
         localUser.getGoal().addUserWeight(LocalDate.of(2018, 1, 17), (float) 78);
         localUser.getGoal().addUserWeight(LocalDate.of(2018, 2, 1), (float) 76);
         localUser.getGoal().addUserWeight(LocalDate.of(2018, 3, 9), (float) 73.4);
-        localUser.getGoal().addUserWeight(LocalDate.of(2018, 3, 21), (float) 71.8); */
+        localUser.getGoal().addUserWeight(LocalDate.of(2018, 3, 21), (float) 71.8);
         localUser.getGoal().addUserWeight(LocalDate.of(2018, 4, 1), (float) 90);
 
         /* If there only is one weight measurement stored (graph needs atleast two)*/
@@ -204,6 +205,16 @@ public class GoalActivity extends AppBackButtonActivity {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.chart_layout_replacer, ChartFragment.newInstance()); // newInstance() is a static factory method.
         transaction.commit();
+    }
+
+    @Override //TODO something else (InRAM user doesnt save)
+    protected void onPause() {
+        super.onPause();
+        if(InRAM.user.getGoal().getLastDate(Goal.getUserWeight()).equals(LocalDate.now())) {
+            float weight = Goal.getUserWeight().get(LocalDate.now());
+            float goalweight = (float) InRAM.user.getGoalWeight();
+            DBHandler.addWeightMeasurement(LocalDate.now(), weight, goalweight, 1);
+        }
     }
 }
 

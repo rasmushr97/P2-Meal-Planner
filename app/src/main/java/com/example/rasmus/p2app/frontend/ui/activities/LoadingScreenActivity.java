@@ -26,7 +26,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
 
                 DBHandler.createCon();
 
-                InRAM.initializeUser(1);
+                InRAM.initializeUser(1, LoadingScreenActivity.this);
                 InRAM.initializeCalender();
                 InRAM.test();
 

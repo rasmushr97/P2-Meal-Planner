@@ -1,7 +1,5 @@
 package com.example.rasmus.p2app.backend.userclasses;
 
-import android.provider.CalendarContract;
-
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;

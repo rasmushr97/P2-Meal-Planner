@@ -1,16 +1,19 @@
 package com.example.rasmus.p2app.backend.userclasses;
 
+import android.support.v7.app.AppCompatActivity;
+
+import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.cloud.DBHandler;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -26,18 +29,18 @@ import static java.time.temporal.ChronoUnit.YEARS;
 
 
 public class LocalUser extends User {
-    private int age;
-    private LocalDate birthday;
-    private int height;
-    private double weight;
-    private double goalWeight;
-    private int calorieDeficit;
-    private int caloriesPerDay;
-    private double exerciseLvl = 1.375;
-    private boolean isMale;
-    private Goal goal = new Goal();
-    private Preferences preferences;
-    private int wantLoseWeight;
+    private static int age;
+    private static LocalDate birthday;
+    private static int height;
+    private static double weight;
+    private static double goalWeight;
+    private static int calorieDeficit;
+    private static int caloriesPerDay;
+    private static int wantLoseWeight = 1;
+    private static double exerciseLvl = 1.375;
+    private static boolean isMale;
+    private static Goal goal = new Goal();
+    private static Preferences preferences;
 
     @Override
     public String toString() {
@@ -55,39 +58,48 @@ public class LocalUser extends User {
     }
 
     public double calcBMI() {
-        return this.weight / ((this.height / 100) * (this.height / 100));
+        double newHeight = (double) height / 100;
+        return weight / (newHeight * newHeight);
     }
 
+    public static int getWantLoseWeight() {
+        return wantLoseWeight;
+    }
+
+    public static void setWantLoseWeight(int wantLoseWeight) {
+        LocalUser.wantLoseWeight = wantLoseWeight;
+    }
+        //TODO RIGHT
     public void calcAge() {
-       this.age = (int) YEARS.between(this.birthday, LocalDate.now());
+       age = (int) YEARS.between(birthday, LocalDate.now());
     }
 
     public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
+    public void setBirthday(LocalDate newBirthday) {
+        birthday = newBirthday;
     }
 
     public int getCaloriesPerDay() {
         return caloriesPerDay;
     }
 
-    public void setCaloriesPerDay(int caloriesPerDay) {
-        this.caloriesPerDay = caloriesPerDay;
+    public void setCaloriesPerDay(int newCaloriesPerDay) {
+        caloriesPerDay = newCaloriesPerDay;
     }
 
     public int getCalorieDeficit() {
         return calorieDeficit;
     }
 
-    public void setCalorieDeficit(int calorieDeficit) {
-        this.calorieDeficit = calorieDeficit;
+    public void setCalorieDeficit(int newCalorieDeficit) {
+        calorieDeficit = newCalorieDeficit;
     }
 
     public boolean isMale() {
-        return this.isMale;
+        return isMale;
     }
 
     public void setMale(boolean male) {
@@ -98,86 +110,67 @@ public class LocalUser extends User {
         return exerciseLvl;
     }
 
-    public void setExerciseLvl(double exerciseLvl) {
-        this.exerciseLvl = exerciseLvl;
+    public void setExerciseLvl(double newExerciseLvl) {
+        exerciseLvl = newExerciseLvl;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setAge(int newAge) {
+        age = newAge;
     }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public void setHeight(int newHeight) {
+        height = newHeight;
     }
 
     public double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public void setWeight(double newWeight) {
+        weight = newWeight;
     }
 
     public double getGoalWeight() {
         return goalWeight;
     }
 
-    public void setGoalWeight(double goalWeight) {
-        this.goalWeight = goalWeight;
+    public void setGoalWeight(double newGoalWeight) {
+        goalWeight = newGoalWeight;
     }
 
     public Goal getGoal() {
         return goal;
     }
 
-    public void setGoal(Goal goal) {
-        this.goal = goal;
+    public void setGoal(Goal newGoal) {
+        goal = newGoal;
     }
 
     public Preferences getPreferences() {
         return preferences;
     }
 
-    public void setPreferences(Preferences preferences) {
-        this.preferences = preferences;
-    }
-
-    public int getWantLoseWeight() { return wantLoseWeight; }
-
-    public void setWantLoseWeight(int wantLoseWeight) { this.wantLoseWeight = wantLoseWeight; }
-
-    public static void main(String argv[]) {
-        LocalUser localUser = new LocalUser();
-        DBHandler.createCon();
-        /*localUser.setBirthday(LocalDate.now());
-        localUser.setHeight(200);
-        localUser.setWeight(70);
-        localUser.updateXML(localUser); */
-        localUser = localUser.initialize(1);
-        System.out.println(localUser.toString());
-        System.out.println(Goal.getUserWeight().values());
-        DBHandler.closeCon();
+    public void setPreferences(Preferences newPreferences) {
+        preferences = newPreferences;
     }
 
 
-
-
-
-    public LocalUser initialize(int ID){
-        LocalUser localUser = new LocalUser();
+    public void initialize(int ID, AppCompatActivity activity){
         try {
-            File userXML = new File("app\\src\\main\\res\\xml\\localuser_data.xml");
+            //Path path = activity.getResources().openRawResource(R.xml.localuser_data));
+            InputStream is = activity.getAssets().open("localuser_data.xml");
+            //File userXML = new File(path.toString());
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(userXML);
+            Document doc = dBuilder.parse(is);
 
             /* Makes the format clean */
             doc.getDocumentElement().normalize();
@@ -189,31 +182,30 @@ public class LocalUser extends User {
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element eElement = (Element) nNode;
                 /* Gets all data from localuser_data.xml */
-                localUser.setHeight(Integer.parseInt(eElement.getElementsByTagName("height").item(0).getTextContent()));
-                localUser.setWeight(Double.parseDouble(eElement.getElementsByTagName("weight").item(0).getTextContent()));
-                localUser.setBirthday(LocalDate.parse(eElement.getElementsByTagName("birthday").item(0).getTextContent()));
-                localUser.calcAge();
+                InRAM.user.setHeight(Integer.parseInt(eElement.getElementsByTagName("height").item(0).getTextContent()));
+                InRAM.user.setWeight(Double.parseDouble(eElement.getElementsByTagName("weight").item(0).getTextContent()));
+                InRAM.user.setBirthday(LocalDate.parse(eElement.getElementsByTagName("birthday").item(0).getTextContent()));
+                InRAM.user.calcAge();
                 //localUser.setGoalWeight(Double.parseDouble(eElement.getElementsByTagName("goalweight").item(0).getTextContent()));
                 int isMale = Integer.parseInt(eElement.getElementsByTagName("isMale").item(0).getTextContent());
                 switch (isMale){
-                    case 0: localUser.setMale(false); break;
-                    case 1: localUser.setMale(true); break;
+                    case 0: InRAM.user.setMale(false); break;
+                    case 1: InRAM.user.setMale(true); break;
                 }
 
                 /* Calculates the users daily calorie intake */
-                localUser.getGoal().calcCaloriesPerDay(localUser);
+                InRAM.user.getGoal().calcCaloriesPerDay(InRAM.user);
 
                 /* Gets previous weight measurements from database */
-                DBHandler.getLocalUser(ID, localUser);
+                DBHandler.getLocalUser(ID);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return localUser;
     }
 
 
-    public void updateXML(LocalUser localUser){
+    public static void updateXML(LocalUser localUser){
         try {
             String filepath = "app\\src\\main\\res\\xml\\localuser_data.xml";
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -247,8 +239,6 @@ public class LocalUser extends User {
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(filepath));
             transformer.transform(source, result);
-
-            System.out.println("Done");
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();

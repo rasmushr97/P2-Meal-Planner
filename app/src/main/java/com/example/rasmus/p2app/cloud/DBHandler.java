@@ -59,7 +59,13 @@ public class DBHandler {
             ex.getMessage();
         }
 
+       /* try {
+            connection.setReadOnly(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } */
         conn = connection;
+
     }
 
 
@@ -83,6 +89,23 @@ public class DBHandler {
                 meal.getMealName() + "', " + userID + ")";
 
         try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addWeightMeasurement(LocalDate date, float weight, float goalweight, int userID){
+        String dateFormatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        String sql = "INSERT INTO goals (date, current_weight, goal_weight, user_id) " +
+                "VALUES ('" + dateFormatted + "', " + weight + ", " +
+                goalweight + ", " + userID + ")";
+
+
+        try {
+            stmt = conn.createStatement();
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,7 +120,8 @@ public class DBHandler {
                 + " AND date = '" + dateFormatted + "' AND user_id = " + userID;
 
         try {
-            System.out.println(stmt.executeUpdate(sql));
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -113,7 +137,6 @@ public class DBHandler {
 
         try {
             stmt = conn.createStatement();
-
             // Create string for SQL Query
             String sql = createQueryString("recipe", IDs);
             resultSet = stmt.executeQuery(sql);
@@ -656,9 +679,9 @@ public class DBHandler {
     }
 
     //Gets information to the recipe class from the database
-    public static LocalUser getLocalUser(int userID, LocalUser localUser) {
+    public static void getLocalUser(int userID) {
         ResultSet resultSet = null;
-        Goal goal = new Goal();
+        //Goal goal = new Goal();
 
         if (conn == null) {
             throw new NoDBConnectionException();
@@ -671,30 +694,27 @@ public class DBHandler {
 
 
             //Extract data from result set
+            int i = 0;
             while (resultSet.next()) {
-                //Retrieve by column name
-                // make date
                 String date = resultSet.getString("date");
-                double curWeight = resultSet.getDouble("current_weight");
-                double goalWeight = resultSet.getDouble("goal_weight");
+                double curWeight = resultSet.getFloat("current_weight");
+                double goalWeight = resultSet.getFloat("goal_weight");
+                if(i == 0) { InRAM.user.setGoalWeight(goalWeight); }
 
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate localDate = LocalDate.parse(date, dateFormatter);
 
-                goal.addUserWeight(localDate, (float) curWeight);
+                InRAM.user.getGoal().addUserWeight(localDate, (float) curWeight);
                 //goal.addGoalWeight(localDate, (float) goalWeight);
-                localUser.setGoalWeight(goalWeight);
+                i++;
             }
-
-            localUser.setGoal(goal);
+            //LocalUser.setGoal(goal);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         closeResultSet(resultSet);
-
-        return localUser;
     }
 
     public static Calendar getCalender(int userID) {
@@ -752,8 +772,9 @@ public class DBHandler {
         return calendar;
     }
 
-    public static void getUser(int userID, User user) {
+    public static User getUser(int userID) {
         ResultSet resultSet = null;
+        User user = new User();
 
         if (conn == null) {
             throw new NoDBConnectionException();
@@ -782,7 +803,7 @@ public class DBHandler {
 
         closeResultSet(resultSet);
 
-
+        return user;
     }
 
     private static String createQueryString(String tableName, List<Integer> IDs) {
