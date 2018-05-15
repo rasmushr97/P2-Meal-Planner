@@ -206,7 +206,7 @@ public class GoalActivity extends AppBackButtonActivity {
     protected void onPause() {
         super.onPause();
         /* Clears the goals data base */
-        DBHandler.deleteFromGoals();
+        DBHandler.deleteFromGoals(InRAM.user.getID());
 
         float goalWeight = (float) InRAM.user.getGoalWeight();
 

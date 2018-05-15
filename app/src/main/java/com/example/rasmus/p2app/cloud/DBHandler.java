@@ -156,8 +156,8 @@ public class DBHandler {
         }
     }
 
-    public static void deleteFromGoals(){
-        String sql = "DELETE FROM goals";
+    public static void deleteFromGoals(int ID){
+        String sql = "DELETE FROM goals WHERE user_id=" + ID;
 
         try {
             stmt = conn.createStatement();

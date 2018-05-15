@@ -199,7 +199,6 @@ public class LocalUser extends User {
                     case 0: InRAM.user.setMale(false); break;
                     case 1: InRAM.user.setMale(true); break;
                 }
-
                 /* Calculates the users daily calorie intake */
                 InRAM.user.getGoal().calcCaloriesPerDay(InRAM.user);
 
