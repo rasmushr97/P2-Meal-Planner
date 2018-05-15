@@ -202,7 +202,6 @@ public class LocalUser extends User {
 
                 /* Calculates the users daily calorie intake */
                 InRAM.user.getGoal().calcCaloriesPerDay(InRAM.user);
-
                 /* Gets previous weight measurements from database */
                 DBHandler.getLocalUser(ID);
                 //is.close();
