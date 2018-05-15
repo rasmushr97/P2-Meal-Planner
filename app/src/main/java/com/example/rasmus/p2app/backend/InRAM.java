@@ -21,7 +21,7 @@ public class InRAM {
     public static Calendar calendar;
 
     public static LocalUser user = new LocalUser();
-    public static Day today = null;
+
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
     public static Map<String, LocalDate> mealsToMake = new HashMap<>();
 
@@ -33,10 +33,9 @@ public class InRAM {
     //TODO: login method
 
     public static void initializeUser(int ID) {
-        LocalUser localUser = new LocalUser();
-        user = localUser.initialize(ID);
+        user =  new LocalUser().initialize(ID);
         user.setID(ID);
-        //user = DBHandler.getUser(ID);
+
     }
 
     public static void initializeCalender() {
@@ -50,18 +49,6 @@ public class InRAM {
         try {
             calendar = DBHandler.getCalender(user.getID());
             Map<LocalDate, Day> days = calendar.getDates();
-            if (days.get(LocalDate.now()) != null) {
-                today = days.get(LocalDate.now());
-            }
-
-            if (today != null) {
-                for (Meal meal : today.getMeals()) {
-                    Recipe recipe = meal.getRecipe();
-                    recipesInRAM.put(recipe.getID(), recipe);
-                }
-            } else {
-                today = new Day();
-            }
 
         } catch (NoDBConnectionException e) {
             System.out.println("no connection");
@@ -75,8 +62,6 @@ public class InRAM {
             recipesInRAM.put(r.getID(), r);
         }
     }
-
-
 
     public static void deleteMeal(LocalDate date, Meal meal){
         calendar.getDay(date).deleteMeal(meal);

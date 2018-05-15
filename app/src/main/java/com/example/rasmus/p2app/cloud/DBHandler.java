@@ -752,9 +752,8 @@ public class DBHandler {
         return calendar;
     }
 
-    public static User getUser(int userID) {
+    public static void getUser(int userID, User user) {
         ResultSet resultSet = null;
-        User user = new User();
 
         if (conn == null) {
             throw new NoDBConnectionException();
@@ -783,7 +782,7 @@ public class DBHandler {
 
         closeResultSet(resultSet);
 
-        return user;
+
     }
 
     private static String createQueryString(String tableName, List<Integer> IDs) {

@@ -101,10 +101,10 @@ public class HomePageFragment extends Fragment {
 
     public void instantiateMeals() {
         // Draw all todays recipes on the front page
-        Day today = InRAM.today;
+        Day today = InRAM.calendar.getDay(LocalDate.now());
 
         if (today != null) {
-            ArrayList<Meal> todaysMeals = new ArrayList<>(InRAM.today.getMeals());
+            ArrayList<Meal> todaysMeals = new ArrayList<>(today.getMeals());
 
             Collections.sort(todaysMeals, new MealCompare());
             int startID = R.id.layout_1;
@@ -144,7 +144,7 @@ public class HomePageFragment extends Fragment {
 
 
     public void updateCalorieText() {
-        Day today = InRAM.today;
+        Day today = InRAM.calendar.getDay(LocalDate.now());
 
         if (today != null) {
             todaysCalories = today.getCalorieSum();
@@ -154,7 +154,6 @@ public class HomePageFragment extends Fragment {
             textCalories.setText("No recipes found");
         }
     }
-
 
 }
 
