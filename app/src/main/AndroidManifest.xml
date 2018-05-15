@@ -13,13 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".frontend.ui.activities.LoadingScreenActivity"
-            android:theme="@style/AppThemeNoActionBar">
+            android:name=".frontend.ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".frontend.ui.activities.LoadingScreenActivity"
+            android:theme="@style/AppThemeNoActionBar">
         </activity>
 
         <activity
@@ -48,6 +52,10 @@
 
         <activity
             android:name=".frontend.ui.activities.SettingsActivity">
+        </activity>
+
+        <activity
+            android:name=".frontend.ui.login.RegisterActivity">
         </activity>
 
     </application>

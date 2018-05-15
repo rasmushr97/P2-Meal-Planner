@@ -1,14 +1,11 @@
 package com.example.rasmus.p2app.backend;
 
-import android.support.v7.app.AppCompatActivity;
-
-import com.example.rasmus.p2app.backend.time.Meal;
-import com.example.rasmus.p2app.backend.userclasses.LocalUser;
-import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Calendar;
 import com.example.rasmus.p2app.backend.time.Day;
-import com.example.rasmus.p2app.backend.userclasses.User;
+import com.example.rasmus.p2app.backend.time.Meal;
+import com.example.rasmus.p2app.backend.userclasses.LocalUser;
+import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.exceptions.NoDBConnectionException;
 import com.example.rasmus.p2app.exceptions.NoUserException;
 
@@ -19,10 +16,11 @@ import java.util.List;
 import java.util.Map;
 
 public class InRAM {
-
     public static Calendar calendar;
 
+    public static int userID = 1;
     public static LocalUser user = new LocalUser();
+
 
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
     public static Map<String, LocalDate> mealsToMake = new HashMap<>();
@@ -34,16 +32,12 @@ public class InRAM {
 
     //TODO: login method
 
-    public static void initializeUser(int ID, AppCompatActivity activity) {
-        if(user == null){
-            user = new LocalUser();
-        }
-        user.initialize(ID, activity);
+    public static void initializeUser(int ID) {
+        user = new LocalUser().initialize(ID);
         user.setID(ID);
     }
 
     public static void initializeCalender() {
-
 
         if (user == null) {
             throw new NoUserException();

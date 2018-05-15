@@ -11,19 +11,19 @@ import com.example.rasmus.p2app.backend.recipeclasses.Review;
 import com.example.rasmus.p2app.backend.time.Calendar;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
-import com.example.rasmus.p2app.backend.userclasses.Goal;
-import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.backend.userclasses.User;
 import com.example.rasmus.p2app.exceptions.NoDBConnectionException;
 
-import java.sql.*;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DBHandler {
 
@@ -68,6 +68,9 @@ public class DBHandler {
 
     }
 
+    public static boolean isConnected(){
+        return !(conn == null);
+    }
 
     public static void closeCon() {
         // what exception to use here
@@ -80,6 +83,47 @@ public class DBHandler {
             e.printStackTrace();
         }
     }
+
+    public static boolean login(String username, String password){
+        ResultSet resultSet;
+        String sql = "SELECT user_id FROM user " +
+                "Where username='" + username + "' AND password='" +  password + "'";
+
+        try {
+            stmt = conn.createStatement();
+            resultSet = stmt.executeQuery(sql);
+
+            if(resultSet.next()){
+                InRAM.userID = resultSet.getInt("user_id");
+            }else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+
+    }
+
+    public static boolean registerUser(String username, String password){
+        boolean registerSuccess = true;
+
+        String sql = "INSERT INTO user (username, password) " +
+                "VALUES ('" + username + "', '" + password + "')";
+
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            registerSuccess = false;
+        }
+
+        return registerSuccess;
+    }
+
 
     public static void addToRecipeChosen(LocalDate date, Meal meal, int userID){
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));

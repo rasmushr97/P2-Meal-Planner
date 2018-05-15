@@ -9,9 +9,6 @@ import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.cloud.DBHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LoadingScreenActivity extends AppCompatActivity {
     final int startAnimationTime = 500;
 
@@ -20,22 +17,20 @@ public class LoadingScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
+        new Handler().postDelayed(() -> {
+            if (!DBHandler.isConnected()) {
                 DBHandler.createCon();
-
-                InRAM.initializeUser(1, LoadingScreenActivity.this);
-                InRAM.initializeCalender();
-                InRAM.test();
-
-                //DBHandler.closeCon();
-
-                Intent intent = new Intent(LoadingScreenActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
             }
+
+            InRAM.initializeUser(InRAM.userID);
+            InRAM.initializeCalender();
+            InRAM.test();
+
+            //DBHandler.closeCon();
+
+            Intent intent = new Intent(LoadingScreenActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }, startAnimationTime);
     }
 }

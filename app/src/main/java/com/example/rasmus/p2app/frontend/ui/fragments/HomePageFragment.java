@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,17 +36,13 @@ import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
-import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.frontend.other.MealCompare;
 import com.example.rasmus.p2app.frontend.ui.activities.PickMealActivity;
 
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 public class HomePageFragment extends Fragment {
 
@@ -142,7 +137,6 @@ public class HomePageFragment extends Fragment {
         }
 
     }
-
 
     public void updateCalorieText() {
         Day today = InRAM.calendar.getDay(LocalDate.now());
