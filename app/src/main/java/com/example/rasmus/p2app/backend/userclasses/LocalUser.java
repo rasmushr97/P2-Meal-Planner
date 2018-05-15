@@ -37,6 +37,7 @@ public class LocalUser extends User {
     private boolean isMale;
     private Goal goal = new Goal();
     private Preferences preferences;
+    private int wantLoseWeight;
 
     @Override
     public String toString() {
@@ -149,6 +150,10 @@ public class LocalUser extends User {
         this.preferences = preferences;
     }
 
+    public int getWantLoseWeight() { return wantLoseWeight; }
+
+    public void setWantLoseWeight(int wantLoseWeight) { this.wantLoseWeight = wantLoseWeight; }
+
     public static void main(String argv[]) {
         LocalUser localUser = new LocalUser();
         DBHandler.createCon();
@@ -161,6 +166,10 @@ public class LocalUser extends User {
         System.out.println(Goal.getUserWeight().values());
         DBHandler.closeCon();
     }
+
+
+
+
 
     public LocalUser initialize(int ID){
         LocalUser localUser = new LocalUser();
