@@ -72,7 +72,6 @@ public class RegisterActivity extends AppBackButtonActivity {
                     etWeight.getText().toString().equals("") || etGoalWeight.getText().toString().equals("")) {
                 Toast.makeText(this, "You have to fill all fields", Toast.LENGTH_LONG).show();
             } else {
-
                 // TODO: save the other information and upload weigths to the database
 
                 String username = etUsername.getText().toString();
