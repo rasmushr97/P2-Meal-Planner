@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.ui.activities;
+package com.example.rasmus.p2app.frontend.ui.settings;
 
 import android.content.Intent;
 import android.os.Bundle;

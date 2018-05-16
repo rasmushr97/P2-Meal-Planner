@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/P2-App.iml" filepath="$PROJECT_DIR$/P2-App.iml" />
       <module fileurl="file://$PROJECT_DIR$/P2AppSmile.iml" filepath="$PROJECT_DIR$/P2AppSmile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/P2app.iml" filepath="$PROJECT_DIR$/P2app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-3.0.17-ga-bin/mysql-connector-java-3.0.17-ga-bin.iml" filepath="$PROJECT_DIR$/mysql-connector-java-3.0.17-ga-bin/mysql-connector-java-3.0.17-ga-bin.iml" />
     </modules>

@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.ui.activities;
+package com.example.rasmus.p2app.frontend.ui.settings;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,11 +17,10 @@ import android.widget.Toast;
 
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.userclasses.Goal;
-import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 import com.example.rasmus.p2app.R;
-import com.example.rasmus.p2app.frontend.ui.fragments.ChartFragment;
+import com.example.rasmus.p2app.frontend.ui.misc.ChartFragment;
 import com.example.rasmus.p2app.frontend.other.GraphData;
 
 import java.time.LocalDate;

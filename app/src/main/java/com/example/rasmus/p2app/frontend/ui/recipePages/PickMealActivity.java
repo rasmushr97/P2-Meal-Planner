@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.ui.activities;
+package com.example.rasmus.p2app.frontend.ui.recipePages;
 
 
 import android.content.Intent;
@@ -12,15 +12,11 @@ import android.widget.ListView;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
-import com.example.rasmus.p2app.backend.time.Calendar;
-import com.example.rasmus.p2app.backend.time.Day;
-import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.

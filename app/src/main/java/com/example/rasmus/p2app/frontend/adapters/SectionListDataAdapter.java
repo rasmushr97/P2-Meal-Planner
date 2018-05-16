@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
-import com.example.rasmus.p2app.frontend.ui.activities.RecipeClickedActivity;
+import com.example.rasmus.p2app.frontend.ui.recipePages.RecipeClickedActivity;
 import com.example.rasmus.p2app.frontend.models.SingleItemModel;
 
 import java.util.ArrayList;

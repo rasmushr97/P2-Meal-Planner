@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".frontend.ui.activities.SettingsActivity">
+        <activity android:name=".frontend.ui.settings.SettingsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,18 +21,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".frontend.ui.activities.LoadingScreenActivity"
+            android:name=".frontend.ui.misc.LoadingScreenActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".frontend.ui.login.LoginActivity"/>
-        <activity android:name=".frontend.ui.activities.MainActivity"/>
-        <activity android:name=".frontend.ui.activities.PickMealActivity" />
-        <activity android:name=".frontend.ui.activities.PickRecipeActivity" />
-        <activity android:name=".frontend.ui.activities.DescriptionRecipeClickedActivity" />
-        <activity android:name=".frontend.ui.activities.RecipeClickedActivity" />
-        <activity android:name=".frontend.ui.activities.GoalActivity" />
+        <activity android:name=".frontend.ui.homeScreenPages.MainActivity"/>
+        <activity android:name=".frontend.ui.recipePages.PickMealActivity" />
+        <activity android:name=".frontend.ui.recipePages.PickRecipeActivity" />
+        <activity android:name=".frontend.ui.recipePages.DescriptionRecipeClickedActivity" />
+        <activity android:name=".frontend.ui.recipePages.RecipeClickedActivity" />
+        <activity android:name=".frontend.ui.settings.GoalActivity" />
         <activity android:name=".frontend.ui.login.RegisterActivity" />
-        <activity android:name=".frontend.ui.activities.SearchActivity" />
-        <activity android:name=".frontend.ui.activities.PrefActivity" />
+        <activity android:name=".frontend.ui.recipePages.SearchActivity" />
+        <activity android:name=".frontend.ui.settings.PrefActivity" />
     </application>
 
 </manifest>

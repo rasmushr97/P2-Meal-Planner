@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.example.rasmus.p2app.R;
-import com.example.rasmus.p2app.frontend.ui.activities.GoalActivity;
-import com.example.rasmus.p2app.frontend.ui.activities.MainActivity;
-import com.example.rasmus.p2app.frontend.ui.activities.SettingsActivity;
+import com.example.rasmus.p2app.frontend.ui.settings.GoalActivity;
+import com.example.rasmus.p2app.frontend.ui.homeScreenPages.MainActivity;
+import com.example.rasmus.p2app.frontend.ui.settings.SettingsActivity;
 
 public abstract class AppDrawerActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
     private FrameLayout view_stub; //This is the framelayout to keep your content view

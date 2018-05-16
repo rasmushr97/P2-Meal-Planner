@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.ui.activities;
+package com.example.rasmus.p2app.frontend.ui.recipePages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.frontend.adapters.DownloadImageTask;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
+import com.example.rasmus.p2app.frontend.ui.homeScreenPages.MainActivity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
