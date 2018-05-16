@@ -6,22 +6,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.recipeclasses.Ingredients;
+import com.example.rasmus.p2app.backend.time.Calendar;
+import com.example.rasmus.p2app.backend.time.Day;
+import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.frontend.adapters.ShoppingListAdapter;
 import com.example.rasmus.p2app.frontend.models.ShoppingListItemModel;
-import com.example.rasmus.p2app.backend.time.*;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 
 
@@ -177,7 +176,6 @@ public class ShoppingListFragment extends Fragment {
             items.add(new ShoppingListItemModel(false, ing));
         }
 
-        // TODO: save isSelected
 
         final ShoppingListAdapter adapter = new ShoppingListAdapter(getActivity(), items);
         listView.setAdapter(adapter);

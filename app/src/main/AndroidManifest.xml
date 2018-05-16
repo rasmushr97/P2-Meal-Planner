@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rasmus.p2app">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -13,52 +13,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".frontend.ui.login.LoginActivity">
+        <activity android:name=".frontend.ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".frontend.ui.activities.LoadingScreenActivity"
-            android:theme="@style/AppThemeNoActionBar">
-        </activity>
-
-        <activity
-            android:name=".frontend.ui.activities.MainActivity">
-        </activity>
-
-        <activity
-            android:name=".frontend.ui.activities.PickMealActivity">
-        </activity>
-
-        <activity
-            android:name=".frontend.ui.activities.PickRecipeActivity">
-        </activity>
-
-        <activity
-            android:name=".frontend.ui.activities.DescriptionRecipeClickedActivity">
-        </activity>
-
-        <activity
-            android:name=".frontend.ui.activities.RecipeClickedActivity">
-        </activity>
-
-        <activity
-            android:name=".frontend.ui.activities.GoalActivity">
-        </activity>
-
-        <activity
-            android:name=".frontend.ui.activities.SettingsActivity">
-        </activity>
-
-        <activity
-            android:name=".frontend.ui.login.RegisterActivity">
-        </activity>
-
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity android:name=".frontend.ui.activities.MainActivity"/>
+        <activity android:name=".frontend.ui.activities.PickMealActivity" />
+        <activity android:name=".frontend.ui.activities.PickRecipeActivity" />
+        <activity android:name=".frontend.ui.activities.DescriptionRecipeClickedActivity" />
+        <activity android:name=".frontend.ui.activities.RecipeClickedActivity" />
+        <activity android:name=".frontend.ui.activities.GoalActivity" />
+        <activity android:name=".frontend.ui.login.RegisterActivity" />
+        <activity android:name=".frontend.ui.activities.SearchActivity" />
+        <activity android:name=".frontend.ui.activities.SettingsActivity" />
+        <activity android:name=".frontend.ui.activities.PrefActivity" />
     </application>
 
 </manifest>
