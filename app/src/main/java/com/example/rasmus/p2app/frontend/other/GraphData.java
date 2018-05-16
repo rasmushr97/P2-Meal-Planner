@@ -27,8 +27,8 @@ public class GraphData {
     //Initialize userweight line
     public void initializeWeight(){
         /* Start and End date*/
-        LocalDate start = InRAM.user.getGoal().getFirstDate(Goal.getUserWeight());
-        LocalDate end = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
+        LocalDate start = Goal.getFirstDate(Goal.getUserWeight());
+        LocalDate end = Goal.getLastDate(Goal.getUserWeight());
 
         this.userWeight.clear();
         /* Goes through all days between the first and the end day */
@@ -38,7 +38,7 @@ public class GraphData {
         for(LocalDate date : dates){
             for(Map.Entry<LocalDate, Float> entry : Goal.getUserWeight().entrySet()){
                 if(date.equals(entry.getKey())){
-                    this.userWeight.add(new Entry(WEEKS.between(InRAM.user.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
+                    this.userWeight.add(new Entry(WEEKS.between(Goal.getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
                 }
             }
         }
@@ -47,25 +47,26 @@ public class GraphData {
     //Initialize goalweight line
     public void initializeGoal(){
         this.goalWeight.clear();
-        Goal.getGoalWeight().clear();
-        InRAM.user.getGoal().calcGoalDate(InRAM.user);
+        LocalDate finishDate = InRAM.user.getGoal().calcGoalDate(InRAM.user);
         /* Start and End date*/
-        LocalDate goalStart = InRAM.user.getGoal().getFirstDate(Goal.getUserWeight());
-        LocalDate goalEnd = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
-        long extendGraphWeeks = (long) (WEEKS.between(goalStart, goalEnd) * 0.2);
-        goalEnd = goalEnd.plusWeeks(extendGraphWeeks);
+        LocalDate graphEndDate = Goal.getLastDate(Goal.getUserWeight()).plusWeeks(3);
 
         /* Goes through all days between the first and the end day */
-        List<LocalDate> goalDates = Stream.iterate(goalStart, date -> date.plusDays(1))
-                .limit(ChronoUnit.DAYS.between(goalStart, goalEnd.plusDays(1).plusWeeks(2)))
+        List<LocalDate> goalDates = Stream.iterate(Goal.startDate, date -> date.plusDays(1))
+                .limit(ChronoUnit.DAYS.between(Goal.startDate, finishDate.plusDays(1)))
                 .collect(Collectors.toList());
+
         for(LocalDate date : goalDates){
+            if(date.isAfter(graphEndDate)){
+                break;
+            }
             for(Map.Entry<LocalDate, Float> entry : Goal.getGoalWeight().entrySet()){
-                if(date.equals(entry.getKey()) && DAYS.between(InRAM.user.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()) % 7 == 0){
-                    this.goalWeight.add(new Entry(WEEKS.between(InRAM.user.getGoal().getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
+                if(date.equals(entry.getKey()) && DAYS.between(Goal.startDate, entry.getKey()) % 7 == 0){
+                    this.goalWeight.add(new Entry(WEEKS.between(Goal.getFirstDate(Goal.getUserWeight()), entry.getKey()), entry.getValue()));
                 }
             }
         }
+
     }
 
     public ArrayList<Entry> getUserWeight() {

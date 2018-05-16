@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.example.rasmus.p2app.backend.userclasses.Goal.getFirstDate;
+
 public class GoalActivity extends AppBackButtonActivity {
 
     private static final String TAG = "GoalActivity";
@@ -38,13 +40,16 @@ public class GoalActivity extends AppBackButtonActivity {
     static GraphData graphData = new GraphData();
     private Button enterWeightButton;
     private EditText weightText;
+    private boolean goalChanged = false;
 
-    //TODO needs an onStop() or something method that saves the data
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
         setTitle("Weight control");
+
+        Goal.startDate = getFirstDate(Goal.getUserWeight());
 
         /* If there only is one weight measurement stored (graph needs atleast two)*/
         if(Goal.getUserWeight().size() == 1){
@@ -66,8 +71,8 @@ public class GoalActivity extends AppBackButtonActivity {
             if (!weightText.getText().toString().equals("")) { //Checks if the input is empty
                 if (Float.valueOf(weightText.getText().toString()) < 500) { //TODO right now checks if weight is below 500
                     /* Changes the user weight and adds it to the history of weight*/
-                    InRAM.user.setWeight(Float.valueOf(weightText.getText().toString())); //TODO add to database/XML
-                    InRAM.user.getGoal().addUserWeight(LocalDate.now(), (float) InRAM.user.getWeight()); //TODO same as above
+                    InRAM.user.setWeight(Float.valueOf(weightText.getText().toString()));
+                    InRAM.user.getGoal().addUserWeight(LocalDate.now(), (float) InRAM.user.getWeight());
                     hideKeyboard(GoalActivity.this);
                     /* Refreshes the graph with new weight */
                     graphData.initializeGoal();
@@ -77,8 +82,8 @@ public class GoalActivity extends AppBackButtonActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
                     builder.setTitle("You Are Fat! :)"); //TODO do something here (Positive button)
                     final EditText input = new EditText(GoalActivity.this);
-                    builder.setPositiveButton("Cancel", (dialog, which) -> dialog.cancel());
-                    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+                    builder.setPositiveButton("CANCEL", (dialog, which) -> dialog.cancel());
+                    builder.setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
                     builder.show();
                 }
             }
@@ -104,21 +109,40 @@ public class GoalActivity extends AppBackButtonActivity {
                     final EditText input = new EditText(GoalActivity.this);
                     input.setInputType(weightText.getInputType()); //Decimal input
                     builder.setView(input);
-                    builder.setPositiveButton("OK", (dialog, which) -> {
+                    builder.setPositiveButton("CHANGE", (dialog, which) -> {
                         if (!input.getText().toString().equals("")) { //Checks if input is empty)
                             InRAM.user.setGoalWeight(Float.valueOf(input.getText().toString()));
-                            if(InRAM.user.getGoalWeight() > InRAM.user.getWeight()){
+
+                            /* If user changes to gain weight */
+                            if(InRAM.user.getGoalWeight() > InRAM.user.getWeight() && InRAM.user.getWantLoseWeight() == 1){
                                 InRAM.user.setWantLoseWeight(0);
-                            } else{
-                                InRAM.user.setWantLoseWeight(1);
+                                Goal.startDate = Goal.getLastDate(Goal.getUserWeight());
+                                goalChanged = true;
                             }
+                            /* If user changes to lose weight */
+                            else if (InRAM.user.getGoalWeight() < InRAM.user.getWeight() && InRAM.user.getWantLoseWeight() == 0){
+                                InRAM.user.setWantLoseWeight(1);
+                                Goal.startDate = Goal.getLastDate(Goal.getUserWeight());
+                                goalChanged = true;
+                            }
+                            /* Select goal graph start point */
+                            else if (!Goal.startDate.equals(getFirstDate(Goal.getUserWeight()))) {
+                                if(InRAM.user.getGoalWeight() < InRAM.user.getWeight() && InRAM.user.getWantLoseWeight() == 1){
+                                    goalChanged = false;
+                                } else if(InRAM.user.getGoalWeight() > InRAM.user.getWeight() && InRAM.user.getWantLoseWeight() == 1){
+                                    goalChanged = false;
+                                } else {
+                                    Goal.startDate = Goal.getLastDate(Goal.getUserWeight());
+                                }
+                            }
+
                             goalEdit.setText(InRAM.user.getGoalWeight() + " kg"); //Shows the goal weight
                             /* Updates graph for goal line */
                             graphData.initializeGoal();
                             refreshGraph();
                         }
                     });
-                    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+                    builder.setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
                     builder.show();
                 });
     }
@@ -151,7 +175,7 @@ public class GoalActivity extends AppBackButtonActivity {
                 if(Goal.getUserWeight().size() > 2) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
                     //Last date of entering a weight
-                    LocalDate lastMeasurement = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
+                    LocalDate lastMeasurement = Goal.getLastDate(Goal.getUserWeight());
                     Object lastWeight = Goal.getUserWeight().get(lastMeasurement);
                     builder.setTitle("Are you sure?");
                     builder.setMessage("You are about to delete your last weight measurement forever, this cannot be undone!\n" +
@@ -160,8 +184,12 @@ public class GoalActivity extends AppBackButtonActivity {
                     /* Yes button deletes the latest weight measurement */
                     builder.setPositiveButton("DELETE", (dialog, which) -> {
                         Goal.getUserWeight().remove(lastMeasurement, lastWeight);
-                        LocalDate prevWeightDate = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
+                        LocalDate prevWeightDate = Goal.getLastDate(Goal.getUserWeight());
                         InRAM.user.setWeight(Goal.getUserWeight().get(prevWeightDate));
+                        /* Updates the date where goal line begins, if goal has been changed */
+                        if(goalChanged){
+                            Goal.startDate = Goal.getLastDate(Goal.getUserWeight());
+                        }
                         Toast.makeText(this, "Measurement deleted", Toast.LENGTH_SHORT).show();
                         /* Refreshes the graph */
                         graphData.initializeGoal();

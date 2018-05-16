@@ -1,5 +1,7 @@
 package com.example.rasmus.p2app.backend.userclasses;
 
+import com.example.rasmus.p2app.backend.InRAM;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +11,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Goal {
     public static Map<LocalDate, Float> userWeight = new HashMap<>();
     public static Map<LocalDate, Float> goalWeight = new HashMap<>();
+    public static LocalDate startDate = getFirstDate(Goal.getUserWeight());
 
     public void addUserWeight(LocalDate localDate, float weight) {
         userWeight.put(localDate, weight);
@@ -29,15 +32,7 @@ public class Goal {
 
     /* Method calculates the date where the user will reach their goal*/
     public LocalDate calcGoalDate(LocalUser localUser) {
-        LocalDate firstDate = getFirstDate(this.userWeight);
-        float tempWeight = userWeight.get(firstDate);
-
-        // determines whether the user wants to lose or gain weight
-        /*if (localUser.getGoalWeight() > localUser.getWeight()) {
-            localUser.setWantLoseWeight(0); // 0 is false the user want to gain weight
-        } else {
-            localUser.setWantLoseWeight(1); // 1 is true the user want to lose weight
-        }*/
+        float tempWeight = userWeight.get(startDate);
 
         int days = 0;
         if (localUser.getWantLoseWeight() == 1) {
@@ -45,7 +40,7 @@ public class Goal {
                 double height = (double) localUser.getHeight() / 100;
                 double BMI = tempWeight / (height * height);
                 tempWeight -= (calToKilo(calDeficit(BMI))) / 7;
-                addGoalWeight(firstDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
+                addGoalWeight(startDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
                 days++;
             }
         } else {
@@ -53,21 +48,17 @@ public class Goal {
                 double height = (double) localUser.getHeight() / 100;
                 double BMI = tempWeight / (height * height);
                 tempWeight += (calToKilo(calDeficit(BMI))) / 7;
-                addGoalWeight(firstDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
+                addGoalWeight(startDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
                 days++;
             }
         }
-        if(days == 0){
-            days = 8;
-            addGoalWeight(firstDate.plusDays(days), tempWeight);
-        }
-        LocalDate goalDate = firstDate.plusDays(days);
-        System.out.println("DAYS: " + days + " date: " + goalDate);
+
+        LocalDate goalDate = startDate.plusDays(days);
         return goalDate;
     }
 
     /* Finds the latest date where a certain weight was entered in the user/goal maps */
-    public LocalDate getLastDate(Map<LocalDate, Float> map) {
+    public static LocalDate getLastDate(Map<LocalDate, Float> map) {
         LocalDate lastDate = LocalDate.of(2000, 1, 1);
         for (Map.Entry<LocalDate, Float> entry : map.entrySet()) {
             if (entry.getKey().isAfter(lastDate)) {
@@ -83,7 +74,7 @@ public class Goal {
     }
 
     /* Method that finds the first date in a Map */
-    public LocalDate getFirstDate(Map<LocalDate, Float> map) {
+    public static LocalDate getFirstDate(Map<LocalDate, Float> map) {
         LocalDate firstDate = LocalDate.of(3000, 1, 1);
         for (Map.Entry<LocalDate, Float> entry : map.entrySet()) {
             if (entry.getKey().isBefore(firstDate)) {
@@ -125,14 +116,14 @@ public class Goal {
         double maxDiffInKg = 2.27;
         int week = 7;
 
-        for (Map.Entry<LocalDate, Float> entry : localUser.getGoal().getUserWeight().entrySet()) {
-            if (entry.getValue() - localUser.getGoal().getGoalWeight().get(entry.getKey()) > maxDiffInKg ||
-                    localUser.getGoal().getGoalWeight().get(entry.getKey()) - entry.getValue() > maxDiffInKg) {
+        for (Map.Entry<LocalDate, Float> entry : getUserWeight().entrySet()) {
+            if (entry.getValue() - getGoalWeight().get(entry.getKey()) > maxDiffInKg ||
+                    getGoalWeight().get(entry.getKey()) - entry.getValue() > maxDiffInKg) {
                 double calDeficit = this.calDeficit(localUser.calcBMI());
                 double gramADay = calDeficit / week;
                 // multiply with 1000 in order to get it in grams
-                double difInCal = (entry.getValue() - localUser.getGoal().getGoalWeight().get(entry.getKey())) * 1000;
-                int days = ((int) DAYS.between(this.getFirstDate(goalWeight), this.getLastDate(userWeight)));
+                double difInCal = (entry.getValue() - getGoalWeight().get(entry.getKey())) * 1000;
+                int days = ((int) DAYS.between(getFirstDate(goalWeight), getLastDate(userWeight)));
 
                 if (localUser.getWantLoseWeight() == 1) {
                     localUser.setCalorieDeficit((int) recalcDeficit(calDeficit, gramADay, difInCal, days));
@@ -159,7 +150,7 @@ public class Goal {
 
     public int calDeficit(double BMI) {
         int offset = (int) ((BMI * BMI) - (BMI * 5)); // calculates the amount of calories less you need to eat
-        return offset > 1000 ? 1000 : offset;         // max less calories per week is 1000
+        return offset > 1000 ? 1000 : offset;         // max calorie deficit per week is 1000
     }
 
     public double recalcDeficit(double calDeficit, double gramADay, double diffInCal, int days) {
