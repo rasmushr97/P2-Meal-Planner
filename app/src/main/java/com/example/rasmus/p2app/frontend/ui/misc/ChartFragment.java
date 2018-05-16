@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.ui.fragments;
+package com.example.rasmus.p2app.frontend.ui.misc;
 
 
 import android.graphics.Color;

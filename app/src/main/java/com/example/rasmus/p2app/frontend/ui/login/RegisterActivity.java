@@ -14,7 +14,7 @@ import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
-import com.example.rasmus.p2app.frontend.ui.activities.LoadingScreenActivity;
+import com.example.rasmus.p2app.frontend.ui.misc.LoadingScreenActivity;
 
 import java.time.LocalDate;
 

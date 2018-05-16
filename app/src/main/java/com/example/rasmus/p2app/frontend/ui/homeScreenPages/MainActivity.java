@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.ui.activities;
+package com.example.rasmus.p2app.frontend.ui.homeScreenPages;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,9 +9,6 @@ import android.view.MenuItem;
 
 import com.example.rasmus.p2app.frontend.AppDrawerActivity;
 import com.example.rasmus.p2app.R;
-import com.example.rasmus.p2app.frontend.ui.fragments.CalenderFragment;
-import com.example.rasmus.p2app.frontend.ui.fragments.HomePageFragment;
-import com.example.rasmus.p2app.frontend.ui.fragments.ShoppingListFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class MainActivity extends AppDrawerActivity {

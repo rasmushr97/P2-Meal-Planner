@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.ui.activities;
+package com.example.rasmus.p2app.frontend.ui.misc;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
-import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.cloud.DBHandler;
+import com.example.rasmus.p2app.frontend.ui.homeScreenPages.MainActivity;
 
 public class LoadingScreenActivity extends AppCompatActivity {
     final int startAnimationTime = 500;

@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.ui.activities;
+package com.example.rasmus.p2app.frontend.ui.recipePages;
 
 import android.os.Bundle;
 import android.widget.ImageView;

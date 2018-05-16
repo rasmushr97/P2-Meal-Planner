@@ -1,5 +1,5 @@
 
-package com.example.rasmus.p2app.frontend.ui.fragments;
+package com.example.rasmus.p2app.frontend.ui.homeScreenPages;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
