@@ -87,7 +87,14 @@ public class ShoppingListFragment extends Fragment {
             } else if (ing.getName().toUpperCase().equals("WATER") || ing.getName().toUpperCase().contains("WATER")){
                 iterator.remove();
                 continue;
+            } else if (ing.getName().toUpperCase().equals("SALT ") || ing.getName().toUpperCase().equals("SALT")){
+                iterator.remove();
+                continue;
+            } else if (ing.getName().toUpperCase().equals("PEPPER ") || ing.getName().toUpperCase().equals("PEPPER")){
+                iterator.remove();
+                continue;
             }
+
             /* Removes the unwanted words */
             for(int i = 0; i < removeWords.length; i++){
                 String[] temp = ing.getName().split(" ");
