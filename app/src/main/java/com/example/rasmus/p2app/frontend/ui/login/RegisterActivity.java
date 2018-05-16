@@ -11,9 +11,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.rasmus.p2app.R;
+import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 import com.example.rasmus.p2app.frontend.ui.activities.LoadingScreenActivity;
+
+import java.time.LocalDate;
 
 public class RegisterActivity extends AppBackButtonActivity {
 
@@ -72,15 +75,30 @@ public class RegisterActivity extends AppBackButtonActivity {
                     etWeight.getText().toString().equals("") || etGoalWeight.getText().toString().equals("")) {
                 Toast.makeText(this, "You have to fill all fields", Toast.LENGTH_LONG).show();
             } else {
-                // TODO: save the other information and upload weigths to the database
+
+                /* Gets the values for database */
+                float weight = Float.parseFloat(etWeight.getText().toString());
+                float goalweight = Float.parseFloat(etGoalWeight.getText().toString());
+                int age = Integer.parseInt(etAge.getText().toString());
+                int height = Integer.parseInt(etHeight.getText().toString());
+                int sex;
+                if(isMale){
+                    sex = 1;
+                } else{ sex = 0; }
+                int toLoseWeight;
+                if(weight > goalweight){
+                    toLoseWeight = 1;
+                } else { toLoseWeight = 0; }
 
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if (DBHandler.registerUser(username, password)) {
+
+                if (DBHandler.registerUser(username, password, height, sex, age, toLoseWeight)) {
                     Toast.makeText(this, "Registration was a Success", Toast.LENGTH_SHORT).show();
 
                     Intent intent;
                     if (DBHandler.login(username, password)) {
+                        DBHandler.addWeightMeasurement(LocalDate.now(), weight, goalweight, InRAM.userID);
                         intent = new Intent(RegisterActivity.this, LoadingScreenActivity.class);
                     } else {
                         intent = new Intent(RegisterActivity.this, LoginActivity.class);

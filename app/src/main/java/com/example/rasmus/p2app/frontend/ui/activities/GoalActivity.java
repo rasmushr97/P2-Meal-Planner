@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.userclasses.Goal;
@@ -159,10 +160,10 @@ public class GoalActivity extends AppBackButtonActivity {
                             "\nTime: " + (lastMeasurement.equals(LocalDate.now()) ? "Today" : lastMeasurement));
                     /* Yes button deletes the latest weight measurement */
                     builder.setPositiveButton("DELETE", (dialog, which) -> {
-                        //TODO Next 3 lines should maybe do something with database/XML
                         Goal.getUserWeight().remove(lastMeasurement, lastWeight);
                         LocalDate prevWeightDate = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
                         InRAM.user.setWeight(Goal.getUserWeight().get(prevWeightDate));
+                        Toast.makeText(this, "Measurement deleted", Toast.LENGTH_SHORT).show();
                         /* Refreshes the graph */
                         graphData.initializeGoal(InRAM.user);
                         graphData.initializeWeight(InRAM.user);
