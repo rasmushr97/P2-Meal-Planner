@@ -25,7 +25,7 @@ public class GraphData {
     public static ArrayList<Entry> goalWeight = new ArrayList<>();
 
     //Initialize userweight line
-    public void initializeWeight(LocalUser localUser){
+    public void initializeWeight(){
         /* Start and End date*/
         LocalDate start = InRAM.user.getGoal().getFirstDate(Goal.getUserWeight());
         LocalDate end = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
@@ -45,10 +45,10 @@ public class GraphData {
     }
 
     //Initialize goalweight line
-    public void initializeGoal(LocalUser localUser){
+    public void initializeGoal(){
         this.goalWeight.clear();
         Goal.getGoalWeight().clear();
-        InRAM.user.getGoal().calcGoalDate(localUser);
+        InRAM.user.getGoal().calcGoalDate(InRAM.user);
         /* Start and End date*/
         LocalDate goalStart = InRAM.user.getGoal().getFirstDate(Goal.getUserWeight());
         LocalDate goalEnd = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());

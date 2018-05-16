@@ -142,11 +142,11 @@ public class DBHandler {
 
     }
 
-    public static boolean registerUser(String username, String password){
+    public static boolean registerUser(String username, String password, int height, int sex, int age, int loseWeight){
         boolean registerSuccess = true;
 
-        String sql = "INSERT INTO user (username, password) " +
-                "VALUES ('" + username + "', '" + password + "')";
+        String sql = "INSERT INTO user (username, password, height, sex, age, for_weight_loss) " +
+                "VALUES ('" + username + "', '" + password + "', " + height + ", " + sex + ", " + age + ", " + loseWeight + ")";
 
         try {
             stmt = conn.createStatement();

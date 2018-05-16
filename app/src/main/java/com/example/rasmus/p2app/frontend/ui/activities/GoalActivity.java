@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.userclasses.Goal;
@@ -55,8 +56,8 @@ public class GoalActivity extends AppBackButtonActivity {
             InRAM.user.getGoal().addUserWeight(key, value);
         }
         /* Loads graph */
-        graphData.initializeWeight(InRAM.user);
-        graphData.initializeGoal(InRAM.user);
+        graphData.initializeWeight();
+        graphData.initializeGoal();
         refreshGraph();
 
         /* Userweight button and textbox */
@@ -70,8 +71,8 @@ public class GoalActivity extends AppBackButtonActivity {
                     InRAM.user.getGoal().addUserWeight(LocalDate.now(), (float) InRAM.user.getWeight()); //TODO same as above
                     hideKeyboard(GoalActivity.this);
                     /* Refreshes the graph with new weight */
-                    graphData.initializeGoal(InRAM.user);
-                    graphData.initializeWeight(InRAM.user);
+                    graphData.initializeGoal();
+                    graphData.initializeWeight();
                     refreshGraph();
                 } else { //TODO If you are above 500kg
                     AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
@@ -114,7 +115,7 @@ public class GoalActivity extends AppBackButtonActivity {
                             }
                             goalEdit.setText(InRAM.user.getGoalWeight() + " kg"); //Shows the goal weight
                             /* Updates graph for goal line */
-                            graphData.initializeGoal(InRAM.user);
+                            graphData.initializeGoal();
                             refreshGraph();
                         }
                     });
@@ -159,13 +160,13 @@ public class GoalActivity extends AppBackButtonActivity {
                             "\nTime: " + (lastMeasurement.equals(LocalDate.now()) ? "Today" : lastMeasurement));
                     /* Yes button deletes the latest weight measurement */
                     builder.setPositiveButton("DELETE", (dialog, which) -> {
-                        //TODO Next 3 lines should maybe do something with database/XML
                         Goal.getUserWeight().remove(lastMeasurement, lastWeight);
                         LocalDate prevWeightDate = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
                         InRAM.user.setWeight(Goal.getUserWeight().get(prevWeightDate));
+                        Toast.makeText(this, "Measurement deleted", Toast.LENGTH_SHORT).show();
                         /* Refreshes the graph */
-                        graphData.initializeGoal(InRAM.user);
-                        graphData.initializeWeight(InRAM.user);
+                        graphData.initializeGoal();
+                        graphData.initializeWeight();
                         refreshGraph();
                     });
                     builder.setNegativeButton("CANCEL", dialogClickListener).show();
