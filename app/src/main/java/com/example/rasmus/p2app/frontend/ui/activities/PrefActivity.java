@@ -21,38 +21,51 @@ public class PrefActivity extends AppBackButtonActivity {
 
         ListView listView = findViewById(R.id.preferenceListView);
 
-        String[] items = {"Display Name", "Dislike", "Allergies", "Vegan Mode"};
+        String[] items = {"Display Name", "Dislike", "Allergies"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(PrefActivity.this, android.R.layout.simple_list_item_1, items);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((adapterView, view, i, l) ->  {
             switch (i){
                 case 0:
-                    AlertDialog.Builder builder = new AlertDialog.Builder(PrefActivity.this);
-                    builder.setTitle("Enter new Display Name");
-                    final EditText input = new EditText(PrefActivity.this);
-                    input.setText("Rasmus");
-                    //input.setInputType(weightText.getInputType()); //Decimal input
-                    builder.setView(input);
-                    builder.setPositiveButton("OK", (dialog, which) -> {
-                        Toast.makeText(this, input.getText().toString(), Toast.LENGTH_SHORT).show();
-                    });
-                    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-                    builder.show();
+                    displayNameClicked();
                     break;
 
-                case 1: break;
+                case 1:
+                    dislikesClicked();
+                    break;
+
+                case 2:
+                    allergiesClicked();
+                    break;
+
 
             }
         });
 
+    }
 
+    private void displayNameClicked(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(PrefActivity.this);
+        builder.setTitle("Enter new Display Name");
+        final EditText input = new EditText(PrefActivity.this);
+        input.setText("Rasmus");
+        //input.setInputType(weightText.getInputType()); //Decimal input
+        builder.setView(input);
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            Toast.makeText(this, input.getText().toString(), Toast.LENGTH_SHORT).show();
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
 
-
-
-
-
-
+    private void dislikesClicked(){
 
     }
+
+    private void allergiesClicked(){
+
+    }
+
+
 }
