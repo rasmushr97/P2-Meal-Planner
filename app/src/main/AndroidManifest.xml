@@ -13,17 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".frontend.ui.misc.LoadingScreenActivity"
-            android:theme="@style/AppThemeNoActionBar">
+        <activity android:name=".frontend.ui.settings.SettingsActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".frontend.ui.settings.SettingsActivity" />
-        <activity android:name=".frontend.ui.login.LoginActivity"/>
+
+        <activity android:name=".frontend.ui.misc.LoadingScreenActivity"
+            android:theme="@style/AppThemeNoActionBar"/>
+    <!-->
+    <activity android:name=".frontend.ui.login.LoginActivity">
+    <activity android:name=".frontend.ui.settings.SettingsActivity" />
+    <-->
         <activity android:name=".frontend.ui.homeScreenPages.MainActivity"/>
         <activity android:name=".frontend.ui.recipePages.PickMealActivity" />
         <activity android:name=".frontend.ui.recipePages.PickRecipeActivity" />

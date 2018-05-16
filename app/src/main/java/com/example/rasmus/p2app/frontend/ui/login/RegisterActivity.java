@@ -1,6 +1,8 @@
 package com.example.rasmus.p2app.frontend.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -69,12 +71,18 @@ public class RegisterActivity extends AppBackButtonActivity {
 
         Button registerButton = findViewById(R.id.bRegister);
         registerButton.setOnClickListener(event -> {
-            System.out.println(etAge.getText().toString().equals(""));
+
             if (etAge.getText().toString().equals("") || etName.getText().toString().equals("") || etPassword.getText().toString().equals("") ||
                     etUsername.getText().toString().equals("") || etHeight.getText().toString().equals("") ||
                     etWeight.getText().toString().equals("") || etGoalWeight.getText().toString().equals("")) {
+
                 Toast.makeText(this, "You have to fill all fields", Toast.LENGTH_LONG).show();
             } else {
+
+                SharedPreferences sharedPref = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("display_name", etName.getText().toString());
+                editor.apply();
 
                 /* Gets the values for database */
                 float weight = Float.parseFloat(etWeight.getText().toString());
