@@ -111,7 +111,7 @@ public class GoalActivity extends AppBackButtonActivity {
                                 InRAM.user.setWantLoseWeight(0);
                             } else{
                                 InRAM.user.setWantLoseWeight(1);
-                            }//TODO update database/XML
+                            }
                             goalEdit.setText(InRAM.user.getGoalWeight() + " kg"); //Shows the goal weight
                             /* Updates graph for goal line */
                             graphData.initializeGoal(InRAM.user);
@@ -225,7 +225,7 @@ public class GoalActivity extends AppBackButtonActivity {
         }
 
         /* Updates the XML file with user data */
-        LocalUser.updateXML(InRAM.user, GoalActivity.this);
+        //LocalUser.updateXML(InRAM.user, GoalActivity.this);
     }
 }
 

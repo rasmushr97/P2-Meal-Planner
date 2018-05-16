@@ -95,6 +95,7 @@ public class DBHandler {
 
             if(resultSet.next()){
                 InRAM.userID = resultSet.getInt("user_id");
+
             }else {
                 return false;
             }
@@ -104,6 +105,40 @@ public class DBHandler {
         }
 
         return true;
+
+    }
+
+    public static void getUserData(int userID){
+        ResultSet resultSet = null;
+
+        if (conn == null) {
+            throw new NoDBConnectionException();
+        }
+
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT height, sex, age, for_weight_loss FROM user WHERE user_id=" + userID;
+            resultSet = stmt.executeQuery(sql);
+
+            //Extract data from result set
+            while (resultSet.next()) {
+                //Retrieve by column name
+                InRAM.user.setHeight(resultSet.getInt("height"));
+                InRAM.user.setAge(resultSet.getInt("age"));
+                if(resultSet.getInt("sex") == 1){
+                    InRAM.user.setMale(true);
+                } else{
+                    InRAM.user.setMale(false);
+                }
+                InRAM.user.setWantLoseWeight(resultSet.getInt("for_weight_loss"));
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        closeResultSet(resultSet);
 
     }
 
@@ -760,6 +795,7 @@ public class DBHandler {
                 LocalDate localDate = LocalDate.parse(date, dateFormatter);
 
                 InRAM.user.getGoal().addUserWeight(localDate, (float) curWeight);
+                InRAM.user.setWeight(curWeight);
                 //goal.addGoalWeight(localDate, (float) goalWeight);
                 i++;
             }

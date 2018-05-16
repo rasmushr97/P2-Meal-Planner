@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
+import com.example.rasmus.p2app.backend.userclasses.LocalUser;
 import com.example.rasmus.p2app.cloud.DBHandler;
 
 public class LoadingScreenActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
                 DBHandler.createCon();
             }
 
-            InRAM.initializeUser(InRAM.userID, LoadingScreenActivity.this);
+            InRAM.initializeUser(InRAM.userID);
             InRAM.initializeCalender();
             InRAM.test();
 

@@ -34,11 +34,11 @@ public class InRAM {
 
     //TODO: login method
 
-    public static void initializeUser(int ID, AppCompatActivity activity) {
+    public static void initializeUser(int ID) {
         if(user == null){
             user = new LocalUser();
         }
-        user.initialize(ID, activity);
+        user.initialize(ID);
         user.setID(ID);
     }
 

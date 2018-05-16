@@ -33,14 +33,13 @@ public class Goal {
         float tempWeight = userWeight.get(firstDate);
 
         // determines whether the user wants to lose or gain weight
-  /*      if (localUser.getGoalWeight() > localUser.getWeight()) {
+        /*if (localUser.getGoalWeight() > localUser.getWeight()) {
             localUser.setWantLoseWeight(0); // 0 is false the user want to gain weight
         } else {
             localUser.setWantLoseWeight(1); // 1 is true the user want to lose weight
-        }
-*/
+        }*/
+
         int days = 0;
-        //getGoalWeight().clear();
         if (localUser.getWantLoseWeight() == 1) {
             while (tempWeight > localUser.getGoalWeight()) {
                 double height = (double) localUser.getHeight() / 100;
@@ -58,7 +57,12 @@ public class Goal {
                 days++;
             }
         }
+        if(days == 0){
+            days = 8;
+            addGoalWeight(firstDate.plusDays(days), tempWeight);
+        }
         LocalDate goalDate = firstDate.plusDays(days);
+        System.out.println("DAYS: " + days + " date: " + goalDate);
         return goalDate;
     }
 
