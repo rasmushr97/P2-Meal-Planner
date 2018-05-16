@@ -11,7 +11,7 @@
         android:id="@+id/recipeTitel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="105dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/img_pasta" />
+        app:srcCompat="@color/cardview_shadow_end_color" />
 
 
     <ScrollView
@@ -55,44 +55,51 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/description_button"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
+                android:id="@+id/btn_add_recipe"
+                android:layout_width="116dp"
+                android:layout_height="48dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/custombutton1"
+                android:text="Add Recipe"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/RecipeCalories"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/RecipeCalories" />
+
+            <Button
+                android:id="@+id/description_button"
+                android:layout_width="116dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
                 android:text="Info"
-                android:textColor="@android:color/background_light"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/RecipeCookTime"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/RecipeCookTime" />
 
             <TextView
                 android:id="@+id/RecipeCalories"
                 android:layout_width="0dp"
-                android:layout_height="27dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:text="Calories: 680"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/description_button"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_add_recipe"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/RecipeCookTime"
                 android:layout_width="0dp"
-                android:layout_height="28dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="Time: 45 minutes"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/description_button"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/RecipeCalories" />
 
@@ -122,23 +129,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipeTitel" />
-
-    <Button
-        android:id="@+id/btn_add_recipe"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Add Recipe"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recipeTitel"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.0" />
 
 
 </android.support.constraint.ConstraintLayout>

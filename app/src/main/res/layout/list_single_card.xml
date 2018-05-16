@@ -21,7 +21,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_money" />
+            android:src="@drawable/ic_placeholder" />
 
 
         <TextView

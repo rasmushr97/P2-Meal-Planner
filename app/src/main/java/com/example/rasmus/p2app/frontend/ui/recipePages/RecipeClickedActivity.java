@@ -34,7 +34,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
         setContentView(R.layout.activity_recipe_clicked);
         setTitle("Recipe Picked");
 
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             recipeID = getIntent().getExtras().getInt("id");
             delete = getIntent().getExtras().getBoolean("delete");
         }
@@ -56,16 +56,16 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
         // TODO: add directions
         TextView ingredients = findViewById(R.id.RecipeItems);
         String ingredientsText = "";
-        for(Ingredients ingredient : recipe.getIngredients()){
+        for (Ingredients ingredient : recipe.getIngredients()) {
             String inParentheses = "";
-            if(!ingredient.getInParentheses().equals("")){
+            if (!ingredient.getInParentheses().equals("")) {
                 inParentheses = "(" + ingredient.getInParentheses() + ")";
             }
             ingredientsText = ingredientsText.concat(ingredient.getName() + " " + inParentheses + "\nAmount: " + ingredient.getAmount() + " " + ingredient.getUnit() + "\n\n");
         }
 
         ingredientsText = ingredientsText.concat("\n\n");
-        for(String direction : recipe.getDirections()){
+        for (String direction : recipe.getDirections()) {
             ingredientsText = ingredientsText.concat(direction + "\n\n");
         }
         ingredients.setText(ingredientsText);
@@ -73,71 +73,63 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
 
         // App bar back button and onClickListener
         Button button = findViewById(R.id.description_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Switches to the Description clicked page (activity)
-                Intent intent = new Intent(RecipeClickedActivity.this, DescriptionRecipeClickedActivity.class);
-                intent.putExtra("id", recipeID);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-            }
+        button.setOnClickListener(view -> {
+            // Switches to the Description clicked page (activity)
+            Intent intent = new Intent(RecipeClickedActivity.this, DescriptionRecipeClickedActivity.class);
+            intent.putExtra("id", recipeID);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         });
 
         // Add recipe button and onClickListener
         Button addRecipeButton = findViewById(R.id.btn_add_recipe);
-        if(delete){
+        if (delete) {
             addRecipeButton.setText("Delete Recipe");
         }
-        addRecipeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        addRecipeButton.setOnClickListener(view -> {
 
+            if (delete) {
+                Map<LocalDate, Day> daysInCalender = InRAM.calendar.getDates();
 
-                if(delete){
-                    Map<LocalDate, Day> daysInCalender = InRAM.calendar.getDates();
+                String mealDate = getIntent().getExtras().getString("date");
+                LocalDate date = LocalDate.parse(mealDate, DateTimeFormatter.ofPattern("d/M/yyyy"));
 
-                    String mealDate = getIntent().getExtras().getString("date");
-                    LocalDate date = LocalDate.parse(mealDate, DateTimeFormatter.ofPattern("d/M/yyyy"));
+                InRAM.deleteMeal(date, daysInCalender.get(date).getMeal(recipeID));
 
-                    InRAM.deleteMeal(date, daysInCalender.get(date).getMeal(recipeID));
+                // Switches back to the home page (activity)
+                Intent intent = new Intent(RecipeClickedActivity.this, MainActivity.class);
+                // Clears all previous activities from the stack
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
-                    // Switches back to the home page (activity)
-                    Intent intent = new Intent(RecipeClickedActivity.this, MainActivity.class);
-                    // Clears all previous activities from the stack
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+            } else {
 
-                } else {
-
-                    // TODO: throw an exception instead
-                    if (InRAM.mealsToMake.size() != 1) {
-                        return;
-                    }
-
-                    String meal = "";
-                    for (String s : InRAM.mealsToMake.keySet()) {
-                        meal = s;
-                    }
-                    LocalDate date = null;
-                    for (LocalDate d : InRAM.mealsToMake.values()) {
-                        date = d;
-                    }
-                    InRAM.mealsToMake = new HashMap<>();
-
-                    InRAM.addMeal(date, new Meal(meal, InRAM.recipesInRAM.get(recipeID)));
-
-                    // Switches back to the home page (activity)
-                    Intent intent = new Intent(RecipeClickedActivity.this, MainActivity.class);
-                    // Clears all previous activities from the stack
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                // TODO: throw an exception instead
+                if (InRAM.mealsToMake.size() != 1) {
+                    return;
                 }
+
+                String meal = "";
+                for (String s : InRAM.mealsToMake.keySet()) {
+                    meal = s;
+                }
+                LocalDate date = null;
+                for (LocalDate d : InRAM.mealsToMake.values()) {
+                    date = d;
+                }
+                InRAM.mealsToMake = new HashMap<>();
+
+                InRAM.addMeal(date, new Meal(meal, InRAM.recipesInRAM.get(recipeID)));
+
+                // Switches back to the home page (activity)
+                Intent intent = new Intent(RecipeClickedActivity.this, MainActivity.class);
+                // Clears all previous activities from the stack
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
+
         });
-
     }
-
 }
