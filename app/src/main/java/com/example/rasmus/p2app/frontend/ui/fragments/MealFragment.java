@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.rasmus.p2app.R;
+import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.frontend.adapters.DownloadImageTask;
 import com.example.rasmus.p2app.frontend.ui.activities.RecipeClickedActivity;
 import com.github.mikephil.charting.animation.Easing;
@@ -67,7 +68,7 @@ public class MealFragment extends Fragment {
         PieChart chart = view.findViewById(R.id.home_chart_1);
         List<PieEntry> pieChartEntries = new ArrayList<>();
 
-        int goalCalories = 2500 - calories;
+        int goalCalories = InRAM.user.getCaloriesPerDay() - calories;
         pieChartEntries.add(new PieEntry(calories, "Meal"));
         pieChartEntries.add(new PieEntry(goalCalories, "Total"));
         setupPieChart(chart, pieChartEntries);
@@ -118,7 +119,7 @@ public class MealFragment extends Fragment {
         chart.setData(data);
         // Cool starting animation for the creation of the pie chart
         chart.animateY(750, Easing.EasingOption.EaseInOutQuad);
-        String centerText = calories + " / " + 2500;
+        String centerText = calories + " / " + InRAM.user.getCaloriesPerDay();
         chart.setCenterText(centerText);
         chart.setCenterTextColor(Color.WHITE);
 
