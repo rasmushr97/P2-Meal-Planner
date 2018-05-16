@@ -34,7 +34,6 @@ public class SettingsActivity extends AppBackButtonActivity {
                     intent = new Intent(SettingsActivity.this, LoginActivity.class);
                     break;
             }
-
             startActivity(intent);
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 

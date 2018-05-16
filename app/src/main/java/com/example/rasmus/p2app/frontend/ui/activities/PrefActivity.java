@@ -1,7 +1,12 @@
 package com.example.rasmus.p2app.frontend.ui.activities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
@@ -13,5 +18,41 @@ public class PrefActivity extends AppBackButtonActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pref);
         setTitle("Preferences");
+
+        ListView listView = findViewById(R.id.preferenceListView);
+
+        String[] items = {"Display Name", "Dislike", "Allergies", "Vegan Mode"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(PrefActivity.this, android.R.layout.simple_list_item_1, items);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener((adapterView, view, i, l) ->  {
+            switch (i){
+                case 0:
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PrefActivity.this);
+                    builder.setTitle("Enter new Display Name");
+                    final EditText input = new EditText(PrefActivity.this);
+                    input.setText("Rasmus");
+                    //input.setInputType(weightText.getInputType()); //Decimal input
+                    builder.setView(input);
+                    builder.setPositiveButton("OK", (dialog, which) -> {
+                        Toast.makeText(this, input.getText().toString(), Toast.LENGTH_SHORT).show();
+                    });
+                    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+                    builder.show();
+                    break;
+
+                case 1: break;
+
+            }
+        });
+
+
+
+
+
+
+
+
+
     }
 }
