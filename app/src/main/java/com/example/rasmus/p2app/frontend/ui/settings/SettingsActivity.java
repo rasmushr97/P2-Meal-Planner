@@ -36,7 +36,6 @@ public class SettingsActivity extends AppBackButtonActivity {
             }
             startActivity(intent);
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-
         });
 
     }

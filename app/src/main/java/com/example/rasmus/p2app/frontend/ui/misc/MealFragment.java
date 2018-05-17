@@ -46,6 +46,8 @@ public class MealFragment extends Fragment {
 
         // pick up the bundle sent from MainActivity
         // Use the information to create the title, image and piechart of the Fragment
+
+        // TODO: refactor so we only need to pass the ID
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             image = bundle.getString("img");

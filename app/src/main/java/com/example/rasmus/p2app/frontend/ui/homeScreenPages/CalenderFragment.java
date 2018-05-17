@@ -20,28 +20,39 @@
 
 package com.example.rasmus.p2app.frontend.ui.homeScreenPages;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
+import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Calendar;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
+import com.example.rasmus.p2app.frontend.adapters.CalendarAdapter;
+import com.example.rasmus.p2app.frontend.models.ShoppingListItemModel;
+import com.example.rasmus.p2app.frontend.other.MealCompare;
+import com.example.rasmus.p2app.frontend.ui.recipePages.PickMealActivity;
+import com.example.rasmus.p2app.frontend.ui.recipePages.RecipeClickedActivity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CalenderFragment extends Fragment {
-    Calendar c;
-
+    private Calendar calend;
+    private View view;
+    private ListView lvCalendar;
+    private FloatingActionButton fab;
 
     public static CalenderFragment newInstance() {
         CalenderFragment fragment = new CalenderFragment();
@@ -57,105 +68,80 @@ public class CalenderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_calender, container, false);
+        view = inflater.inflate(R.layout.fragment_calender, container, false);
 
         final CalendarView calendar = (CalendarView) view.findViewById(R.id.calendar);
-        final Button breakfastButton = view.findViewById(R.id.breakfastButton);
-        final Button lunchButton = view.findViewById(R.id.lunchButton);
-        final Button dinnerButton = view.findViewById(R.id.dinnerButton);
-        final TextView breakfastDyn = view.findViewById(R.id.breakfastDyn);
-        final TextView lunchDyn = view.findViewById(R.id.lunchDyn);
-        final TextView dinnerDyn = view.findViewById(R.id.dinnerDyn);
+        lvCalendar = view.findViewById(R.id.lvCalendar);
 
-        c = InRAM.calendar;
+        setFabListener(LocalDate.now());
 
-        //default
-        breakfastDyn.setText(R.string.default_food);
-        lunchDyn.setText(R.string.default_food);
-        dinnerDyn.setText(R.string.default_food);
+        calend = InRAM.calendar;
 
+        Day today = calend.getDay(LocalDate.now());
 
-        breakfastButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Button Clicked", Toast.LENGTH_SHORT).show();
-        });
-        lunchButton.setOnClickListener(v -> { });
-        dinnerButton.setOnClickListener(v ->{ });
-
-
-        final Day today = c.getDay(LocalDate.now());
-        int i = 0;
+        List<Meal> todaysMeals = new ArrayList<>();
         if (today != null) {
-            for (Meal meal : today.getMeals()) {
-                switch (i) {
-                    case 0:
-                        breakfastDyn.setText(meal.getRecipe().getTitle());
-                        break;
-
-                    case 1:
-                        lunchDyn.setText(meal.getRecipe().getTitle());
-                        break;
-
-                    case 2:
-                        dinnerDyn.setText(meal.getRecipe().getTitle());
-                        break;
-                }
-
-                i++;
-            }
+            todaysMeals = new ArrayList<>(today.getMeals());
+            todaysMeals.sort(new MealCompare());
         }
+        drawMeals(todaysMeals, LocalDate.now());
 
+        calendar.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
+            month += 1;
 
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                month += 1;
+            Toast.makeText(getContext(),
+                    dayOfMonth + "/" + month + "/" + year, Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(getContext(),
-                        dayOfMonth + "/" + month + "/" + year, Toast.LENGTH_SHORT).show();
+            String clickedDate = dayOfMonth + "/" + month + "/" + year;
+            LocalDate date = LocalDate.parse(clickedDate, DateTimeFormatter.ofPattern("d/M/yyyy"));
+            setFabListener(date);
 
-                String clickedDate = dayOfMonth + "/" + month + "/" + year;
-                LocalDate date = LocalDate.parse(clickedDate, DateTimeFormatter.ofPattern("d/M/yyyy"));
+            Day day = calend.getDay(date);
 
-
-                // TODO: create fragment instead
-
-                Day clickedDay = c.getDates().get(date);
-                if (clickedDay != null) {
-                    breakfastDyn.setText("No meal found");
-                    lunchDyn.setText("No meal found");
-                    dinnerDyn.setText("No meal found");
-
-                    int i = 0;
-                    for (Meal meal : clickedDay.getMeals()) {
-                        switch (i) {
-                            case 0:
-                                breakfastDyn.setText(meal.getRecipe().getTitle());
-                                break;
-
-                            case 1:
-                                lunchDyn.setText(meal.getRecipe().getTitle());
-                                break;
-
-                            case 2:
-                                dinnerDyn.setText(meal.getRecipe().getTitle());
-                                break;
-                        }
-
-                        i++;
-                    }
-
-
-                } else {
-                    breakfastDyn.setText("No meal found");
-                    lunchDyn.setText("No meal found");
-                    dinnerDyn.setText("No meal found");
-                }
-
-
+            List<Meal> mealList = new ArrayList<>();
+            if (day != null) {
+                mealList = new ArrayList<>(day.getMeals());
+                mealList.sort(new MealCompare());
             }
+            drawMeals(mealList, date);
         });
-
 
         return view;
     }
+
+
+    private void drawMeals(List<Meal> meals, LocalDate date) {
+
+        meals.add(new Meal("", new Recipe()));
+
+        final CalendarAdapter adapter = new CalendarAdapter(getContext(), meals);
+        lvCalendar.setAdapter(adapter);
+
+        lvCalendar.setOnItemClickListener((parent, view1, i, l) -> {
+            Meal meal = meals.get(i);
+            String dateString = date.format(DateTimeFormatter.ofPattern("d/M/yyyy"));
+
+            Intent intent = new Intent(getActivity(), RecipeClickedActivity.class);
+
+            intent.putExtra("delete", true);
+            intent.putExtra("id", meal.getRecipe().getID());
+            intent.putExtra("date", dateString);
+
+            getActivity().startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
+        });
+    }
+
+    private void setFabListener(LocalDate date){
+        fab = view.findViewById(R.id.fabCalendar);
+        fab.setOnClickListener(v ->  {
+            Intent intent = new Intent(getActivity(), PickMealActivity.class);
+            String formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            intent.putExtra("date", formattedDate);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        });
+    }
+
 }

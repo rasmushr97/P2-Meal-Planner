@@ -178,11 +178,9 @@ public class ShoppingListFragment extends Fragment {
             stringShoppingList.add(ingredient);
         }
 
-
         for(String ing : stringShoppingList){
             items.add(new ShoppingListItemModel(false, ing));
         }
-
 
         final ShoppingListAdapter adapter = new ShoppingListAdapter(getActivity(), items);
         listView.setAdapter(adapter);
@@ -200,7 +198,6 @@ public class ShoppingListFragment extends Fragment {
 
             adapter.updateRecords(items);
         });
-
 
         return view;
     }

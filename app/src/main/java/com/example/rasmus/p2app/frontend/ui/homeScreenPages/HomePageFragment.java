@@ -47,7 +47,6 @@ import java.util.Collections;
 
 public class HomePageFragment extends Fragment {
 
-    ScrollView scrollView;
     TextView textCalories;
 
     int todaysGoal = 0;
@@ -74,8 +73,6 @@ public class HomePageFragment extends Fragment {
         textCalories = (TextView) view.findViewById(R.id.text_calories);
         // Default text
         updateCalorieText();
-
-        scrollView = (ScrollView) view.findViewById(R.id.scrollView1);
 
         instantiateMeals();
 
@@ -123,7 +120,6 @@ public class HomePageFragment extends Fragment {
                 final MealFragment mealFragment = new MealFragment();
                 FragmentManager manager = getFragmentManager();
 
-
                 // Pass the bundle of information into the meal fragment
                 mealFragment.setArguments(bundle);
                 // Replace one of the layouts in fragment_home_page.xml with the MealFragment
@@ -133,8 +129,6 @@ public class HomePageFragment extends Fragment {
 
                 counter++;
             }
-
-
         }
 
     }

@@ -16,7 +16,7 @@ import java.util.List;
 public class ShoppingListAdapter extends BaseAdapter {
     Activity activity;
     List<ShoppingListItemModel> items;
-LayoutInflater inflater;
+    LayoutInflater inflater;
 
 
     public ShoppingListAdapter(Activity activity) {
@@ -51,24 +51,25 @@ LayoutInflater inflater;
 
         ViewHolder holder = null;
 
-        if (view == null){
+        if (view == null) {
 
             view = inflater.inflate(R.layout.list_view_item_shopping_list, viewGroup, false);
 
             holder = new ViewHolder();
 
-            holder.tvItemName = (TextView)view.findViewById(R.id.tv_item_name);
-            holder.ivCheckbox = (ImageView)view.findViewById(R.id.iv_check_box);
+            holder.tvItemName = (TextView) view.findViewById(R.id.tv_item_name);
+            holder.ivCheckbox = (ImageView) view.findViewById(R.id.iv_check_box);
 
             view.setTag(holder);
-        }else
-            holder = (ViewHolder)view.getTag();
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
 
         ShoppingListItemModel model = items.get(i);
 
         holder.tvItemName.setText(model.getItemName());
 
-        if(model.isSelected())
+        if (model.isSelected())
             holder.ivCheckbox.setBackgroundResource(R.drawable.ic_checked);
 
         else
@@ -79,14 +80,11 @@ LayoutInflater inflater;
 
     public void updateRecords(List<ShoppingListItemModel> items) {
         this.items = items;
-
         notifyDataSetChanged();
     }
 
 
-
-    class ViewHolder{
-
+    class ViewHolder {
         TextView tvItemName;
         ImageView ivCheckbox;
     }
