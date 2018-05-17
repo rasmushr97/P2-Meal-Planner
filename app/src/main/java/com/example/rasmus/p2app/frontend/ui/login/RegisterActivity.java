@@ -106,7 +106,7 @@ public class RegisterActivity extends AppBackButtonActivity {
 
                     Intent intent;
                     if (DBHandler.login(username, password)) {
-                        DBHandler.addWeightMeasurement(LocalDate.now(), weight, goalweight, InRAM.userID);
+                        DBHandler.addWeightMeasurement(LocalDate.now(), weight, goalweight, InRAM.userID, LocalDate.now());
                         intent = new Intent(RegisterActivity.this, LoadingScreenActivity.class);
                     } else {
                         intent = new Intent(RegisterActivity.this, LoginActivity.class);

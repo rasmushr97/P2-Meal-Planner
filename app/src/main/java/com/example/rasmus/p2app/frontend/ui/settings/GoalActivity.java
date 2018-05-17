@@ -49,8 +49,6 @@ public class GoalActivity extends AppBackButtonActivity {
         setContentView(R.layout.activity_goal);
         setTitle("Weight control");
 
-        Goal.startDate = getFirstDate(Goal.getUserWeight());
-
         /* If there only is one weight measurement stored (graph needs atleast two)*/
         if(Goal.getUserWeight().size() == 1){
             Map.Entry<LocalDate,Float> entry = Goal.getUserWeight().entrySet().iterator().next();
@@ -235,11 +233,12 @@ public class GoalActivity extends AppBackButtonActivity {
         super.onPause();
         /* Clears the goals data base */
         DBHandler.deleteFromGoals(InRAM.user.getID());
+        DBHandler.updateLoseWeightOrNot(InRAM.user.getWantLoseWeight(), InRAM.user.getID());
 
         float goalWeight = (float) InRAM.user.getGoalWeight();
 
-        LocalDate first = InRAM.user.getGoal().getFirstDate(Goal.getUserWeight());
-        LocalDate last = InRAM.user.getGoal().getLastDate(Goal.getUserWeight());
+        LocalDate first = getFirstDate(Goal.getUserWeight());
+        LocalDate last = Goal.getLastDate(Goal.getUserWeight());
 
         /* Creates a list of dates between 'first' and 'last' date */
         List<LocalDate> dates = Stream.iterate(first, date -> date.plusDays(1))
@@ -248,12 +247,9 @@ public class GoalActivity extends AppBackButtonActivity {
         /* Goes through all days, and adds all weight measurements to the database */
         for(LocalDate date : dates){
             if(Goal.getUserWeight().keySet().contains(date)){
-                DBHandler.addWeightMeasurement(date, Goal.getUserWeight().get(date), goalWeight, InRAM.user.getID());
+                DBHandler.addWeightMeasurement(date, Goal.getUserWeight().get(date), goalWeight, InRAM.user.getID(), Goal.startDate);
             }
         }
-
-        /* Updates the XML file with user data */
-        //LocalUser.updateXML(InRAM.user, GoalActivity.this);
     }
 }
 

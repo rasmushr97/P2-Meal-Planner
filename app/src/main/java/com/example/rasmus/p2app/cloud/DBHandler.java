@@ -11,6 +11,7 @@ import com.example.rasmus.p2app.backend.recipeclasses.Review;
 import com.example.rasmus.p2app.backend.time.Calendar;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
+import com.example.rasmus.p2app.backend.userclasses.Goal;
 import com.example.rasmus.p2app.backend.userclasses.User;
 import com.example.rasmus.p2app.exceptions.NoDBConnectionException;
 
@@ -99,13 +100,10 @@ public class DBHandler {
             }else {
                 return false;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return true;
-
     }
 
     public static void getUserData(int userID){
@@ -175,12 +173,13 @@ public class DBHandler {
         }
     }
 
-    public static void addWeightMeasurement(LocalDate date, float weight, float goalweight, int userID){
+    public static void addWeightMeasurement(LocalDate date, float weight, float goalweight, int userID, LocalDate goal_changed_date){
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String goal_changed_formatted = goal_changed_date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        String sql = "INSERT INTO goals (date, current_weight, goal_weight, user_id) " +
+        String sql = "INSERT INTO goals (date, current_weight, goal_weight, user_id, goal_changed_date) " +
                 "VALUES ('" + dateFormatted + "', " + weight + ", " +
-                goalweight + ", " + userID + ")";
+                goalweight + ", " + userID + ", '" + goal_changed_formatted + "')";
 
 
         try {
@@ -768,6 +767,19 @@ public class DBHandler {
         return user;
     }
 
+    public static void updateLoseWeightOrNot(int toLostWeight, int userID){
+        String sql = "UPDATE user SET for_weight_loss = " + toLostWeight + " WHERE user_id= " + userID;
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     //Gets information to the recipe class from the database
     public static void getLocalUser(int userID) {
         ResultSet resultSet = null;
@@ -779,7 +791,7 @@ public class DBHandler {
 
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT date, current_weight, goal_weight FROM goals WHERE user_id=" + userID;
+            String sql = "SELECT date, current_weight, goal_weight, goal_changed_date FROM goals WHERE user_id=" + userID;
             resultSet = stmt.executeQuery(sql);
 
 
@@ -787,19 +799,21 @@ public class DBHandler {
             int i = 0;
             while (resultSet.next()) {
                 String date = resultSet.getString("date");
-                double curWeight = resultSet.getFloat("current_weight");
-                double goalWeight = resultSet.getFloat("goal_weight");
-                if(i == 0) { InRAM.user.setGoalWeight(goalWeight); }
-
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate localDate = LocalDate.parse(date, dateFormatter);
-
+                double curWeight = resultSet.getFloat("current_weight");
                 InRAM.user.getGoal().addUserWeight(localDate, (float) curWeight);
                 InRAM.user.setWeight(curWeight);
-                //goal.addGoalWeight(localDate, (float) goalWeight);
+
+                double goalWeight = resultSet.getFloat("goal_weight");
+                if(i == 0) {
+                    InRAM.user.setGoalWeight(goalWeight);
+                    String goal_changed_date = resultSet.getString("goal_changed_date");
+                    Goal.startDate = LocalDate.parse(goal_changed_date, dateFormatter);
+                }
+
                 i++;
             }
-            //LocalUser.setGoal(goal);
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -11,7 +11,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Goal {
     public static Map<LocalDate, Float> userWeight = new HashMap<>();
     public static Map<LocalDate, Float> goalWeight = new HashMap<>();
-    public static LocalDate startDate = getFirstDate(Goal.getUserWeight());
+    public static LocalDate startDate;
 
     public void addUserWeight(LocalDate localDate, float weight) {
         userWeight.put(localDate, weight);
