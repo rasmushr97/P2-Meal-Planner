@@ -2,7 +2,6 @@ package com.example.rasmus.p2app.frontend.ui.recipePages;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,7 +74,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
         Button button = findViewById(R.id.description_button);
         button.setOnClickListener(view -> {
             // Switches to the Description clicked page (activity)
-            Intent intent = new Intent(RecipeClickedActivity.this, DescriptionRecipeClickedActivity.class);
+            Intent intent = new Intent(RecipeClickedActivity.this, RecipeInfoAcitivty.class);
             intent.putExtra("id", recipeID);
             startActivity(intent);
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);

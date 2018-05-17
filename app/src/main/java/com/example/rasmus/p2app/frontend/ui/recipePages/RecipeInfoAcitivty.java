@@ -10,12 +10,12 @@ import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.frontend.adapters.DownloadImageTask;
 
-public class DescriptionRecipeClickedActivity extends AppBackButtonActivity {
+public class RecipeInfoAcitivty extends AppBackButtonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_description_recipe_clicked);
+        setContentView(R.layout.activity_recipe_info);
         setTitle("Description");
 
         int recipeID = getIntent().getExtras().getInt("id");

@@ -29,7 +29,7 @@
         <activity android:name=".frontend.ui.homeScreenPages.MainActivity" />
         <activity android:name=".frontend.ui.recipePages.PickMealActivity" />
         <activity android:name=".frontend.ui.recipePages.PickRecipeActivity" />
-        <activity android:name=".frontend.ui.recipePages.DescriptionRecipeClickedActivity" />
+        <activity android:name=".frontend.ui.recipePages.RecipeInfoAcitivty" />
         <activity android:name=".frontend.ui.recipePages.RecipeClickedActivity" />
         <activity android:name=".frontend.ui.settings.GoalActivity" />
         <activity android:name=".frontend.ui.login.RegisterActivity" />
