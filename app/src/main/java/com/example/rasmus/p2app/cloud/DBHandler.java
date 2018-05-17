@@ -955,7 +955,6 @@ public class DBHandler {
     public static void uploadRating(int recipeID, int rating) {
         String sql = "INSERT INTO reviews (review, submitter, submitter_id, individual_rating, recipe_id) " +
                 "VALUES ('" + "" + "', '" + "" + "', '" + InRAM.userID + "', " + rating + ", " + recipeID + ")";
-        System.out.println(sql);
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(sql);
