@@ -37,7 +37,6 @@
 
     <string-array name="pref_allergies_list">
         <item>Gluten</item>
-        <item>milk</item>
         <item>Dairy</item>
         <item>Peanuts</item>
         <item>Eggs</item>
