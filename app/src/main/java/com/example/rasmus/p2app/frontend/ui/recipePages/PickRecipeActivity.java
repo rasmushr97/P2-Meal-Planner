@@ -36,6 +36,7 @@ public class PickRecipeActivity extends AppBackButtonActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_recipe);
+        setTitle("Recipe Explorer");
 
 
         // App bar back button
