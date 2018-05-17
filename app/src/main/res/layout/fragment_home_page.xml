@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".frontend.ui.fragments.HomePageFragment"
+    tools:context=".frontend.ui.homeScreenPages.HomePageFragment"
     tools:layout_editor_absoluteY="81dp">
 
     <android.support.constraint.Guideline
@@ -17,6 +17,7 @@
         android:id="@+id/scrollView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,73 +29,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/layout_1"
+            <ListView
+                android:id="@+id/lvMeals"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:layout_height="match_parent">
+            </ListView>
 
-            </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/layout_2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_7"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_8"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_9"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
-            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

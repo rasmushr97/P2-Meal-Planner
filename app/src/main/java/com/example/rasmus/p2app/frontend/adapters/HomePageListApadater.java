@@ -1,18 +1,21 @@
-package com.example.rasmus.p2app.frontend.ui.misc;
+package com.example.rasmus.p2app.frontend.adapters;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
-import com.example.rasmus.p2app.frontend.adapters.DownloadImageTask;
+import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
+import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.frontend.ui.recipePages.RecipeClickedActivity;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -25,40 +28,33 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+public class HomePageListApadater extends ArrayAdapter {
+    private Context mContext;
+    private List<Meal> mealList = new ArrayList<>();
 
-public class MealFragment extends Fragment {
-    private String meal = "Breakfast";
-    private String image = null;
-    private int calories = 0;
-    private int id = 0;
-
-    public void setMeal(String meal) {
-        this.meal = meal;
+    public HomePageListApadater(@NonNull Context context, List<Meal> list) {
+        super(context, 0 , list);
+        mContext = context;
+        mealList = list;
     }
 
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
 
-        View view = inflater.inflate(R.layout.fragment_meal, container, false);
+        if(view == null) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.list_view_item_meal, parent, false);
+        }
 
-        setHasOptionsMenu(true);
+        Meal meal = mealList.get(position);
 
-        // pick up the bundle sent from MainActivity
-        // Use the information to create the title, image and piechart of the Fragment
-
-        // TODO: refactor so we only need to pass the ID
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            image = bundle.getString("img");
-            calories = bundle.getInt("calories");
-            id = bundle.getInt("id");
-            meal = bundle.getString("meal");
+        if(meal == null){
+            return view;
         }
 
         // Initialization of the text above the picture describing the meal
         TextView mealText = view.findViewById(R.id.text_meal_1);
-        mealText.setText(meal);
+        mealText.setText(meal.getMealName());
 
         // Bring the markup lines to front
         View line1 =  view.findViewById(R.id.h_line_1);
@@ -70,14 +66,16 @@ public class MealFragment extends Fragment {
         PieChart chart = view.findViewById(R.id.home_chart_1);
         List<PieEntry> pieChartEntries = new ArrayList<>();
 
-        int goalCalories = InRAM.user.getCaloriesPerDay() - calories;
-        pieChartEntries.add(new PieEntry(calories, "Meal"));
+        Recipe recipe = meal.getRecipe();
+
+        int goalCalories = InRAM.user.getCaloriesPerDay() - recipe.getCalories();
+        pieChartEntries.add(new PieEntry(recipe.getCalories(), "Meal"));
         pieChartEntries.add(new PieEntry(goalCalories, "Total"));
-        setupPieChart(chart, pieChartEntries);
+        setupPieChart(chart, pieChartEntries, recipe.getCalories());
 
         // Initialization of the recipe's image
         ImageButton imgbtn = view.findViewById(R.id.imgbtn_meal_1);
-        new DownloadImageTask((ImageButton) view.findViewById(R.id.imgbtn_meal_1)).execute(image);
+        new DownloadImageTask((ImageButton) view.findViewById(R.id.imgbtn_meal_1)).execute(recipe.getPictureLink());
 
 
         // Image button OnClickListener
@@ -85,20 +83,19 @@ public class MealFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Write code that just gives the id to RecipeClickedActivity
-                Intent intent = new Intent(getActivity(), RecipeClickedActivity.class);
+                Intent intent = new Intent(view.getContext(), RecipeClickedActivity.class);
                 String date = LocalDate.now().format(DateTimeFormatter.ofPattern("d/M/yyyy"));
                 intent.putExtra("delete", true);
-                intent.putExtra("id", id);
+                intent.putExtra("id", recipe.getID());
                 intent.putExtra("date", date);
-                startActivity(intent);
+                getContext().startActivity(intent);
             }
         });
 
         return view;
     }
 
-
-    private void setupPieChart(PieChart chart, List<PieEntry> entryList) {
+    private void setupPieChart(PieChart chart, List<PieEntry> entryList, int calories) {
         // Colors scheme for the pie chart
         final int[] MY_COLORS = {Color.rgb(0, 100, 0), Color.rgb(0, 175, 0)};
         ArrayList<Integer> colors = new ArrayList<>();
@@ -138,4 +135,10 @@ public class MealFragment extends Fragment {
         chart.invalidate();
     }
 
+
+
+
+
+
 }
+

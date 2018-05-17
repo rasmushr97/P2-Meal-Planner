@@ -24,30 +24,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
-import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
+import com.example.rasmus.p2app.frontend.adapters.HomePageListApadater;
 import com.example.rasmus.p2app.frontend.other.MealCompare;
-import com.example.rasmus.p2app.frontend.ui.misc.MealFragment;
 import com.example.rasmus.p2app.frontend.ui.recipePages.PickMealActivity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 public class HomePageFragment extends Fragment {
 
-    TextView textCalories;
+    private TextView textCalories;
+    private ListView lvMeals;
 
     int todaysGoal = 0;
     int todaysCalories = 0;
@@ -74,7 +73,6 @@ public class HomePageFragment extends Fragment {
         // Default text
         updateCalorieText();
 
-        instantiateMeals();
 
         // Setting up the add button
         final FloatingActionButton fab = view.findViewById(R.id.fab_1);
@@ -89,49 +87,20 @@ public class HomePageFragment extends Fragment {
             }
         });
 
+
+        // Draw all todays recipes on the front page
+        lvMeals = view.findViewById(R.id.lvMeals);
+        Day today = InRAM.calendar.getDay(LocalDate.now());
+        List<Meal> todaysMeals = new ArrayList<>(today.getMeals());
+        todaysMeals.sort(new MealCompare());
+
+        final HomePageListApadater adapter = new HomePageListApadater(getActivity(), todaysMeals);
+        lvMeals.setAdapter(adapter);
+
         return view;
     }
 
 
-    public void instantiateMeals() {
-        // Draw all todays recipes on the front page
-        Day today = InRAM.calendar.getDay(LocalDate.now());
-
-        if (today != null) {
-            ArrayList<Meal> todaysMeals = new ArrayList<>(today.getMeals());
-
-            Collections.sort(todaysMeals, new MealCompare());
-            int startID = R.id.layout_1;
-
-            int counter = 0;
-            for (Meal m : todaysMeals) {
-                // Creating a bundle of information
-                Bundle bundle = new Bundle();
-
-                Recipe recipe = m.getRecipe();
-
-                // Input information to the bundle
-                bundle.putInt("calories", recipe.getCalories());
-                bundle.putInt("id", recipe.getID());
-                bundle.putString("meal", m.getMealName());
-                bundle.putString("img", recipe.getPictureLink());
-
-                // Create an instance of the MealFragment
-                final MealFragment mealFragment = new MealFragment();
-                FragmentManager manager = getFragmentManager();
-
-                // Pass the bundle of information into the meal fragment
-                mealFragment.setArguments(bundle);
-                // Replace one of the layouts in fragment_home_page.xml with the MealFragment
-                manager.beginTransaction()
-                        .replace(startID + counter, mealFragment, mealFragment.getTag())
-                        .commit();
-
-                counter++;
-            }
-        }
-
-    }
 
     public void updateCalorieText() {
         Day today = InRAM.calendar.getDay(LocalDate.now());
