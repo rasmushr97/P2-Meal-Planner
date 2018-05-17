@@ -47,11 +47,11 @@
         android:layout_marginBottom="8dp"
         android:clickable="true"
         android:focusable="true"
-        app:backgroundTint="#aa0011"
+        app:backgroundTint="#00cc00"
         app:layout_constraintBottom_toBottomOf="@+id/scrollView1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/ic_add" />
 
     <TextView
         android:id="@+id/text_calories"

@@ -117,7 +117,7 @@ public class HomePageListApadater extends ArrayAdapter {
         // Use data in chart
         chart.setData(data);
         // Cool starting animation for the creation of the pie chart
-        chart.animateY(750, Easing.EasingOption.EaseInOutQuad);
+        chart.animateY(250, Easing.EasingOption.EaseInOutQuad);
         String centerText = calories + " / " + InRAM.user.getCaloriesPerDay();
         chart.setCenterText(centerText);
         chart.setCenterTextColor(Color.WHITE);

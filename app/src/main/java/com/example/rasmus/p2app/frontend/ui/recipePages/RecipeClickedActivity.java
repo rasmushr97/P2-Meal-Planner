@@ -2,6 +2,8 @@ package com.example.rasmus.p2app.frontend.ui.recipePages;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -111,8 +113,8 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
 
 
         // App bar back button and onClickListener
-        Button button = findViewById(R.id.description_button);
-        button.setOnClickListener(view -> {
+        FloatingActionButton infoButton = findViewById(R.id.btnInfo);
+        infoButton.setOnClickListener(view -> {
             // Switches to the Description clicked page (activity)
             Intent intent = new Intent(RecipeClickedActivity.this, RecipeInfoAcitivty.class);
             intent.putExtra("id", recipeID);
@@ -121,9 +123,15 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
         });
 
         // Add recipe button and onClickListener
-        Button addRecipeButton = findViewById(R.id.btn_add_recipe);
+        FloatingActionButton addRecipeButton = findViewById(R.id.btnAddRecipe);
         if (delete) {
-            addRecipeButton.setText("Delete Recipe");
+            addRecipeButton.setImageResource(R.drawable.ic_delete);
+            addRecipeButton.setBackgroundTintList(ColorStateList.valueOf(Color
+                    .parseColor("#aa0011")));
+        } else {
+            addRecipeButton.setImageResource(R.drawable.ic_add);
+            addRecipeButton.setBackgroundTintList(ColorStateList.valueOf(Color
+                    .parseColor("#00cc00")));
         }
         addRecipeButton.setOnClickListener(view -> {
 
