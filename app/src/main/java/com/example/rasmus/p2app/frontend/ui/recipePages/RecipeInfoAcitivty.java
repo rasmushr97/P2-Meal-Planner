@@ -20,10 +20,15 @@ public class RecipeInfoAcitivty extends AppBackButtonActivity {
 
         int recipeID = getIntent().getExtras().getInt("id");
         Recipe recipe = InRAM.recipesInRAM.get(recipeID);
+        setTitle(recipe.getTitle());
 
         new DownloadImageTask((ImageView) findViewById(R.id.ImageFromClickedRecipe)).execute(recipe.getPictureLink());
+
         TextView descriptionText = (TextView) findViewById(R.id.description_text);
         descriptionText.setText(recipe.getDescription());
-        setTitle(recipe.getTitle());
+
+        TextView madeByText = (TextView) findViewById(R.id.tvRecipeOwner);
+        String madeByString = "Made by: " + recipe.getSubmitterName();
+        madeByText.setText(madeByString);
     }
 }

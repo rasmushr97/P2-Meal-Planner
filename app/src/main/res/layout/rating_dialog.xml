@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#333333"
+    android:padding="2dp">
+
+    <TextView
+        android:id="@+id/tvRatingDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="#CCCCCC"
+        android:textSize="24sp" />
+
+    <RatingBar
+        android:id="@+id/ratingbarDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:isIndicator="false"
+        android:numStars="0"
+        android:rating="2"
+        android:stepSize="1.0" />
+
+    <Button
+        android:id="@+id/btnRatingDialog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:focusable="false"
+        android:text="Rate"
+        android:textColor="#CCCCCC"
+        android:textSize="20sp" />
+</LinearLayout>

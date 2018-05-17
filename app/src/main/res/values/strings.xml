@@ -12,7 +12,8 @@
     <string name="breakfast_food_chosen">Breakfast food chosen</string>
     <string name="lunch_food_chosen">Lunch food chosen</string>
     <string name="dinner_food_chosen">Dinner food chosen</string>
-    
+
+    <string name="rate">Rate this Recipe</string>
 
     <string-array name="pref_dislikes_list">
         <item>Pork</item>

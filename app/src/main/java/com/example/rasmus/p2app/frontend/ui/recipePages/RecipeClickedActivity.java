@@ -1,10 +1,15 @@
 package com.example.rasmus.p2app.frontend.ui.recipePages;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
@@ -12,10 +17,12 @@ import com.example.rasmus.p2app.backend.recipeclasses.Ingredients;
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
+import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.frontend.adapters.DownloadImageTask;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 import com.example.rasmus.p2app.frontend.ui.homeScreenPages.MainActivity;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -26,6 +33,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
     private int recipeID;
     private Recipe recipe;
     private boolean delete;
+    private static DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +47,42 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
         }
         recipe = InRAM.recipesInRAM.get(recipeID);
 
+        FloatingActionButton ratingBtn = (FloatingActionButton) findViewById(R.id.fabRate);
+        ratingBtn.setOnClickListener(view -> {
+
+            Dialog ratingDialog = new Dialog(RecipeClickedActivity.this, R.style.FullHeightDialog);
+            ratingDialog.setContentView(R.layout.rating_dialog);
+            ratingDialog.setCancelable(true);
+            RatingBar ratingBar = (RatingBar) ratingDialog.findViewById(R.id.ratingbarDialog);
+
+            if(InRAM.usersRatings.containsKey(recipeID)){
+                ratingBar.setRating((float)InRAM.usersRatings.get(recipeID));
+            }
+
+            TextView text = (TextView) ratingDialog.findViewById(R.id.tvRatingDialog);
+            text.setText(R.string.rate);
+
+            Button updateButton = (Button) ratingDialog.findViewById(R.id.btnRatingDialog);
+            updateButton.setOnClickListener(v -> {
+                DBHandler.uploadRating(recipeID, (int)ratingBar.getRating());
+                InRAM.usersRatings.put(recipeID, (int)ratingBar.getRating());
+                ratingDialog.dismiss();
+            });
+
+            //now that the dialog is set up, it's time to show it
+            ratingDialog.show();
+
+        });
+
         new DownloadImageTask((ImageView) findViewById(R.id.RecipeImg)).execute(recipe.getPictureLink());
 
         TextView title = findViewById(R.id.recipeTitel);
         title.setText(recipe.getTitle());
+
+        TextView rating = findViewById(R.id.recipeOverallRating);
+        String ratingText = "Rating: " + df.format(recipe.getRating());
+        System.out.println(recipe.getRating());
+        rating.setText(ratingText);
 
         TextView calories = findViewById(R.id.RecipeCalories);
         String calorieText = "Calories: " + recipe.getCalories();
@@ -52,7 +92,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
         String timeText = "Time: " + recipe.getTime().getReadyIn();
         time.setText(timeText);
 
-        // TODO: add directions
+
         TextView ingredients = findViewById(R.id.RecipeItems);
         String ingredientsText = "";
         for (Ingredients ingredient : recipe.getIngredients()) {
@@ -60,7 +100,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
             if (!ingredient.getInParentheses().equals("")) {
                 inParentheses = "(" + ingredient.getInParentheses() + ")";
             }
-            ingredientsText = ingredientsText.concat(ingredient.getName() + " " + inParentheses + "\nAmount: " + ingredient.getAmount() + " " + ingredient.getUnit() + "\n\n");
+            ingredientsText = ingredientsText.concat(ingredient.getName() + " " + inParentheses + "\nAmount: " + df.format(ingredient.getAmount()) + " " + ingredient.getUnit() + "\n\n");
         }
 
         ingredientsText = ingredientsText.concat("\n\n");

@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DBHandler {
 
@@ -60,13 +61,7 @@ public class DBHandler {
             ex.getMessage();
         }
 
-       /* try {
-            connection.setReadOnly(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } */
         conn = connection;
-
     }
 
     public static boolean isConnected(){
@@ -242,7 +237,7 @@ public class DBHandler {
                 recipe.setDescription(resultSet.getString("description"));
                 recipe.setServings(resultSet.getInt("servings"));
                 recipe.setCalories(resultSet.getInt("calories"));
-                recipe.setRating(resultSet.getInt("rating"));
+                recipe.setRating(resultSet.getDouble("rating"));
                 recipeList.add(recipe);
             }
 
@@ -538,7 +533,7 @@ public class DBHandler {
                 description = resultSet.getString("description");
                 servings = resultSet.getInt("servings");
                 calories = resultSet.getInt("calories");
-                rating = resultSet.getInt("rating");
+                rating = resultSet.getDouble("rating");
             }
 
         } catch (SQLException e) {
@@ -934,4 +929,39 @@ public class DBHandler {
         }
     }
 
+    public static Map<Integer, Integer> getUserRatings(){
+        Map<Integer, Integer> res = new HashMap<>();
+
+        ResultSet resultSet;
+        String sql = "SELECT recipe_id, individual_rating FROM reviews " +
+                "WHERE submitter_id= '1'";
+
+        try {
+            stmt = conn.createStatement();
+            resultSet = stmt.executeQuery(sql);
+
+            while (resultSet.next()){
+                int rating = resultSet.getInt("individual_rating");
+                int recipeID = resultSet.getInt("recipe_id");
+                res.put(recipeID, rating);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public static void uploadRating(int recipeID, int rating) {
+        String sql = "INSERT INTO reviews (review, submitter, submitter_id, individual_rating, recipe_id) " +
+                "VALUES ('" + "" + "', '" + "" + "', '" + InRAM.userID + "', " + rating + ", " + recipeID + ")";
+        System.out.println(sql);
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

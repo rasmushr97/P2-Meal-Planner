@@ -1,7 +1,5 @@
 package com.example.rasmus.p2app.backend;
 
-import android.support.v7.app.AppCompatActivity;
-
 import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.backend.time.Calendar;
 import com.example.rasmus.p2app.backend.time.Day;
@@ -23,7 +21,7 @@ public class InRAM {
     public static int userID = 1;
     public static LocalUser user = new LocalUser();
 
-
+    public static Map<Integer, Integer> usersRatings = new HashMap<>();
     public static Map<Integer, Recipe> recipesInRAM = new HashMap<>();
     public static Map<String, LocalDate> mealsToMake = new HashMap<>();
 
@@ -40,6 +38,7 @@ public class InRAM {
         }
         user.initialize(ID);
         user.setID(ID);
+        usersRatings = DBHandler.getUserRatings();
     }
 
     public static void initializeCalender() {

@@ -23,9 +23,12 @@ public class LoadingScreenActivity extends AppCompatActivity {
                 DBHandler.createCon();
             }
 
+            // TODO: find the three most popular tags from the user and get 100 recipes per tag
+
             InRAM.initializeUser(InRAM.userID);
             InRAM.initializeCalender();
             InRAM.test();
+
 
             //DBHandler.closeCon();
 
