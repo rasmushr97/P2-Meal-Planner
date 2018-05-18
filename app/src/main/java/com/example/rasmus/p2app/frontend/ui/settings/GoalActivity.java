@@ -21,7 +21,7 @@ import com.example.rasmus.p2app.cloud.DBHandler;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.frontend.ui.misc.ChartFragment;
-import com.example.rasmus.p2app.frontend.other.GraphData;
+import com.example.rasmus.p2app.frontend.models.GraphData;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

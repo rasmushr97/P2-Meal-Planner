@@ -35,7 +35,7 @@ import com.example.rasmus.p2app.backend.InRAM;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.frontend.adapters.HomePageListApadater;
-import com.example.rasmus.p2app.frontend.other.MealCompare;
+import com.example.rasmus.p2app.backend.Comparators.MealCompare;
 import com.example.rasmus.p2app.frontend.ui.recipePages.PickMealActivity;
 
 import java.time.LocalDate;

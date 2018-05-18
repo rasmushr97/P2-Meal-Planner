@@ -1,5 +1,6 @@
 package com.example.rasmus.p2app.backend.recipeclasses;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,10 +15,10 @@ public class Recipe {
     private int calories;
     private double rating;
     private CookTime time;
-    private List<String> categories;
-    private List<Ingredients> ingredients;
-    private List<String> directions;
-    private List<Review> reviews;
+    private List<String> categories = new ArrayList<>();
+    private List<Ingredients> ingredients = new ArrayList<>();
+    private List<String> directions = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 
     public Recipe(int ID, String title, String submitterName,
                   String pictureLink, String websiteLink, String description,

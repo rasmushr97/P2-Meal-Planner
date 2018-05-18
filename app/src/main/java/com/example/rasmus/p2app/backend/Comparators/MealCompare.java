@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.other;
+package com.example.rasmus.p2app.backend.Comparators;
 
 import com.example.rasmus.p2app.backend.time.Meal;
 

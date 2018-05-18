@@ -90,7 +90,7 @@ public class DBHandler {
             resultSet = stmt.executeQuery(sql);
 
             if(resultSet.next()){
-                InRAM.userID = resultSet.getInt("user_id");
+                InRAM.userID = resultSet.getString("user_id");
 
             }else {
                 return false;
@@ -101,7 +101,7 @@ public class DBHandler {
         return true;
     }
 
-    public static void getUserData(int userID){
+    public static void getUserData(String userID){
         ResultSet resultSet = null;
 
         if (conn == null) {
@@ -153,7 +153,7 @@ public class DBHandler {
     }
 
 
-    public static void addToRecipeChosen(LocalDate date, Meal meal, int userID){
+    public static void addToRecipeChosen(LocalDate date, Meal meal, String userID){
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         String sql = "INSERT INTO recipes_chosen (recipe_id, date, meal_title, user_id) " +
@@ -168,7 +168,7 @@ public class DBHandler {
         }
     }
 
-    public static void addWeightMeasurement(LocalDate date, float weight, float goalweight, int userID, LocalDate goal_changed_date){
+    public static void addWeightMeasurement(LocalDate date, float weight, float goalweight, String userID, LocalDate goal_changed_date){
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String goal_changed_formatted = goal_changed_date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
@@ -185,8 +185,8 @@ public class DBHandler {
         }
     }
 
-    public static void deleteFromGoals(int ID){
-        String sql = "DELETE FROM goals WHERE user_id=" + ID;
+    public static void deleteFromGoals(String userID){
+        String sql = "DELETE FROM goals WHERE user_id=" + userID;
 
         try {
             stmt = conn.createStatement();
@@ -196,8 +196,7 @@ public class DBHandler {
         }
     }
 
-
-    public static void deleteFromRecipeChosen(LocalDate date, int recipeID, int userID){
+    public static void deleteFromRecipeChosen(LocalDate date, int recipeID, String userID){
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         String sql = "DELETE FROM recipes_chosen WHERE recipe_id = " + recipeID
@@ -209,6 +208,14 @@ public class DBHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static List<Recipe> getAllRecipes() {
+        List<Integer> IDs = new ArrayList<>();
+        for (int i = 0; i < 2779; i++) {
+            IDs.add(2357 + i);
+        }
+        return getRecipesFromIDs(IDs);
     }
 
     public static List<Recipe> getRecipesFromIDs(List<Integer> IDs) {
@@ -480,7 +487,7 @@ public class DBHandler {
                 }
                 prevRecipeID = recipeID;
 
-                reviewList.add(new Review(reviewID, reviewText, submitterName, submitterID, individualRating));
+                reviewList.add(new Review(reviewID, reviewText, submitterName, submitterID, individualRating, recipeID));
             }
 
             if (recipeID != 0) {
@@ -693,6 +700,7 @@ public class DBHandler {
         String submitterName;
         String submitterID;
         int individualRating;
+        int recipeID;
         List<Review> reviewList = new ArrayList<>();
 
         if (conn == null) {
@@ -701,19 +709,20 @@ public class DBHandler {
 
         try {
             stmt = conn.createStatement();
-            String sql = "SELECT review, submitter, submitter_id, individual_rating FROM reviews WHERE recipe_id=" + ID;
+            String sql = "SELECT * FROM reviews WHERE recipe_id=" + ID;
             resultSet = stmt.executeQuery(sql);
 
             //5: Extract data from result set
             while (resultSet.next()) {
                 //Retrieve by column name
+                recipeID = resultSet.getInt("recipe_id");
                 reviewText = resultSet.getString("review");
                 submitterName = resultSet.getString("submitter");
                 submitterID = resultSet.getString("submitter_id");
                 individualRating = resultSet.getInt("individual_rating");
 
                 //Initializing fields in the Review class
-                reviewList.add(new Review(ID, reviewText, submitterName, submitterID, individualRating));
+                reviewList.add(new Review(ID, reviewText, submitterName, submitterID, individualRating, recipeID));
             }
 
         } catch (SQLException e) {
@@ -725,9 +734,9 @@ public class DBHandler {
         return reviewList;
     }
 
-    public static User getRevToUser(int userID) {
+    public static List<Review> getRevForUser(String userID) {
         ResultSet resultSet = null;
-        User user = new User();
+        List<Review> res = new ArrayList<>();
 
         if (conn == null) {
             throw new NoDBConnectionException();
@@ -742,6 +751,7 @@ public class DBHandler {
             //5: Extract data from result set
             while (resultSet.next()) {
                 //Retrieve by column name
+                int recipeID = resultSet.getInt("recipe_id");
                 int revID = resultSet.getInt("recipe_id");
                 String reviewText = resultSet.getString("review");
                 String submitterName = resultSet.getString("submitter");
@@ -749,7 +759,7 @@ public class DBHandler {
                 int individualRating = resultSet.getInt("individual_rating");
 
                 //Initializing fields in the Review class
-                user.addReview(new Review(revID, reviewText, submitterName, submitterID, individualRating));
+                res.add(new Review(revID, reviewText, submitterName, submitterID, individualRating, recipeID));
             }
 
 
@@ -759,10 +769,10 @@ public class DBHandler {
 
         closeResultSet(resultSet);
 
-        return user;
+        return res;
     }
 
-    public static void updateLoseWeightOrNot(int toLostWeight, int userID){
+    public static void updateLoseWeightOrNot(int toLostWeight, String userID){
         String sql = "UPDATE user SET for_weight_loss = " + toLostWeight + " WHERE user_id= " + userID;
         try {
             stmt = conn.createStatement();
@@ -776,7 +786,7 @@ public class DBHandler {
     }
 
     //Gets information to the recipe class from the database
-    public static void getLocalUser(int userID) {
+    public static void getLocalUser(String userID) {
         ResultSet resultSet = null;
         //Goal goal = new Goal();
 
@@ -817,7 +827,7 @@ public class DBHandler {
         closeResultSet(resultSet);
     }
 
-    public static Calendar getCalender(int userID) {
+    public static Calendar getCalender(String userID) {
         ResultSet resultSet = null;
         Calendar calendar = new Calendar(LocalDate.now());
         String prevDate = null;
@@ -872,7 +882,7 @@ public class DBHandler {
         return calendar;
     }
 
-    public static User getUser(int userID) {
+    public static User getUser(String userID) {
         ResultSet resultSet = null;
         User user = new User();
 

@@ -38,8 +38,7 @@ import com.example.rasmus.p2app.backend.time.Calendar;
 import com.example.rasmus.p2app.backend.time.Day;
 import com.example.rasmus.p2app.backend.time.Meal;
 import com.example.rasmus.p2app.frontend.adapters.CalendarAdapter;
-import com.example.rasmus.p2app.frontend.models.ShoppingListItemModel;
-import com.example.rasmus.p2app.frontend.other.MealCompare;
+import com.example.rasmus.p2app.backend.Comparators.MealCompare;
 import com.example.rasmus.p2app.frontend.ui.recipePages.PickMealActivity;
 import com.example.rasmus.p2app.frontend.ui.recipePages.RecipeClickedActivity;
 

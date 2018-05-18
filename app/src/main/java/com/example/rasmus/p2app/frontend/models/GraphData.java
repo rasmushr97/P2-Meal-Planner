@@ -1,4 +1,4 @@
-package com.example.rasmus.p2app.frontend.other;
+package com.example.rasmus.p2app.frontend.models;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;

@@ -144,7 +144,7 @@ public class LocalUser extends User {
     }
 
 
-    public void initialize(int ID) {
+    public void initialize(String ID) {
 
         DBHandler.getUserData(InRAM.userID);
         /* Gets previous weight measurements from database */

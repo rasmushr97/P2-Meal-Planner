@@ -12,11 +12,15 @@ import android.widget.ListView;
 
 import com.example.rasmus.p2app.R;
 import com.example.rasmus.p2app.backend.InRAM;
+import com.example.rasmus.p2app.backend.Recommender;
+import com.example.rasmus.p2app.backend.recipeclasses.Recipe;
 import com.example.rasmus.p2app.frontend.AppBackButtonActivity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +72,7 @@ public class PickMealActivity extends AppBackButtonActivity {
 
                 // Switch to the pick recipe page (PickRecipeActivity)
                 startActivity(intent);
+
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
             }
@@ -82,6 +87,7 @@ public class PickMealActivity extends AppBackButtonActivity {
         // Find the meal class without a recipe, and delete it
         InRAM.mealsToMake = new HashMap<>();
     }
+
 
 }
 

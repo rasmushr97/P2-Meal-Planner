@@ -14,13 +14,14 @@ import com.example.rasmus.p2app.frontend.models.SectionDataModel;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDataAdapter.ItemRowHolder> {
 
-    private ArrayList<SectionDataModel> dataList;
+    private List<SectionDataModel> dataList;
     private Context mContext;
 
-    public RecyclerViewDataAdapter(Context context, ArrayList<SectionDataModel> dataList) {
+    public RecyclerViewDataAdapter(Context context, List<SectionDataModel> dataList) {
         this.dataList = dataList;
         this.mContext = context;
     }

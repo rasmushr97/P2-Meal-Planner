@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rasmus.p2app.R;
-import com.example.rasmus.p2app.frontend.other.GraphData;
+import com.example.rasmus.p2app.frontend.models.GraphData;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;

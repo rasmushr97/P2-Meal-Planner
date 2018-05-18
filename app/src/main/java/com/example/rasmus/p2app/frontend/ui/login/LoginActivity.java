@@ -41,9 +41,10 @@ public class LoginActivity extends AppCompatActivity {
 
         bLogin.setOnClickListener(view -> {
             hideKeyboard(LoginActivity.this);
-            Toast.makeText(this, "Logging in", Toast.LENGTH_SHORT).show();
+
 
             if (DBHandler.login(etUsername.getText().toString(), etPassword.getText().toString())) {
+                Toast.makeText(this, "Logging in", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, LoadingScreenActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
