@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.rasmus.p2app.frontend.ui.settings.SettingsActivity">
+    tools:context="com.p2app.frontend.ui.settings.SettingsActivity">
 
     <ListView
         android:id="@+id/settingListView"
