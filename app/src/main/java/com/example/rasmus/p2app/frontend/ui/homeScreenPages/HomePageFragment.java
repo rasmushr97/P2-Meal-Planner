@@ -76,30 +76,31 @@ public class HomePageFragment extends Fragment {
 
         // Setting up the add button
         final FloatingActionButton fab = view.findViewById(R.id.fab_1);
-        fab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Open the meal pick page (PickMealActivity)
-                Intent intent = new Intent(getActivity(), PickMealActivity.class);
-                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                intent.putExtra("date", date);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-            }
+        fab.setOnClickListener(v -> {
+            // Open the meal pick page (PickMealActivity)
+            Intent intent = new Intent(getActivity(), PickMealActivity.class);
+            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            intent.putExtra("date", date);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         });
 
 
         // Draw all todays recipes on the front page
         lvMeals = view.findViewById(R.id.lvMeals);
         Day today = InRAM.calendar.getDay(LocalDate.now());
-        List<Meal> todaysMeals = new ArrayList<>(today.getMeals());
-        todaysMeals.sort(new MealCompare());
+
+        List<Meal> todaysMeals = new ArrayList<>();
+        if (today != null) {
+            todaysMeals = new ArrayList<>(today.getMeals());
+            todaysMeals.sort(new MealCompare());
+        }
 
         final HomePageListApadater adapter = new HomePageListApadater(getActivity(), todaysMeals);
         lvMeals.setAdapter(adapter);
 
         return view;
     }
-
 
 
     public void updateCalorieText() {

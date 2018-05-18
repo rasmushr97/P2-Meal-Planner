@@ -33,7 +33,7 @@ public class HomePageListApadater extends ArrayAdapter {
     private List<Meal> mealList = new ArrayList<>();
 
     public HomePageListApadater(@NonNull Context context, List<Meal> list) {
-        super(context, 0 , list);
+        super(context, 0, list);
         mContext = context;
         mealList = list;
     }
@@ -42,13 +42,13 @@ public class HomePageListApadater extends ArrayAdapter {
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
 
-        if(view == null) {
+        if (view == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.list_view_item_meal, parent, false);
         }
 
         Meal meal = mealList.get(position);
 
-        if(meal == null){
+        if (meal == null) {
             return view;
         }
 
@@ -57,7 +57,7 @@ public class HomePageListApadater extends ArrayAdapter {
         mealText.setText(meal.getMealName());
 
         // Bring the markup lines to front
-        View line1 =  view.findViewById(R.id.h_line_1);
+        View line1 = view.findViewById(R.id.h_line_1);
         line1.bringToFront();
         View line2 = view.findViewById(R.id.h_line_2);
         line1.bringToFront();
@@ -79,17 +79,14 @@ public class HomePageListApadater extends ArrayAdapter {
 
 
         // Image button OnClickListener
-        imgbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Write code that just gives the id to RecipeClickedActivity
-                Intent intent = new Intent(view.getContext(), RecipeClickedActivity.class);
-                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("d/M/yyyy"));
-                intent.putExtra("delete", true);
-                intent.putExtra("id", recipe.getID());
-                intent.putExtra("date", date);
-                getContext().startActivity(intent);
-            }
+        imgbtn.setOnClickListener(v -> {
+            // Write code that just gives the id to RecipeClickedActivity
+            Intent intent = new Intent(v.getContext(), RecipeClickedActivity.class);
+            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("d/M/yyyy"));
+            intent.putExtra("delete", true);
+            intent.putExtra("id", recipe.getID());
+            intent.putExtra("date", date);
+            getContext().startActivity(intent);
         });
 
         return view;
@@ -134,10 +131,6 @@ public class HomePageListApadater extends ArrayAdapter {
 
         chart.invalidate();
     }
-
-
-
-
 
 
 }
