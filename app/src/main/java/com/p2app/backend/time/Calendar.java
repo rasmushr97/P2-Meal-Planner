@@ -36,8 +36,10 @@ public class Calendar {
 
 
     public List<Day> get7DayList() {
+        // This method is made for the shopping list
         List<Day> res = new ArrayList<>();
 
+        // Get Day objects of the Map "dates" where the key is from today til 6 days from now
         LocalDate date;
         for(int i = 0; i < 7; i++){
             date = LocalDate.now().plusDays(i);
@@ -45,7 +47,6 @@ public class Calendar {
             if(dates.get(date) != null){
                 res.add(dates.get(date));
             }
-
         }
 
         return res;

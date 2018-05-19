@@ -65,6 +65,8 @@ public class ShoppingListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
+
+
         ShoppingListItemModel model = items.get(i);
 
         holder.tvItemName.setText(model.getItemName());

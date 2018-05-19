@@ -10,6 +10,7 @@ public class MealCompare implements Comparator<Meal> {
         String[] meals = {meal1.getMealName(), meal2.getMealName()};
         int[] mealValue = new int[2];
 
+        // Give both meals a int a value based on the order the meals should show
         for(int i = 0; i < 2; i++){
             switch (meals[i]){
                 case "Breakfast":
@@ -29,6 +30,7 @@ public class MealCompare implements Comparator<Meal> {
                     break;
             }
         }
+
 
         return mealValue[0] - mealValue[1];
     }

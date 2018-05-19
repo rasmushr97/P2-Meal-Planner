@@ -2,10 +2,11 @@ package com.p2app.frontend.models;
 
 import java.util.ArrayList;
 
+    // Holds all the information i one section of the explorer
 public class SectionDataModel {
-
     private String headerTitle;
     private ArrayList<SingleItemModel> allItemsInSection;
+
 
     public SectionDataModel() {
 

@@ -26,14 +26,13 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         this.mContext = context;
     }
 
-    //onCreate metode
+
     @Override
     public ItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item, null);
         return new ItemRowHolder(v);
     }
 
-    //Endnu et manDAtory metodekald
     @Override
     public void onBindViewHolder(ItemRowHolder itemRowHolder, int i) {
 

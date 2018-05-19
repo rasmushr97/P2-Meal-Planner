@@ -1,7 +1,7 @@
 package com.p2app.frontend.models;
 
+    // Holds the information of one item in the shoppinglist
 public class ShoppingListItemModel {
-
     boolean isSelected;
     String itemName;
 

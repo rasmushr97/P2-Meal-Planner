@@ -41,6 +41,9 @@ public class Recipe {
         this.reviews = reviews;
     }
 
+    public Recipe() {
+    }
+
     @Override
     public String toString() {
         return "Recipe{" +
@@ -56,8 +59,6 @@ public class Recipe {
                 '}';
     }
 
-    public Recipe() {
-    }
 
     public int getID() {
         return ID;

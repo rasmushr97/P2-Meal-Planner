@@ -14,6 +14,7 @@ public class Day {
     }
 
     public Meal getMeal(int recipeID){
+        // Find the meal that has a recipe with the input ID and return it
         for(Meal m : meals){
             if(m.getRecipe().getID() == recipeID){
                 return m;
@@ -31,11 +32,7 @@ public class Day {
     }
 
     public int getCalorieSum(){
-        int sum = 0;
-        for(Meal m : meals){
-            sum += m.getRecipe().getCalories();
-        }
-        return sum;
+        return meals.stream().mapToInt(x -> x.getRecipe().getCalories()).sum();
     }
 
     public void setMeals(Set<Meal> meals) {

@@ -7,6 +7,7 @@ public class Ingredients {
     private String name;
     private double amount;
     private String unit;
+    // Some times the ingredients have something in parentheses e.g. "1 can (300g) of beans
     private String inParentheses;
 
     public Ingredients(int ID, String name, double amount, String unit, String inParentheses) {

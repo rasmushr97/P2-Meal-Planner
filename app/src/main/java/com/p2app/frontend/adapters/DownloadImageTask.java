@@ -8,6 +8,8 @@ import android.widget.ImageView;
 
 import java.io.InputStream;
 
+// Async task is a task that is run on another thread
+// Its an Abstract class that forces you to implement: doInBackGround() and onPostExecute
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
 
@@ -18,7 +20,9 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         this.bmImage = bmImage;
     }
 
+    // This method is called, in AsyncTask's method execute
     protected Bitmap doInBackground(String... urls) {
+        // The image is encoded into a bitmap
         String urldisplay = urls[0];
         Bitmap mIcon11 = null;
         try {
@@ -32,6 +36,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
+        // The image i set using the bitmap
         bmImage.setImageBitmap(result);
     }
 }

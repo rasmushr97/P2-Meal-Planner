@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Meal {
     private String mealName;
-    private Recipe recipe = null;
+    private Recipe recipe;
 
     public Meal(String mealName, Recipe recipe) {
         this.mealName = mealName;
@@ -39,7 +39,6 @@ public class Meal {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(recipe);
     }
 }

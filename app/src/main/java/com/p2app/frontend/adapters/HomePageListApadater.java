@@ -42,11 +42,13 @@ public class HomePageListApadater extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
+        // Works the same as the calendarAdapter
 
         if (view == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.list_view_item_meal, parent, false);
         }
 
+        // Get the meal which corresponds to this position in the ListView
         Meal meal = mealList.get(position);
 
         if (meal == null) {

@@ -44,11 +44,15 @@ public class DBHandler {
     @SuppressLint("NewApi")
     public static void createCon(){
 
+        // Normally android studio does not allow for slower operation such as reading from a file or a database
+        // There you have to use these to lines in order to permit these slow operations
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+
         Connection connection = null;
         try {
+            // Create connection to the database using the JDBC driver
             Class.forName(JDBC_DRIVER).newInstance();
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException se) {
@@ -69,7 +73,6 @@ public class DBHandler {
     }
 
     public static void closeCon() {
-        // what exception to use here
         try {
             if (stmt != null)
                 stmt.close();
@@ -82,16 +85,18 @@ public class DBHandler {
 
     public static boolean login(String username, String password){
         ResultSet resultSet;
+        // Create string for query
         String sql = "SELECT user_id FROM user " +
                 "Where username='" + username + "' AND password='" +  password + "'";
 
         try {
+            // Execute the query
             stmt = conn.createStatement();
             resultSet = stmt.executeQuery(sql);
 
+            // The result of the query is loading into a ResultSet object
             if(resultSet.next()){
                 InRAM.userID = resultSet.getString("user_id");
-
             }else {
                 return false;
             }

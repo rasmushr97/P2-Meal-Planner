@@ -31,16 +31,11 @@ public class InRAM {
     public static List<User> allUsers = new ArrayList<>();
 
     public static List<List<Integer>> recipeIDsForExplorer = new ArrayList<>();
-
     public static List<String> sectionNames = new ArrayList<>();
 
 
-    //TODO: login method
-
     public static void initializeUser() {
-        if (user == null) {
-            user = new LocalUser();
-        }
+        user = new LocalUser();
         user.initialize(userID);
         user.setID(userID);
         user.setReviews(DBHandler.getRevForUser(userID));
@@ -48,28 +43,16 @@ public class InRAM {
     }
 
     public static void initializeCalender() {
-
         if (user == null) {
-            throw new NoUserException();
+            throw new NoUserException("User Failed to initialize");
         }
 
-        // maybe get recipes from the recommender  systems
-        try {
-            calendar = DBHandler.getCalender(user.getID());
-            Map<LocalDate, Day> days = calendar.getDates();
-
-        } catch (NoDBConnectionException e) {
+        try { calendar = DBHandler.getCalender(user.getID()); }
+        catch (NoDBConnectionException e) {
             System.out.println("no connection");
         }
     }
 
-
-    public static void addRecipesToRam(List<Integer> IDList) {
-        List<Recipe> recipes = DBHandler.getRecipesFromIDs(IDList);
-        for (Recipe r : recipes) {
-            recipesInRAM.put(r.getID(), r);
-        }
-    }
 
     public static void deleteMeal(LocalDate date, Meal meal) {
         calendar.getDay(date).deleteMeal(meal);
@@ -88,10 +71,10 @@ public class InRAM {
     }
 
 
-
     public static void findUsers() {
+        // Go through all recipes and their reviews to find users
         for (Recipe recipe : recipesInRAM.values()) {
-            /* Loads in reviews and creates users based on data */
+            // Loads in reviews and creates users based on data
             if (recipe.getReviews() != null) {
                 for (Review r : recipe.getReviews()) {
                     User user1 = new User();
@@ -130,10 +113,8 @@ public class InRAM {
 
     public static void initializeRecipes() {
         List<Recipe> recipes = DBHandler.getAllRecipes();
-
-        for(Recipe r : recipes){
+        for (Recipe r : recipes) {
             recipesInRAM.put(r.getID(), r);
         }
-
     }
 }
