@@ -10,7 +10,6 @@ import static java.time.temporal.ChronoUnit.YEARS;
 
 public class LocalUser extends User {
     private static int age;
-    private static LocalDate birthday;
     private static int height;
     private static double weight;
     private static double goalWeight;
@@ -26,7 +25,6 @@ public class LocalUser extends User {
     public String toString() {
         return "LocalUser{" +
                 "age=" + age +
-                ", birthday=" + birthday +
                 ", height=" + height +
                 ", weight=" + weight +
                 ", goalWeight=" + goalWeight +
@@ -48,19 +46,6 @@ public class LocalUser extends User {
 
     public void setWantLoseWeight(int wantLoseWeight) {
         LocalUser.wantLoseWeight = wantLoseWeight;
-    }
-
-    //TODO RIGHT
-    public void calcAge() {
-        age = (int) YEARS.between(birthday, LocalDate.now());
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate newBirthday) {
-        birthday = newBirthday;
     }
 
     public int getCaloriesPerDay() {

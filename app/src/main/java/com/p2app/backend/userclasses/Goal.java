@@ -50,7 +50,6 @@ public class Goal {
                 days++;
             }
         }
-
         LocalDate goalDate = startDate.plusDays(days);
         return goalDate;
     }
@@ -97,7 +96,6 @@ public class Goal {
                     localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl())));
                     break;
                 } // goal reached, no deficit
-
             case 0:
                 if (localUser.getWeight() < localUser.getGoalWeight()) {
                     localUser.setCaloriesPerDay((int) (BMR * localUser.getExerciseLvl() + calSurplus));
