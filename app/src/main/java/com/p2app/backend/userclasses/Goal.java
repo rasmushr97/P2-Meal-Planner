@@ -133,7 +133,7 @@ public class Goal {
     }
 
     /* Using 'The Revised Harris-Benedict Equation' to calculate daily burned calories for male or female */
-    public double RHB_Equation(LocalUser localUser) {
+    private double RHB_Equation(LocalUser localUser) {
         /* BMR = the amount of calories you burn during a day without exercise */
         double BMR;
         if (localUser.isMale()) {
@@ -144,12 +144,12 @@ public class Goal {
         return BMR;
     }
 
-    public int calDeficit(double BMI) {
-        int offset = (int) ((BMI * BMI) - (BMI * 5)); // calculates the amount of calories less you need to eat
+    private int calDeficit(double BMI) {
+        int offset = (int) ((BMI * BMI) - (BMI * 5)); // calculates the amount of calories less needed
         return offset > 1000 ? 1000 : offset;         // max calorie deficit per week is 1000
     }
 
-    public double recalcDeficit(double calDeficit, double gramADay, double diffInCal, int days) {
+    private double recalcDeficit(double calDeficit, double gramADay, double diffInCal, int days) {
         int week = 7;
         double missCalCalories;
         double newDeficit = 0;
