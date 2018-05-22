@@ -7,8 +7,8 @@ import java.util.Map;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Goal {
-    public static Map<LocalDate, Float> userWeight = new HashMap<>();
-    public static Map<LocalDate, Float> goalWeight = new HashMap<>();
+    private static Map<LocalDate, Float> userWeight = new HashMap<>();
+    private static Map<LocalDate, Float> goalWeight = new HashMap<>();
     public static LocalDate startDate;
 
     public void addUserWeight(LocalDate localDate, float weight) {
@@ -50,7 +50,6 @@ public class Goal {
                 days++;
             }
         }
-
         LocalDate goalDate = startDate.plusDays(days);
         return goalDate;
     }
@@ -67,7 +66,7 @@ public class Goal {
     }
 
     /* Calculates how many kg you lose by calories*/
-    public double calToKilo(int calories) {
+    private double calToKilo(int calories) {
         return calories / 1102.3;
     }
 
@@ -97,7 +96,6 @@ public class Goal {
                     localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl())));
                     break;
                 } // goal reached, no deficit
-
             case 0:
                 if (localUser.getWeight() < localUser.getGoalWeight()) {
                     localUser.setCaloriesPerDay((int) (BMR * localUser.getExerciseLvl() + calSurplus));
@@ -135,7 +133,7 @@ public class Goal {
     }
 
     /* Using 'The Revised Harris-Benedict Equation' to calculate daily burned calories for male or female */
-    public double RHB_Equation(LocalUser localUser) {
+    private double RHB_Equation(LocalUser localUser) {
         /* BMR = the amount of calories you burn during a day without exercise */
         double BMR;
         if (localUser.isMale()) {
@@ -146,12 +144,12 @@ public class Goal {
         return BMR;
     }
 
-    public int calDeficit(double BMI) {
-        int offset = (int) ((BMI * BMI) - (BMI * 5)); // calculates the amount of calories less you need to eat
+    private int calDeficit(double BMI) {
+        int offset = (int) ((BMI * BMI) - (BMI * 5)); // calculates the amount of calories less needed
         return offset > 1000 ? 1000 : offset;         // max calorie deficit per week is 1000
     }
 
-    public double recalcDeficit(double calDeficit, double gramADay, double diffInCal, int days) {
+    private double recalcDeficit(double calDeficit, double gramADay, double diffInCal, int days) {
         int week = 7;
         double missCalCalories;
         double newDeficit = 0;
@@ -162,7 +160,7 @@ public class Goal {
         return newDeficit;
     }
 
-    public double recalcSurplus(double gramADay, double diffInCal, int days) {
+    private double recalcSurplus(double gramADay, double diffInCal, int days) {
         int week = 7;
         double calSurplus = 500;
         double missCalCalories;

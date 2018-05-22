@@ -752,7 +752,6 @@ public class DBHandler {
             String sql = "SELECT * FROM reviews WHERE submitter_id=" + userID;
             resultSet = stmt.executeQuery(sql);
 
-
             //5: Extract data from result set
             while (resultSet.next()) {
                 //Retrieve by column name
@@ -766,14 +765,11 @@ public class DBHandler {
                 //Initializing fields in the Review class
                 res.add(new Review(revID, reviewText, submitterName, submitterID, individualRating, recipeID));
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         closeResultSet(resultSet);
-
         return res;
     }
 
@@ -782,18 +778,14 @@ public class DBHandler {
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(sql);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
     //Gets information to the recipe class from the database
     public static void getLocalUser(String userID) {
         ResultSet resultSet = null;
-        //Goal goal = new Goal();
 
         if (conn == null) {
             throw new NoDBConnectionException();

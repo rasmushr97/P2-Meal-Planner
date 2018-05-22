@@ -67,21 +67,21 @@ public class GoalActivity extends AppBackButtonActivity {
         enterWeightButton = findViewById(R.id.enterWeight);
         enterWeightButton.setOnClickListener(view -> {
             if (!weightText.getText().toString().equals("")) { //Checks if the input is empty
-                if (Float.valueOf(weightText.getText().toString()) < 500) { //TODO right now checks if weight is below 500
+                float input = Float.valueOf(weightText.getText().toString());
+                if (500 > input && input > 30) {
                     /* Changes the user weight and adds it to the history of weight*/
-                    InRAM.user.setWeight(Float.valueOf(weightText.getText().toString()));
-                    InRAM.user.getGoal().addUserWeight(LocalDate.now(), (float) InRAM.user.getWeight());
+                    InRAM.user.setWeight(input);
+                    InRAM.user.getGoal().addUserWeight(LocalDate.now(), input);
                     hideKeyboard(GoalActivity.this);
                     /* Refreshes the graph with new weight */
                     graphData.initializeGoal();
                     graphData.initializeWeight();
                     refreshGraph();
-                } else { //TODO If you are above 500kg
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
-                    builder.setTitle("You Are Fat! :)"); //TODO do something here (Positive button)
-                    final EditText input = new EditText(GoalActivity.this);
-                    builder.setPositiveButton("CANCEL", (dialog, which) -> dialog.cancel());
-                    builder.setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
+                    builder.setTitle("INVALID INPUT");
+                    builder.setMessage("You entered an invalid weight \nWeight: " + input);
+                    builder.setPositiveButton("DISMISS", (dialog, which) -> dialog.cancel());
                     builder.show();
                 }
             }
@@ -109,7 +109,8 @@ public class GoalActivity extends AppBackButtonActivity {
                     builder.setView(input);
                     builder.setPositiveButton("CHANGE", (dialog, which) -> {
                         if (!input.getText().toString().equals("")) { //Checks if input is empty)
-                            InRAM.user.setGoalWeight(Float.valueOf(input.getText().toString()));
+                            float goalWeight = Float.valueOf(input.getText().toString());
+                            InRAM.user.setGoalWeight(goalWeight);
 
                             /* If user changes to gain weight */
                             if(InRAM.user.getGoalWeight() > InRAM.user.getWeight() && InRAM.user.getWantLoseWeight() == 1){
@@ -134,7 +135,7 @@ public class GoalActivity extends AppBackButtonActivity {
                                 }
                             }
 
-                            goalEdit.setText(InRAM.user.getGoalWeight() + " kg"); //Shows the goal weight
+                            goalEdit.setText(InRAM.user.getGoalWeight() + "kg"); //Shows the goal weight
                             /* Updates graph for goal line */
                             graphData.initializeGoal();
                             refreshGraph();
