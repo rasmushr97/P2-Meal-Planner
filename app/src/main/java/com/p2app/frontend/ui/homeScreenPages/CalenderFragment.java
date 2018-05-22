@@ -34,7 +34,7 @@ import android.widget.Toast;
 import com.p2app.frontend.ui.recipePages.PickMealActivity;
 import com.p2app.frontend.ui.recipePages.RecipeClickedActivity;
 import com.p2app.R;
-import com.p2app.backend.Comparators.MealCompare;
+import com.p2app.backend.comparators.MealCompare;
 import com.p2app.backend.InRAM;
 import com.p2app.backend.recipeclasses.Recipe;
 import com.p2app.backend.time.Calendar;

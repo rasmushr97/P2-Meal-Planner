@@ -1,4 +1,4 @@
-package com.p2app.backend.Comparators;
+package com.p2app.backend.comparators;
 
 import com.p2app.backend.time.Meal;
 

@@ -32,7 +32,7 @@ import android.widget.TextView;
 
 import com.p2app.frontend.ui.recipePages.PickMealActivity;
 import com.p2app.R;
-import com.p2app.backend.Comparators.MealCompare;
+import com.p2app.backend.comparators.MealCompare;
 import com.p2app.backend.InRAM;
 import com.p2app.backend.time.Day;
 import com.p2app.backend.time.Meal;

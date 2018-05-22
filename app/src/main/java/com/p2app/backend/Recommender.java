@@ -1,7 +1,7 @@
 package com.p2app.backend;
 
-import com.p2app.backend.Comparators.ValueRecipeComparator;
-import com.p2app.backend.Comparators.ValueUserComparator;
+import com.p2app.backend.comparators.ValueRecipeComparator;
+import com.p2app.backend.comparators.ValueUserComparator;
 import com.p2app.backend.recipeclasses.Recipe;
 import com.p2app.backend.recipeclasses.Review;
 import com.p2app.backend.userclasses.User;
