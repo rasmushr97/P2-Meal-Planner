@@ -7,8 +7,8 @@ import java.util.Map;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Goal {
-    public static Map<LocalDate, Float> userWeight = new HashMap<>();
-    public static Map<LocalDate, Float> goalWeight = new HashMap<>();
+    private static Map<LocalDate, Float> userWeight = new HashMap<>();
+    private static Map<LocalDate, Float> goalWeight = new HashMap<>();
     public static LocalDate startDate;
 
     public void addUserWeight(LocalDate localDate, float weight) {
@@ -66,7 +66,7 @@ public class Goal {
     }
 
     /* Calculates how many kg you lose by calories*/
-    public double calToKilo(int calories) {
+    private double calToKilo(int calories) {
         return calories / 1102.3;
     }
 
@@ -160,7 +160,7 @@ public class Goal {
         return newDeficit;
     }
 
-    public double recalcSurplus(double gramADay, double diffInCal, int days) {
+    private double recalcSurplus(double gramADay, double diffInCal, int days) {
         int week = 7;
         double calSurplus = 500;
         double missCalCalories;
