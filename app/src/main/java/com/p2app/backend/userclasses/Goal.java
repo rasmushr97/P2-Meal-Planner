@@ -9,7 +9,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Goal {
     private static Map<LocalDate, Float> userWeight = new HashMap<>();
     private static Map<LocalDate, Float> goalWeight = new HashMap<>();
-    public static LocalDate startDate;
+    public static LocalDate goalStartDate;
 
     public void addUserWeight(LocalDate localDate, float weight) {
         userWeight.put(localDate, weight);
@@ -30,31 +30,35 @@ public class Goal {
 
     /* Method calculates the date where the user will reach their goal*/
     public LocalDate calcGoalDate(LocalUser localUser) {
-        float tempWeight = userWeight.get(startDate);
+        /* tempWeight is the users weight they started their goal */
+        float tempWeight = userWeight.get(goalStartDate);
 
         int days = 0;
-        if (localUser.getWantLoseWeight() == 1) {
+        if (localUser.getWantLoseWeight() == 1) { //User wants to lose weight
+            /* Loop that counts how many days it takes the user reach their goal */
             while (tempWeight > localUser.getGoalWeight()) {
                 double height = (double) localUser.getHeight() / 100;
                 double BMI = tempWeight / (height * height);
+                /* For each day the projected amount of weight loss per day is removed from tempWeight */
                 tempWeight -= (calToKilo(calDeficit(BMI))) / 7;
-                addGoalWeight(startDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
+                addGoalWeight(goalStartDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
                 days++;
             }
-        } else {
+        } else { //user wants to gain weight
             while (tempWeight < localUser.getGoalWeight()) {
                 double height = (double) localUser.getHeight() / 100;
                 double BMI = tempWeight / (height * height);
+                /* For each day the projected amount of weight gain per day is added to tempWeight */
                 tempWeight += (calToKilo(calDeficit(BMI))) / 7;
-                addGoalWeight(startDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
+                addGoalWeight(goalStartDate.plusDays(days), tempWeight); //Adds a weight for each week for the graph
                 days++;
             }
         }
-        LocalDate goalDate = startDate.plusDays(days);
-        return goalDate;
+        /* Returns the date where the user is projected to reach their */
+        return goalStartDate.plusDays(days);
     }
 
-    /* Finds the latest date where a certain weight was entered in the user/goal maps */
+    /* Returns the last date where a certain weight was entered in a LocalDate/Float map */
     public static LocalDate getLastDate(Map<LocalDate, Float> map) {
         LocalDate lastDate = LocalDate.of(2000, 1, 1);
         for (Map.Entry<LocalDate, Float> entry : map.entrySet()) {
@@ -66,11 +70,11 @@ public class Goal {
     }
 
     /* Calculates how many kg you lose by calories*/
-    private double calToKilo(int calories) {
+    public double calToKilo(int calories) {
         return calories / 1102.3;
     }
 
-    /* Method that finds the first date in a Map */
+    /* Method that returns the first date in a LocalDate/Float map */
     public static LocalDate getFirstDate(Map<LocalDate, Float> map) {
         LocalDate firstDate = LocalDate.of(3000, 1, 1);
         for (Map.Entry<LocalDate, Float> entry : map.entrySet()) {
@@ -86,24 +90,26 @@ public class Goal {
         int calSurplus = 500;
 
         switch (localUser.getWantLoseWeight()) {
-            case 1:
+            case 1: // User wants to lose weight
                 if (localUser.getWeight() > localUser.getGoalWeight()) { // user hasn't reached their goal
                     double BMI = localUser.calcBMI();
-                    localUser.setCalorieDeficit(calDeficit(BMI)); // calculates the offset in calories
+                    localUser.setCalorieDeficit(calDeficit(BMI)); // calculates the deficit in calories
                     localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl()) - localUser.getCalorieDeficit()));
                     break;
                 } else {
+                    /* goal reached, no surplus */
                     localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl())));
                     break;
-                } // goal reached, no deficit
-            case 0:
+                }
+            case 0: // user wants to gain weight
                 if (localUser.getWeight() < localUser.getGoalWeight()) {
                     localUser.setCaloriesPerDay((int) (BMR * localUser.getExerciseLvl() + calSurplus));
                     break;
                 } else {
+                    /* goal reached, no surplus */
                     localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl())));
                     break;
-                } // goal reached, no surplus
+                }
         }
     }
 
@@ -133,7 +139,7 @@ public class Goal {
     }
 
     /* Using 'The Revised Harris-Benedict Equation' to calculate daily burned calories for male or female */
-    private double RHB_Equation(LocalUser localUser) {
+    public double RHB_Equation(LocalUser localUser) {
         /* BMR = the amount of calories you burn during a day without exercise */
         double BMR;
         if (localUser.isMale()) {
@@ -144,7 +150,7 @@ public class Goal {
         return BMR;
     }
 
-    private int calDeficit(double BMI) {
+    public int calDeficit(double BMI) {
         int offset = (int) ((BMI * BMI) - (BMI * 5)); // calculates the amount of calories less needed
         return offset > 1000 ? 1000 : offset;         // max calorie deficit per week is 1000
     }

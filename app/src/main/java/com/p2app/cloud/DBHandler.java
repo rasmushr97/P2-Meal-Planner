@@ -811,7 +811,7 @@ public class DBHandler {
                 if(i == 0) {
                     InRAM.user.setGoalWeight(goalWeight);
                     String goal_changed_date = resultSet.getString("goal_changed_date");
-                    Goal.startDate = LocalDate.parse(goal_changed_date, dateFormatter);
+                    Goal.goalStartDate = LocalDate.parse(goal_changed_date, dateFormatter);
                 }
 
                 i++;
