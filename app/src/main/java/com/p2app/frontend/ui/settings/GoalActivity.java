@@ -115,23 +115,23 @@ public class GoalActivity extends AppBackButtonActivity {
                             /* If user changes to gain weight */
                             if(InRAM.user.getGoalWeight() > InRAM.user.getWeight() && InRAM.user.getWantLoseWeight() == 1){
                                 InRAM.user.setWantLoseWeight(0);
-                                Goal.startDate = Goal.getLastDate(Goal.getUserWeight());
+                                Goal.goalStartDate = Goal.getLastDate(Goal.getUserWeight());
                                 goalChanged = true;
                             }
                             /* If user changes to lose weight */
                             else if (InRAM.user.getGoalWeight() < InRAM.user.getWeight() && InRAM.user.getWantLoseWeight() == 0){
                                 InRAM.user.setWantLoseWeight(1);
-                                Goal.startDate = Goal.getLastDate(Goal.getUserWeight());
+                                Goal.goalStartDate = Goal.getLastDate(Goal.getUserWeight());
                                 goalChanged = true;
                             }
                             /* Select goal graph start point */
-                            else if (!Goal.startDate.equals(getFirstDate(Goal.getUserWeight()))) {
+                            else if (!Goal.goalStartDate.equals(getFirstDate(Goal.getUserWeight()))) {
                                 if(InRAM.user.getGoalWeight() < InRAM.user.getWeight() && InRAM.user.getWantLoseWeight() == 1){
                                     goalChanged = false;
                                 } else if(InRAM.user.getGoalWeight() > InRAM.user.getWeight() && InRAM.user.getWantLoseWeight() == 1){
                                     goalChanged = false;
                                 } else {
-                                    Goal.startDate = Goal.getLastDate(Goal.getUserWeight());
+                                    Goal.goalStartDate = Goal.getLastDate(Goal.getUserWeight());
                                 }
                             }
 
@@ -187,7 +187,7 @@ public class GoalActivity extends AppBackButtonActivity {
                         InRAM.user.setWeight(Goal.getUserWeight().get(prevWeightDate));
                         /* Updates the date where goal line begins, if goal has been changed */
                         if(goalChanged){
-                            Goal.startDate = Goal.getLastDate(Goal.getUserWeight());
+                            Goal.goalStartDate = Goal.getLastDate(Goal.getUserWeight());
                         }
                         Toast.makeText(this, "Measurement deleted", Toast.LENGTH_SHORT).show();
                         /* Refreshes the graph */
@@ -248,7 +248,7 @@ public class GoalActivity extends AppBackButtonActivity {
         /* Goes through all days, and adds all weight measurements to the database */
         for(LocalDate date : dates){
             if(Goal.getUserWeight().keySet().contains(date)){
-                DBHandler.addWeightMeasurement(date, Goal.getUserWeight().get(date), goalWeight, InRAM.user.getID(), Goal.startDate);
+                DBHandler.addWeightMeasurement(date, Goal.getUserWeight().get(date), goalWeight, InRAM.user.getID(), Goal.goalStartDate);
             }
         }
     }
