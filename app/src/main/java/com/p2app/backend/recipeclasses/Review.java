@@ -32,10 +32,6 @@ public class Review {
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public int getRecipeID() {
         return recipeID;
     }
@@ -44,31 +40,16 @@ public class Review {
         return review;
     }
 
-    public void setReview(String review) {
-        this.review = review;
-    }
-
     public String getSubmitterName() {
         return submitterName;
-    }
-
-    public void setSubmitterName(String submitterName) {
-        this.submitterName = submitterName;
     }
 
     public String getSubmitterID() {
         return submitterID;
     }
 
-    public void setSubmitterID(String submitterID) {
-        this.submitterID = submitterID;
-    }
-
     public int getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
 }

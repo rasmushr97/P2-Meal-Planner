@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import com.p2app.R;
 import com.p2app.backend.InRAM;
-import com.p2app.backend.recipeclasses.Ingredients;
+import com.p2app.backend.recipeclasses.Ingredient;
 import com.p2app.backend.time.Calendar;
 import com.p2app.backend.time.Day;
 import com.p2app.backend.time.Meal;
@@ -48,7 +48,7 @@ public class ShoppingListFragment extends Fragment {
 
         final List<ShoppingListItemModel> items = new ArrayList<>();
         List<Day> week = calendar.get7DayList();
-        List<Ingredients> ingredientList = new ArrayList<>();
+        List<Ingredient> ingredientList = new ArrayList<>();
 
 
         for (Day day : week) {
@@ -56,14 +56,14 @@ public class ShoppingListFragment extends Fragment {
                 ingredientList.addAll(meal.getRecipe().getIngredients());
             }
         }
-        List<Ingredients> shoppingList = new ArrayList<>();
+        List<Ingredient> shoppingList = new ArrayList<>();
         List<String> stringShoppingList = new ArrayList<>();
         String[] removeWords = {"CHOPPED ", "COOKED ", "SHREDDED ", "UNCOOKED "};
         String[] removeUnits = {"TEASPOON", "TABLESPOON", "CLOVE", "PINCH"};
 
 
-        for (Iterator<Ingredients> iterator = ingredientList.iterator(); iterator.hasNext(); ) {
-            Ingredients ing = iterator.next();
+        for (Iterator<Ingredient> iterator = ingredientList.iterator(); iterator.hasNext(); ) {
+            Ingredient ing = iterator.next();
             /* If statements to remove unnecessary ingredients from the shoppinglist */
             if (ing.getName().toUpperCase().contains("SALT") && ing.getName().toUpperCase().contains("PEPPER")) {
                 iterator.remove();
@@ -132,7 +132,7 @@ public class ShoppingListFragment extends Fragment {
 
             boolean alreadyExist = false;
             /* If the item already exists on the shoppinglist the amount is added up */
-            for(Ingredients i : shoppingList){
+            for(Ingredient i : shoppingList){
                 if(i.getName().toUpperCase().equals(ing.getName().toUpperCase()) && i.getUnit().equals(ing.getUnit())){
                     i.setAmount(i.getAmount() + ing.getAmount());
                     alreadyExist = true;
@@ -146,7 +146,7 @@ public class ShoppingListFragment extends Fragment {
         }
 
         /* Every item on the shopping list gets turned into a string*/
-        for(Ingredients ing : shoppingList){
+        for(Ingredient ing : shoppingList){
             String ingredient;
             /* Uppercase the first letter */
             String tempName = ing.getName().substring(0, 1).toUpperCase() + ing.getName().substring(1);
