@@ -14,7 +14,7 @@ import com.p2app.frontend.ui.homeScreenPages.MainActivity;
 import com.p2app.frontend.ui.login.LoginActivity;
 
 public class LoadingScreenActivity extends AppCompatActivity {
-    final int startAnimationTime = 100; // Milliseconds
+    final int startAnimationTime = 500; // Milliseconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

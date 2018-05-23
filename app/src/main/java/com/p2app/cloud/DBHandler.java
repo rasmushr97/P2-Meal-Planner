@@ -12,7 +12,6 @@ import com.p2app.backend.time.Calendar;
 import com.p2app.backend.time.Day;
 import com.p2app.backend.time.Meal;
 import com.p2app.backend.userclasses.Goal;
-import com.p2app.backend.userclasses.User;
 import com.p2app.exceptions.NoDBConnectionException;
 
 import java.sql.Connection;
@@ -879,39 +878,6 @@ public class DBHandler {
         return calendar;
     }
 
-    public static User getUser(String userID) {
-        ResultSet resultSet = null;
-        User user = new User();
-
-        if (conn == null) {
-            throw new NoDBConnectionException();
-        }
-
-        try {
-            stmt = conn.createStatement();
-            String sql = "SELECT user_id, username, password FROM user WHERE user_id=" + userID;
-            resultSet = stmt.executeQuery(sql);
-
-            //Extract data from result set
-            while (resultSet.next()) {
-                //Retrieve by column name
-                String userName = resultSet.getString("username");
-                String passWord = resultSet.getString("password");
-
-                user.setID(userID);
-                user.setUserName(userName);
-                user.setPassWord(passWord);
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        closeResultSet(resultSet);
-
-        return user;
-    }
 
     private static String createQueryString(String tableName, List<Integer> IDs) {
         String res = "select * from " + tableName + " WHERE recipe_id IN (";

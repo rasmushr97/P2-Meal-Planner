@@ -3,10 +3,6 @@ package com.p2app.backend.userclasses;
 import com.p2app.backend.InRAM;
 import com.p2app.cloud.DBHandler;
 
-import java.time.LocalDate;
-
-import static java.time.temporal.ChronoUnit.YEARS;
-
 
 public class LocalUser extends User {
     private int age;
@@ -25,6 +21,7 @@ public class LocalUser extends User {
         double newHeight = (double) height / 100;
         return weight / (newHeight * newHeight);
     }
+
 
     public int getWantLoseWeight() {
         return wantLoseWeight;

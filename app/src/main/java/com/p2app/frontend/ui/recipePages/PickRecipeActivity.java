@@ -10,10 +10,10 @@ import com.p2app.backend.InRAM;
 import com.p2app.backend.Recommender;
 import com.p2app.backend.recipeclasses.Recipe;
 import com.p2app.backend.recipeclasses.Review;
+import com.p2app.frontend.AppBackButtonActivity;
 import com.p2app.frontend.adapters.RecyclerViewDataAdapter;
 import com.p2app.frontend.models.SectionDataModel;
 import com.p2app.frontend.models.SingleItemModel;
-import com.p2app.frontend.AppBackButtonActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,14 +24,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 public class PickRecipeActivity extends AppBackButtonActivity {
 
     private Toolbar toolbar;
-
-
 
     /* SectionDataModel klassen er for hver kategori. SingleItemModel klassen er for hver ting inde i hver kategori.
      * Dataen der bliver indlæst er fra createDummyData metoden
