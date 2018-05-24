@@ -35,6 +35,7 @@ public class PickRecipeActivity extends AppBackButtonActivity {
 
     List<SectionDataModel> allSampleData;
 
+    final int amountOfTags = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class PickRecipeActivity extends AppBackButtonActivity {
     }
 
     private void loadRecipes() {
+
         InRAM.recipeIDsForExplorer = new ArrayList<>();
         List<Recipe> recipes = new ArrayList<>(InRAM.recipesInRAM.values());
 
@@ -99,7 +101,6 @@ public class PickRecipeActivity extends AppBackButtonActivity {
 
 
         // Find the users most used tags
-
         Map<String, Integer> tags = new HashMap<>();
 
         for (Review r : InRAM.user.getReviews()) {
@@ -116,11 +117,11 @@ public class PickRecipeActivity extends AppBackButtonActivity {
         }
         tags = sortByValue(tags);
 
-        // Take the users 3 most popular tags and save them
+        // Take the users 5 most popular tags and save them
         List<String> tagList = new ArrayList<>();
         int i = 0;
         for (String s : tags.keySet()) {
-            if (i < 3) {
+            if (i < amountOfTags) {
                 tagList.add(s);
             } else {
                 break;
@@ -130,13 +131,11 @@ public class PickRecipeActivity extends AppBackButtonActivity {
         InRAM.sectionNames.addAll(tagList);
 
 
-
-
-        // Find all recipes using those 3 tags
+        // Find all recipes using those 5 tags
         List<List<Integer>> tagList2d = new ArrayList<>();
-        tagList2d.add(new ArrayList<>());
-        tagList2d.add(new ArrayList<>());
-        tagList2d.add(new ArrayList<>());
+        for(int j = 0; j < amountOfTags; j++){
+            tagList2d.add(new ArrayList<>());
+        }
 
         List<Recipe> recipeList = new ArrayList<>(InRAM.recipesInRAM.values());
         for (Recipe recipe : recipeList) {

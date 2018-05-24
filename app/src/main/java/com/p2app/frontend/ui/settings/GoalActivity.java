@@ -20,6 +20,7 @@ import com.p2app.backend.userclasses.Goal;
 import com.p2app.cloud.DBHandler;
 import com.p2app.frontend.AppBackButtonActivity;
 import com.p2app.R;
+import com.p2app.frontend.AppDrawerActivity;
 import com.p2app.frontend.ui.misc.ChartFragment;
 import com.p2app.frontend.models.GraphData;
 
@@ -32,9 +33,7 @@ import java.util.stream.Stream;
 
 import static com.p2app.backend.userclasses.Goal.getFirstDate;
 
-public class GoalActivity extends AppBackButtonActivity {
-
-    private static final String TAG = "GoalActivity";
+public class GoalActivity extends AppDrawerActivity {
     private Button goalButton;
     private TextView goalEdit;
     static GraphData graphData = new GraphData();

@@ -15,9 +15,10 @@ import android.widget.TextView;
 
 import com.p2app.R;
 import com.p2app.frontend.AppBackButtonActivity;
+import com.p2app.frontend.AppDrawerActivity;
 import com.p2app.frontend.ui.login.LoginActivity;
 
-public class SettingsActivity extends AppBackButtonActivity {
+public class SettingsActivity extends AppDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
