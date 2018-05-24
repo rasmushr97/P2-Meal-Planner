@@ -16,14 +16,14 @@ public class Recipe {
     private double rating;
     private CookTime time;
     private List<String> categories = new ArrayList<>();
-    private List<Ingredients> ingredients = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
     private List<String> directions = new ArrayList<>();
     private List<Review> reviews = new ArrayList<>();
 
     public Recipe(int ID, String title, String submitterName,
                   String pictureLink, String websiteLink, String description,
                   int servings, int calories, double rating,
-                  CookTime time, List<String> categories, List<Ingredients> ingredients,
+                  CookTime time, List<String> categories, List<Ingredient> ingredients,
                   List<String> directions, List<Review> reviews) {
         this.ID = ID;
         this.title = title;
@@ -148,11 +148,11 @@ public class Recipe {
         this.categories = categories;
     }
 
-    public List<Ingredients> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredients> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 

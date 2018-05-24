@@ -6,22 +6,20 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.p2app.R;
 import com.p2app.backend.InRAM;
-import com.p2app.backend.recipeclasses.Ingredients;
+import com.p2app.backend.recipeclasses.Ingredient;
 import com.p2app.backend.recipeclasses.Recipe;
 import com.p2app.backend.time.Day;
 import com.p2app.backend.time.Meal;
 import com.p2app.cloud.DBHandler;
-import com.p2app.frontend.adapters.DownloadImageTask;
 import com.p2app.frontend.AppBackButtonActivity;
+import com.p2app.frontend.adapters.DownloadImageTask;
 import com.p2app.frontend.ui.homeScreenPages.MainActivity;
 
 import java.text.DecimalFormat;
@@ -97,7 +95,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
 
         TextView ingredients = findViewById(R.id.RecipeItems);
         String ingredientsText = "";
-        for (Ingredients ingredient : recipe.getIngredients()) {
+        for (Ingredient ingredient : recipe.getIngredients()) {
             String inParentheses = "";
             if (!ingredient.getInParentheses().equals("")) {
                 inParentheses = "(" + ingredient.getInParentheses() + ")";

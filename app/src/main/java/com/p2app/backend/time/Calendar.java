@@ -1,7 +1,10 @@
 package com.p2app.backend.time;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Calendar {
     private LocalDate today;
@@ -11,21 +14,10 @@ public class Calendar {
         this.today = today;
     }
 
-    public LocalDate getToday() {
-        return today;
-    }
-
-    public void setToday(LocalDate today) {
-        this.today = today;
-    }
-
     public Map<LocalDate, Day> getDates() {
         return dates;
     }
 
-    public void setDates(Map<LocalDate, Day> dates) {
-        this.dates = dates;
-    }
     public Day getDay(LocalDate date){
         return dates.get(date);
     }

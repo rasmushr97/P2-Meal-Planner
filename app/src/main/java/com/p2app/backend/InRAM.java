@@ -1,6 +1,5 @@
 package com.p2app.backend;
 
-;
 import com.p2app.backend.recipeclasses.Recipe;
 import com.p2app.backend.recipeclasses.Review;
 import com.p2app.backend.time.Calendar;
@@ -17,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+;
 
 public class InRAM {
     public static Calendar calendar;
@@ -82,7 +83,6 @@ public class InRAM {
                         user1.addReview(r);
                     }
 
-                    user1.setUserName(r.getSubmitterName());
                     user1.setID(r.getSubmitterID());
 
                     /* Makes sure each user is unique and stores unique objects in ArrayList

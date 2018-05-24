@@ -12,8 +12,7 @@ import java.util.Objects;
 
 public class User {
     private String ID;
-    private String userName;
-    private String passWord;
+
     private List<Review> reviews = new ArrayList<>();
 
     private LinkedHashMap<String, Double> similarityScores = new LinkedHashMap<>(); //Stores this users similarity scores to other users <otherUserID, simScore>
@@ -26,6 +25,7 @@ public class User {
         this.ID = ID;
     }
 
+
     public String getID() {
         return ID;
     }
@@ -34,17 +34,6 @@ public class User {
         this.ID = ID;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassWord() { return passWord; }
-
-    public void setPassWord(String passWord) { this.passWord = passWord; }
 
     public List<Review> getReviews() {
         return reviews;

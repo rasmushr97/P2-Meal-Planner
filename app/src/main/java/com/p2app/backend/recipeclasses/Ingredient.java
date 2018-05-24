@@ -2,7 +2,7 @@ package com.p2app.backend.recipeclasses;
 
 import java.util.Objects;
 
-public class Ingredients {
+public class Ingredient {
     private int ID;
     private String name;
     private double amount;
@@ -10,7 +10,7 @@ public class Ingredients {
     // Some times the ingredients have something in parentheses e.g. "1 can (300g) of beans
     private String inParentheses;
 
-    public Ingredients(int ID, String name, double amount, String unit, String inParentheses) {
+    public Ingredient(int ID, String name, double amount, String unit, String inParentheses) {
         this.ID = ID;
         this.name = name;
         this.amount = amount;
@@ -24,7 +24,7 @@ public class Ingredients {
 
     @Override
     public String toString() {
-        return "Ingredients{" +
+        return "Ingredient{" +
                 "ID=" + ID +
                 ", name='" + name + '\'' +
                 ", amount=" + amount +
@@ -73,7 +73,7 @@ public class Ingredients {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Ingredients that = (Ingredients) o;
+        Ingredient that = (Ingredient) o;
         return Objects.equals(name, that.name);
     }
 

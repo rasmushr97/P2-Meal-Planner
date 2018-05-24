@@ -5,14 +5,13 @@ import android.os.StrictMode;
 
 import com.p2app.backend.InRAM;
 import com.p2app.backend.recipeclasses.CookTime;
-import com.p2app.backend.recipeclasses.Ingredients;
+import com.p2app.backend.recipeclasses.Ingredient;
 import com.p2app.backend.recipeclasses.Recipe;
 import com.p2app.backend.recipeclasses.Review;
 import com.p2app.backend.time.Calendar;
 import com.p2app.backend.time.Day;
 import com.p2app.backend.time.Meal;
 import com.p2app.backend.userclasses.Goal;
-import com.p2app.backend.userclasses.User;
 import com.p2app.exceptions.NoDBConnectionException;
 
 import java.sql.Connection;
@@ -264,7 +263,7 @@ public class DBHandler {
             r.setTime(cookTimeMap.get(r.getID()));
         }
 
-        HashMap<Integer, List<Ingredients>> ingredientsListMap = getIngredientsFromRecipeIDs(IDs);
+        HashMap<Integer, List<Ingredient>> ingredientsListMap = getIngredientsFromRecipeIDs(IDs);
         for (Recipe r : recipeList) {
             r.setIngredients(ingredientsListMap.get(r.getID()));
         }
@@ -365,7 +364,7 @@ public class DBHandler {
         return categoryMap;
     }
 
-    private static HashMap<Integer, List<Ingredients>> getIngredientsFromRecipeIDs(List<Integer> IDs) {
+    private static HashMap<Integer, List<Ingredient>> getIngredientsFromRecipeIDs(List<Integer> IDs) {
         int recipeID = 0;
         int prevRecipeID = 0;
         ResultSet resultSet = null;
@@ -374,8 +373,8 @@ public class DBHandler {
             throw new NoDBConnectionException();
         }
 
-        HashMap<Integer, List<Ingredients>> ingredientsMap = new HashMap<>();
-        List<Ingredients> ingredientsList = new ArrayList<>();
+        HashMap<Integer, List<Ingredient>> ingredientsMap = new HashMap<>();
+        List<Ingredient> ingredientList = new ArrayList<>();
 
         try {
             stmt = conn.createStatement();
@@ -393,16 +392,16 @@ public class DBHandler {
                 int ingrID = resultSet.getInt("ingr_id");
 
                 if (prevRecipeID != recipeID && recipeID != 0) {
-                    ingredientsMap.put(prevRecipeID, ingredientsList);
-                    ingredientsList = new ArrayList<>();
+                    ingredientsMap.put(prevRecipeID, ingredientList);
+                    ingredientList = new ArrayList<>();
                 }
                 prevRecipeID = recipeID;
 
-                ingredientsList.add(new Ingredients(ingrID, ingr_name, amount, unit, other_unit));
+                ingredientList.add(new Ingredient(ingrID, ingr_name, amount, unit, other_unit));
             }
 
             if (recipeID != 0) {
-                ingredientsMap.put(recipeID, ingredientsList);
+                ingredientsMap.put(recipeID, ingredientList);
             }
 
         } catch (SQLException e) {
@@ -522,7 +521,7 @@ public class DBHandler {
         double rating = 0;
         CookTime time = null;
         List<String> categories = new ArrayList<>();
-        List<Ingredients> ingredients = new ArrayList<>();
+        List<Ingredient> ingredients = new ArrayList<>();
         List<String> directions = new ArrayList<>();
         List<Review> reviews = new ArrayList<>();
 
@@ -630,13 +629,13 @@ public class DBHandler {
     }
 
     //Gets information to the recipe class from the database
-    public static List<Ingredients> getIngr(int ID) {
+    public static List<Ingredient> getIngr(int ID) {
         ResultSet resultSet = null;
         String ingr_name = null;
         double amount = 0;
         String unit = null;
         String other_unit = null;
-        List<Ingredients> ingredientsList = new ArrayList<>();
+        List<Ingredient> ingredientList = new ArrayList<>();
 
         if (conn == null) {
             throw new NoDBConnectionException();
@@ -655,7 +654,7 @@ public class DBHandler {
                 other_unit = resultSet.getString("other_unit");
                 ingr_name = resultSet.getString("ingr_name");
 
-                ingredientsList.add(new Ingredients(ID, ingr_name, amount, unit, other_unit));
+                ingredientList.add(new Ingredient(ID, ingr_name, amount, unit, other_unit));
             }
 
 
@@ -665,7 +664,7 @@ public class DBHandler {
 
         closeResultSet(resultSet);
 
-        return ingredientsList;
+        return ingredientList;
     }
 
     //Gets information to the recipe class from the database
@@ -752,7 +751,6 @@ public class DBHandler {
             String sql = "SELECT * FROM reviews WHERE submitter_id=" + userID;
             resultSet = stmt.executeQuery(sql);
 
-
             //5: Extract data from result set
             while (resultSet.next()) {
                 //Retrieve by column name
@@ -766,14 +764,11 @@ public class DBHandler {
                 //Initializing fields in the Review class
                 res.add(new Review(revID, reviewText, submitterName, submitterID, individualRating, recipeID));
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         closeResultSet(resultSet);
-
         return res;
     }
 
@@ -782,18 +777,14 @@ public class DBHandler {
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(sql);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
     //Gets information to the recipe class from the database
     public static void getLocalUser(String userID) {
         ResultSet resultSet = null;
-        //Goal goal = new Goal();
 
         if (conn == null) {
             throw new NoDBConnectionException();
@@ -819,7 +810,7 @@ public class DBHandler {
                 if(i == 0) {
                     InRAM.user.setGoalWeight(goalWeight);
                     String goal_changed_date = resultSet.getString("goal_changed_date");
-                    Goal.startDate = LocalDate.parse(goal_changed_date, dateFormatter);
+                    Goal.goalStartDate = LocalDate.parse(goal_changed_date, dateFormatter);
                 }
 
                 i++;
@@ -887,39 +878,6 @@ public class DBHandler {
         return calendar;
     }
 
-    public static User getUser(String userID) {
-        ResultSet resultSet = null;
-        User user = new User();
-
-        if (conn == null) {
-            throw new NoDBConnectionException();
-        }
-
-        try {
-            stmt = conn.createStatement();
-            String sql = "SELECT user_id, username, password FROM user WHERE user_id=" + userID;
-            resultSet = stmt.executeQuery(sql);
-
-            //Extract data from result set
-            while (resultSet.next()) {
-                //Retrieve by column name
-                String userName = resultSet.getString("username");
-                String passWord = resultSet.getString("password");
-
-                user.setID(userID);
-                user.setUserName(userName);
-                user.setPassWord(passWord);
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        closeResultSet(resultSet);
-
-        return user;
-    }
 
     private static String createQueryString(String tableName, List<Integer> IDs) {
         String res = "select * from " + tableName + " WHERE recipe_id IN (";
