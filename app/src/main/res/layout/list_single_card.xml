@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="0dp"
-        android:background="?android:selectableItemBackground"
+        android:background="@color/colorLightPrimary"
         android:orientation="vertical">
 
         <ImageView

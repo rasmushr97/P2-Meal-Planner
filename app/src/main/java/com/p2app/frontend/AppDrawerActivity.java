@@ -1,6 +1,7 @@
 package com.p2app.frontend;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -35,9 +36,9 @@ public abstract class AppDrawerActivity extends AppCompatActivity implements Men
         NavigationView navigation_view = (NavigationView) findViewById(R.id.navigation_view);
         DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+
         view_stub = (FrameLayout) findViewById(R.id.view_stub);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0);
-        //mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

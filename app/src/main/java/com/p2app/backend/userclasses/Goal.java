@@ -97,7 +97,7 @@ public class Goal {
                     localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl()) - localUser.getCalorieDeficit()));
                     break;
                 } else {
-                    /* goal reached, no surplus */
+                    /* Goal reached, no surplus */
                     localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl())));
                     break;
                 }
@@ -106,7 +106,7 @@ public class Goal {
                     localUser.setCaloriesPerDay((int) (BMR * localUser.getExerciseLvl() + calSurplus));
                     break;
                 } else {
-                    /* goal reached, no surplus */
+                    /* Goal reached, no surplus */
                     localUser.setCaloriesPerDay((int) ((BMR * localUser.getExerciseLvl())));
                     break;
                 }

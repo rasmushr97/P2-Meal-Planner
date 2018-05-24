@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     app:layout_constraintVertical_chainStyle="packed"
     tools:context=".frontend.ui.settings.GoalActivity"
+    app:itemTextColor="@color/text_color"
     >
 
 
@@ -46,6 +47,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Enter"
+        android:background="@color/colorAccent"
+        android:textColor="@color/text_color"
         app:layout_constraintBottom_toBottomOf="@+id/weightTextInput"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/weightTextInput" />
@@ -69,6 +72,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="Change"
+        android:textColor="@color/text_color"
+        android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/goalText"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/goalText" />

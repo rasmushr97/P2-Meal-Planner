@@ -74,6 +74,7 @@ public class HomePageListApadater extends ArrayAdapter {
         int goalCalories = InRAM.user.getCaloriesPerDay() - recipe.getCalories();
         pieChartEntries.add(new PieEntry(recipe.getCalories(), "Meal"));
         pieChartEntries.add(new PieEntry(goalCalories, "Total"));
+
         setupPieChart(chart, pieChartEntries, recipe.getCalories());
 
         // Initialization of the recipe's image
@@ -97,7 +98,7 @@ public class HomePageListApadater extends ArrayAdapter {
 
     private void setupPieChart(PieChart chart, List<PieEntry> entryList, int calories) {
         // Colors scheme for the pie chart
-        final int[] MY_COLORS = {Color.rgb(0, 100, 0), Color.rgb(0, 175, 0)};
+        final int[] MY_COLORS = {Color.rgb(240, 185, 98), Color.rgb(149, 199, 105)};
         ArrayList<Integer> colors = new ArrayList<>();
         for (int c : MY_COLORS) colors.add(c);
 
@@ -120,7 +121,7 @@ public class HomePageListApadater extends ArrayAdapter {
         chart.animateY(250, Easing.EasingOption.EaseInOutQuad);
         String centerText = calories + " / " + InRAM.user.getCaloriesPerDay();
         chart.setCenterText(centerText);
-        chart.setCenterTextColor(Color.WHITE);
+        chart.setCenterTextColor(Color.parseColor("#333333"));
 
         // middle hole color
         chart.setHoleColor(Color.TRANSPARENT);
