@@ -42,6 +42,7 @@ public class GoalActivity extends AppDrawerActivity {
     private boolean goalChanged = false;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
