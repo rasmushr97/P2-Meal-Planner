@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class User {
     private String ID;
-
+    private String userName;
     private List<Review> reviews = new ArrayList<>();
 
     private LinkedHashMap<String, Double> similarityScores = new LinkedHashMap<>(); //Stores this users similarity scores to other users <otherUserID, simScore>

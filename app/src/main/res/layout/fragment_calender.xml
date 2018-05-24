@@ -6,6 +6,7 @@
     tools:context=".frontend.ui.homeScreenPages.CalenderFragment">
 
 
+
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -24,6 +25,7 @@
                 android:id="@+id/calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:background="@color/text_color"
                 android:weekDayTextAppearance="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
