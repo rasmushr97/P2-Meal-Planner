@@ -2,8 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="Undo weight"
-        android:id="@+id/undo_weight"/>
-
-
+        android:id="@+id/undo_weight"
+        />
 
 </menu>

@@ -21,6 +21,7 @@
 package com.p2app.frontend.ui.homeScreenPages;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;

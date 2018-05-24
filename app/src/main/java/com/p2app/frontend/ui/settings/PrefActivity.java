@@ -4,10 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,7 +61,15 @@ public class PrefActivity extends AppBackButtonActivity {
 
 
         String[] items = {"Display Name", "Dislike", "Allergies"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(PrefActivity.this, android.R.layout.simple_list_item_1, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(PrefActivity.this, android.R.layout.simple_list_item_1, items){
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView tv = view.findViewById(android.R.id.text1);
+                tv.setTextColor(Color.rgb(51,51,51));
+                return view;
+            }
+        };
 
         ListView listView = findViewById(R.id.preferenceListView);
         listView.setAdapter(adapter);
@@ -79,9 +94,17 @@ public class PrefActivity extends AppBackButtonActivity {
 
     private void displayNameClicked() {
         AlertDialog.Builder builder = new AlertDialog.Builder(PrefActivity.this);
-        builder.setTitle("Enter new Display Name");
+        String titleText = "Enter new Display Name";
+        // Just changing the color
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.rgb(51,51,51));
+        SpannableStringBuilder stringBuilder = new SpannableStringBuilder(titleText);
+        stringBuilder.setSpan(colorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
         final EditText input = new EditText(PrefActivity.this);
         input.setText(sharedPref.getString("display_name", ""));
+
+        builder.setTitle(stringBuilder);
         builder.setView(input);
         builder.setPositiveButton("OK", (dialog, which) -> {
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -105,10 +128,15 @@ public class PrefActivity extends AppBackButtonActivity {
         for (int i : mUserItems) {
             checkedItems[i] = true;
         }
+        // All this just changes the color
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.rgb(51,51,51));
+        SpannableStringBuilder stringBuilder = new SpannableStringBuilder(alertTitle);
+        stringBuilder.setSpan(colorSpan, 0, alertTitle.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(PrefActivity.this);
         mBuilder
-                .setTitle(alertTitle)
+                .setTitle(stringBuilder)
                 .setCancelable(false)
                 .setMultiChoiceItems(listItems, checkedItems, (dialogInterface, i, isChecked) -> {
                     if (isChecked) {

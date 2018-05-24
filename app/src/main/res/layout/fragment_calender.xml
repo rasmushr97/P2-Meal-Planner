@@ -24,10 +24,11 @@
                 android:id="@+id/calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/text_color"
+                android:weekDayTextAppearance="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
             </CalendarView>
 
             <LinearLayout
@@ -62,7 +63,7 @@
         android:layout_marginStart="8dp"
         android:clickable="true"
         android:focusable="true"
-        app:backgroundTint="#00cc00"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

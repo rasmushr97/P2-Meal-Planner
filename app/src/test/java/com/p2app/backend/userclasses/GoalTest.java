@@ -144,7 +144,7 @@ public class GoalTest {
         assertTrue(500 > user.getGoal().calDeficit(22));
     }
 
-    @Test //Can use in report
+    @Test
     public void RHB_EquationTest01(){
         LocalUser maleUser = createUser(true, true);
         double maleBMR = maleUser.getGoal().RHB_Equation(maleUser);
@@ -154,9 +154,17 @@ public class GoalTest {
     }
 
     @Test
-    public void getGoalWeightTest01(){
+    public void clearGoalWeightTest01(){
+        Goal.getGoalWeight().put(LocalDate.now(), (float) 80);
         Goal.getGoalWeight().clear();
         assertTrue(Goal.getGoalWeight().isEmpty());
+    }
+
+    @Test
+    public void addGoalWeightTest01(){
+        Goal.getGoalWeight().clear();
+        Goal.getGoalWeight().put(LocalDate.now(), (float) 80);
+        assertEquals(1, Goal.getGoalWeight().size());
     }
 
 

@@ -129,7 +129,7 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
         } else {
             addRecipeButton.setImageResource(R.drawable.ic_add);
             addRecipeButton.setBackgroundTintList(ColorStateList.valueOf(Color
-                    .parseColor("#00cc00")));
+                    .parseColor("#D32F2F")));
         }
         addRecipeButton.setOnClickListener(view -> {
 

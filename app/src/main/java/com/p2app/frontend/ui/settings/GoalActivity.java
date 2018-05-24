@@ -102,7 +102,7 @@ public class GoalActivity extends AppBackButtonActivity {
         goalButton.setOnClickListener(
                 view -> {
                     /* Creates alertbox */
-                    AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this, R.style.AlertDialogStyle);
                     builder.setTitle("Enter Goal Weight");
                     final EditText input = new EditText(GoalActivity.this);
                     input.setInputType(weightText.getInputType()); //Decimal input
@@ -172,7 +172,7 @@ public class GoalActivity extends AppBackButtonActivity {
                 };
                 /* Alertbox for 'undo weight' */
                 if(Goal.getUserWeight().size() > 2) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this, R.style.AlertDialogStyle);
                     //Last date of entering a weight
                     LocalDate lastMeasurement = Goal.getLastDate(Goal.getUserWeight());
                     Object lastWeight = Goal.getUserWeight().get(lastMeasurement);
@@ -199,12 +199,13 @@ public class GoalActivity extends AppBackButtonActivity {
                     break;
                 } else {
                     /* You can't delete your first measurement */ //TODO maybe needs change
-                    AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this, R.style.AlertDialogStyle);
                     builder.setTitle("WARNING!");
                     builder.setMessage("You cant delete all of your measurements");
                     builder.setNegativeButton("GOT IT", dialogClickListener).show();
                     break;
                 }
+
         }
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event

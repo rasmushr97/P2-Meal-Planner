@@ -46,11 +46,9 @@ public class GraphDataTest {
         GraphData graphData = new GraphData();
         LocalUser user = createUser(true, true);
         Goal.getUserWeight().clear();
-        user.getGoal().addUserWeight(LocalDate.of(2018,1,1), 120);
-        //user.getGoal().addUserWeight(LocalDate.of(2018,2,1), 120);
-        user.setWeight(120);
-        InRAM.user = user;
         Goal.goalStartDate = LocalDate.of(2018,1,1);
+        user.getGoal().addUserWeight(Goal.goalStartDate, (float) user.getWeight());
+        InRAM.user = user;
         graphData.initializeGoal();
         assertEquals(4, GraphData.goalWeight.size());
     }
