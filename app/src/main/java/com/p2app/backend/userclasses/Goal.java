@@ -121,7 +121,7 @@ public class Goal {
         for (Map.Entry<LocalDate, Float> entry : getUserWeight().entrySet()) {
             if (entry.getValue() - getGoalWeight().get(entry.getKey()) > maxDiffInKg ||
                     getGoalWeight().get(entry.getKey()) - entry.getValue() > maxDiffInKg) {
-                double calDeficit = this.calDeficit(localUser.calcBMI());
+                double calDeficit = calDeficit(localUser.calcBMI());
                 double gramADay = calDeficit / week;
                 // multiply with 1000 in order to get it in grams
                 double difInCal = (entry.getValue() - getGoalWeight().get(entry.getKey())) * 1000;
@@ -162,7 +162,6 @@ public class Goal {
 
         missCalCalories = ((((diffInCal / days) - gramADay) * days) / (days / week)) + calDeficit;
         newDeficit = missCalCalories;
-
         return newDeficit;
     }
 

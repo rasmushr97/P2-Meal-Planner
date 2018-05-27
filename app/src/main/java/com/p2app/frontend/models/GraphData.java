@@ -30,19 +30,25 @@ public class GraphData {
         LocalDate end = Goal.getLastDate(Goal.getUserWeight());
 
         userWeight.clear();
-        /* Goes through all days between the first and the end day */
+        /* Goes through all days between the first weight date and the last weight date */
         List<LocalDate> dates = Stream.iterate(start, date -> date.plusDays(1))
                 .limit(ChronoUnit.DAYS.between(start, end.plusDays(1)))
                 .collect(Collectors.toList());
+
+        /* Iterates the dates */
         for(LocalDate date : dates){
+            /* Iterates the userWeight map from Goal */
             for(Map.Entry<LocalDate, Float> entry : Goal.getUserWeight().entrySet()){
+                /* If a measurement is done that day */
                 if(date.equals(entry.getKey())){
                     float weeks = (int) WEEKS.between(start, entry.getKey());
+                    /* If not an exact amount of weeks had passed, the days are added */
                     if(DAYS.between(start, entry.getKey()) % 7 != 0){
                         float days = (int) (DAYS.between(start, entry.getKey()) % 7);
                         days = days / 7;
                         weeks += days;
                     }
+                    /* Adds a point to the line*/
                     userWeight.add(new Entry(weeks, entry.getValue()));
                 }
             }
@@ -56,19 +62,23 @@ public class GraphData {
         /* Start and End date*/
         LocalDate graphEndDate = Goal.getLastDate(Goal.getUserWeight()).plusWeeks(3);
 
-        /* Goes through all days between the first and the end day */
+        /* Goes through all days between the day the user began its goal and the calculated finish date */
         List<LocalDate> goalDates = Stream.iterate(Goal.goalStartDate, date -> date.plusDays(1))
                 .limit(ChronoUnit.DAYS.between(Goal.goalStartDate, finishDate.plusDays(1)))
                 .collect(Collectors.toList());
 
+        /* Iterates all the dates */
         for(LocalDate date : goalDates){
+            /* If there is more than three weeks till goal, no more points are added*/
             if(date.isAfter(graphEndDate)){
                 break;
             }
+            /* Iterates the goalWeigh map from Goal class */
             for(Map.Entry<LocalDate, Float> entry : Goal.getGoalWeight().entrySet()){
+                /* Every time a week passes, if statement is true*/
                 if(date.equals(entry.getKey()) && DAYS.between(Goal.goalStartDate, entry.getKey()) % 7 == 0){
                     int weeks = (int) WEEKS.between(Goal.getFirstDate(Goal.getUserWeight()), entry.getKey());
-                    goalWeight.add(new Entry(weeks, entry.getValue()));
+                    goalWeight.add(new Entry(weeks, entry.getValue())); //Adds a point to the graph
                 }
             }
         }

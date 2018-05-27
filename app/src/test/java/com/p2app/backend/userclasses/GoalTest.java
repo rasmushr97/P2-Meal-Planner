@@ -167,6 +167,37 @@ public class GoalTest {
         assertEquals(1, Goal.getGoalWeight().size());
     }
 
+    @Test
+    public void recalcTest01(){
+        Goal.getGoalWeight().clear();
+        LocalUser user = createUser(true,true);
+        Goal.goalStartDate = LocalDate.of(2018,1,1);
+        Goal.getGoalWeight().put(LocalDate.now(), (float) 80);
+        Goal.getUserWeight().put(LocalDate.of(2018,1,1), (float) 120);
+        Goal.getUserWeight().put(LocalDate.now(), (float) 90);
+        user.getGoal().calcGoalDate(user);
+        user.getGoal().calcCaloriesPerDay(user);
+        user.getGoal().recalcCalories(user);
+        assertTrue(0 > user.getCalorieDeficit());
+    }
+
+
+    @Test
+    public void recalcTest02(){
+        Goal.getGoalWeight().clear();
+        Goal.getUserWeight().clear();
+        LocalUser user = createUser(true,false);
+        Goal.goalStartDate = LocalDate.of(2018,1,1);
+        Goal.getGoalWeight().put(LocalDate.now(), (float) 100);
+        Goal.getUserWeight().put(LocalDate.of(2018,1,1), (float) 70);
+        Goal.getUserWeight().put(LocalDate.now(), (float) 90);
+        user.getGoal().calcGoalDate(user);
+        user.getGoal().calcCaloriesPerDay(user);
+        user.getGoal().recalcCalories(user);
+        System.out.println(user.getCalorieDeficit());
+        assertTrue(0 < user.getCalorieDeficit());
+    }
+
 
 
 
