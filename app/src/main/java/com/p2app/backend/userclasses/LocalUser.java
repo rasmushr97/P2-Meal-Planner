@@ -18,8 +18,8 @@ public class LocalUser extends User {
     private Preferences preferences;
 
     public double calcBMI() {
-        double newHeight = (double) height / 100;
-        return weight / (newHeight * newHeight);
+        double heightInMeters = (double) height / 100;
+        return weight / (heightInMeters * heightInMeters);
     }
 
 
