@@ -14,11 +14,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.p2app.frontend.AppBackButtonActivity;
-import com.p2app.frontend.ui.misc.LoadingScreenActivity;
 import com.p2app.R;
 import com.p2app.backend.InRAM;
 import com.p2app.cloud.DBHandler;
+import com.p2app.frontend.AppBackButtonActivity;
+import com.p2app.frontend.ui.misc.LoadingScreenActivity;
 
 import java.time.LocalDate;
 
@@ -107,6 +107,7 @@ public class RegisterActivity extends AppBackButtonActivity {
 
                     Intent intent;
                     if (DBHandler.login(username, password)) {
+                        DBHandler.makeRandomRatings();
                         DBHandler.addWeightMeasurement(LocalDate.now(), weight, goalweight, InRAM.userID, LocalDate.now());
                         intent = new Intent(RegisterActivity.this, LoadingScreenActivity.class);
                     } else {

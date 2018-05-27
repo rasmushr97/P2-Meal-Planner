@@ -58,7 +58,6 @@ public class PickRecipeActivity extends AppBackButtonActivity {
 
         my_recycler_view.setAdapter(adapter);
 
-
     }
 
 
@@ -102,16 +101,18 @@ public class PickRecipeActivity extends AppBackButtonActivity {
 
         // Find the users most used tags
         Map<String, Integer> tags = new HashMap<>();
-
-        for (Review r : InRAM.user.getReviews()) {
-            int recipeID = r.getRecipeID();
-            List<String> categories = InRAM.recipesInRAM.get(recipeID).getCategories();
-            for (String s : categories) {
-                if (tags.containsKey(s)) {
-                    int count = tags.get(s) + 1;
-                    tags.put(s, count);
-                } else {
-                    tags.put(s, 1);
+        List<Review> userReviews = InRAM.user.getReviews();
+        if(userReviews != null) {
+            for (Review r : userReviews) {
+                int recipeID = r.getRecipeID();
+                List<String> categories = InRAM.recipesInRAM.get(recipeID).getCategories();
+                for (String s : categories) {
+                    if (tags.containsKey(s)) {
+                        int count = tags.get(s) + 1;
+                        tags.put(s, count);
+                    } else {
+                        tags.put(s, 1);
+                    }
                 }
             }
         }

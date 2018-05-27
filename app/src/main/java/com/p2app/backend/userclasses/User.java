@@ -14,7 +14,6 @@ public class User {
     private String ID;
     private String userName;
     private List<Review> reviews = new ArrayList<>();
-
     private LinkedHashMap<String, Double> similarityScores = new LinkedHashMap<>(); //Stores this users similarity scores to other users <otherUserID, simScore>
     private Map<Integer, Double> recommendedRecipes = new HashMap<>(); //Recommended recipes for this user <RecipeID, ExpectedRating>
 
@@ -25,9 +24,12 @@ public class User {
         this.ID = ID;
     }
 
-
     public String getID() {
         return ID;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public void setID(String ID) {

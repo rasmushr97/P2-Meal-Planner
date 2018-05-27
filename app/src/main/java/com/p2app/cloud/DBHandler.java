@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class DBHandler {
 
@@ -935,5 +936,26 @@ public class DBHandler {
             e.printStackTrace();
         }
 
+    }
+
+    public static void makeRandomRatings() {
+        Random random = new Random();
+        String sql = "INSERT INTO reviews (review, submitter, submitter_id, individual_rating, recipe_id) VALUES";
+
+        for(int i = 0; i < 100; i++){
+            if(i == 99){
+                sql = sql.concat("( '', '','" + InRAM.userID + "', " + (random.nextInt(5) + 1) + ", " + (random.nextInt(2779) + 2357) +")");
+            } else {
+                sql = sql.concat("( '', '','" + InRAM.userID + "', " + (random.nextInt(5) + 1) + ", " + (random.nextInt(2779) + 2357) +"),");
+            }
+        }
+
+
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
