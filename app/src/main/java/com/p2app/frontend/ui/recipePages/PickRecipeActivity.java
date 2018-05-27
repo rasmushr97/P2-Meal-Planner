@@ -102,20 +102,21 @@ public class PickRecipeActivity extends AppBackButtonActivity {
         // Find the users most used tags
         Map<String, Integer> tags = new HashMap<>();
         List<Review> userReviews = InRAM.user.getReviews();
-        if(userReviews != null) {
             for (Review r : userReviews) {
-                int recipeID = r.getRecipeID();
-                List<String> categories = InRAM.recipesInRAM.get(recipeID).getCategories();
-                for (String s : categories) {
-                    if (tags.containsKey(s)) {
-                        int count = tags.get(s) + 1;
-                        tags.put(s, count);
-                    } else {
-                        tags.put(s, 1);
+                    int recipeID = r.getRecipeID();
+                    List<String> categories = InRAM.recipesInRAM.get(recipeID).getCategories();
+                    if(categories != null) {
+                        for (String s : categories) {
+                            if (tags.containsKey(s)) {
+                                int count = tags.get(s) + 1;
+                                tags.put(s, count);
+                            } else {
+                                tags.put(s, 1);
+                            }
+                        }
                     }
-                }
             }
-        }
+        // Sort the list
         tags = sortByValue(tags);
 
         // Take the users 5 most popular tags and save them
@@ -138,6 +139,7 @@ public class PickRecipeActivity extends AppBackButtonActivity {
             tagList2d.add(new ArrayList<>());
         }
 
+        // For every recipe find all categories and if one of them matches the most popular categories, add the recipe to the list
         List<Recipe> recipeList = new ArrayList<>(InRAM.recipesInRAM.values());
         for (Recipe recipe : recipeList) {
             if (recipe != null) {
