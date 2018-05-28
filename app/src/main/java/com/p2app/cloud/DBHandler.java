@@ -950,7 +950,6 @@ public class DBHandler {
             }
         }
 
-
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(sql);
