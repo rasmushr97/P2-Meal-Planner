@@ -150,7 +150,6 @@ public class RecipeClickedActivity extends AppBackButtonActivity {
 
             } else {
 
-                // TODO: throw an exception instead
                 if (InRAM.mealsToMake.size() != 1) {
                     return;
                 }

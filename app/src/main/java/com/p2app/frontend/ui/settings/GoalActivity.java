@@ -15,14 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.p2app.R;
 import com.p2app.backend.InRAM;
 import com.p2app.backend.userclasses.Goal;
 import com.p2app.cloud.DBHandler;
-import com.p2app.frontend.AppBackButtonActivity;
-import com.p2app.R;
 import com.p2app.frontend.AppDrawerActivity;
-import com.p2app.frontend.ui.misc.ChartFragment;
 import com.p2app.frontend.models.GraphData;
+import com.p2app.frontend.ui.misc.ChartFragment;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -198,7 +197,7 @@ public class GoalActivity extends AppDrawerActivity {
                     builder.setNegativeButton("CANCEL", dialogClickListener).show();
                     break;
                 } else {
-                    /* You can't delete your first measurement */ //TODO maybe needs change
+                    /* You can't delete your first measurement */
                     AlertDialog.Builder builder = new AlertDialog.Builder(GoalActivity.this, R.style.AlertDialogStyle);
                     builder.setTitle("WARNING!");
                     builder.setMessage("You cant delete all of your measurements");
