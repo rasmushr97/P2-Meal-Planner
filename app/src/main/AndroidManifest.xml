@@ -33,7 +33,6 @@
         <activity android:name=".frontend.ui.recipePages.RecipeClickedActivity" />
         <activity android:name=".frontend.ui.settings.GoalActivity" />
         <activity android:name=".frontend.ui.login.RegisterActivity" />
-        <activity android:name=".frontend.ui.recipePages.SearchActivity" />
         <activity android:name=".frontend.ui.settings.PrefActivity" />
     </application>
 
